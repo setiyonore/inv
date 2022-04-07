@@ -29,13 +29,13 @@
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="{{ request()->route()->named('home') ? 'nav-link active' : 'nav-link'}}">
                         <i class="fas fa-tachometer-alt nav-icon"></i>
-                        <p>Dashboard v1</p>
+                        <p>Dashboard </p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('customers') }}" class="{{ request()->route()->named('customers.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-address-book nav-icon"></i>
-                        <p>Customer</p>
+                        <p>Pelanggan</p>
                     </a>
                 </li>
                 <li class="nav-item">

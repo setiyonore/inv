@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title-page','Dashboard')
 @section('content-header')
     <div class="row mb-2">
         <div class="col-sm-6">

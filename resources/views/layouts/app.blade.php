@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Invoice | @yield('title-page')</title>
 
     <!--include css-->
     @include('layouts.partial.includecss')
@@ -54,7 +54,8 @@
 </div>
 <!-- ./wrapper -->
 
-//includejs
+<!--include js-->
 @include('layouts.partial.includejs')
+@yield('script')
 </body>
 </html>

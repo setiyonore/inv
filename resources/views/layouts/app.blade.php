@@ -8,6 +8,7 @@
     <title>Invoice | @yield('title-page')</title>
 
     <!--include css-->
+    @yield('includecss')
     @include('layouts.partial.includecss')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

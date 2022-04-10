@@ -5,4 +5,6 @@ return [
     'phone' => 'Telepon',
     'filter' => 'Filter',
     'action' => 'Tindakan',
+    'save' => 'Simpan',
+    'close' => 'Keluar'
 ];

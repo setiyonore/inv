@@ -3,9 +3,13 @@
 @section('includecss')
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
 <script src="{{asset('dist/jquery/jquery.min.js')}}"></script>
 @endsection
 @section('content-header')
+    <input type="hidden" id="url">
+    <input type="hidden" id="token" value="{{csrf_token()}}">
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="m-0">Pelanggan</h1>
@@ -24,7 +28,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-body">
                     <div class="col-xs-12">
-                        <button class="btn btn-info"><i class="fa fa-plus"></i> Tambah Data</button>
+                        <button class="btn btn-info" data-toggle="modal" onclick="create()"><i class="fa fa-plus"></i> Tambah Data</button>
                         <div class="btn-group float-right">
                             <a href="#"  class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Print">
                                 <i class="fa fa-print"></i>
@@ -86,33 +90,49 @@
             </div>
         </div>
     </div>
+    <!--modal create-->
+    <div class="modal fade" tabindex="-1" id="modalCreate" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang("customer.addCustomer")</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" name="form">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="name">@lang('global.name')</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">@lang('global.phone')</label>
+                            <input type="text" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">@lang('global.email')</label>
+                            <input type="text" id="email" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->
     <script src="{{asset('plugins/datatables/datatables.min.js')}}"></script>
+    <!-- Toastr -->
+    <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script>
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-            getData();
-        });
-        function getData(){
-            $('#data-table').DataTable({
-                paging      : true,
-                searching   : false,
-                info        : true,
-                ordering    : false,
-                bDestroy    : true,
-                ajax: {
-                    url: "{{ route('customers.index') }}",
-                    type: "GET",
-                },
-                columns:[
-                    { data: 'name'},
-                    { data: 'phone'},
-                    { data: 'email'},
-                    { data: 'action'}
-                ]
-            });
-        }
+        var APP_URL = {!! json_encode(url('/')) !!}
+        $('#url').val(APP_URL);
     </script>
+    <script src="{{asset('functionjs/customers.js')}}"></script>
 @endsection

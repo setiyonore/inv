@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
 class CustomerController extends Controller
 {
@@ -30,5 +31,28 @@ class CustomerController extends Controller
                 ->make(true);
         }
         return view('customers.index');
+    }
+
+    public function store(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'phone' => 'required|unique:customers,phone',
+            'email' => 'email:rfc,dns|unique:customers,email',
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+        $data = Customer::query()
+            ->firstOrNew(array('id'=>$request->id));
+        $data->name = $request->name;
+        $data->phone = $request->phone;
+        $data->email = $request->email;
+        $data->save();
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
     }
 }

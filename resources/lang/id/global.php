@@ -6,5 +6,8 @@ return [
     'filter' => 'Filter',
     'action' => 'Tindakan',
     'save' => 'Simpan',
-    'close' => 'Keluar'
+    'close' => 'Keluar',
+    'confirmation' => 'Konfirmasi',
+    'cancel' => 'Batal',
+    'delete' => 'Hapus'
 ];

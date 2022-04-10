@@ -62,4 +62,10 @@ class CustomerController extends Controller
             ->first();
         return response()->json($data);
     }
+
+    public function destroy($id){
+        $data = Customer::query()->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
+    }
 }

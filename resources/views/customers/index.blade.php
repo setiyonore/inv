@@ -76,7 +76,7 @@
                     <hr>
                 </div>
                 <div class="card-body table-responsive">
-                    <table id="data-table" class="table table-bordered table-hover">
+                    <table id="data-table" class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>@lang("global.name")</th>

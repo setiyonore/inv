@@ -64,3 +64,14 @@ $('#simpan').click(function (e) {
         }
     });
 })
+
+$('body').on('click','#my-btn-edit',function (){
+    var id = $(this).data("id");
+    $.get(baseurl+'/customers/edit/'+id,function (data){
+        $('#id').val(data.id);
+        $('#name').val(data.name);
+        $('#phone').val(data.phone);
+        $('#email').val(data.email);
+        $('#modalCreate').modal('show');
+    })
+})

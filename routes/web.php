@@ -22,5 +22,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix'=>'customers'],function(){
    Route::get('/','CustomerController@index')->name('customers.index');
+   Route::get('edit/{id}','CustomerController@edit')->name('customer.edit');
    Route::post('store','CustomerController@store')->name('customers.store');
 });

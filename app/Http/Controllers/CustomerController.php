@@ -36,8 +36,8 @@ class CustomerController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required',
-            'phone' => 'required|unique:customers,phone',
-            'email' => 'email:rfc,dns|unique:customers,email',
+            'phone' => 'required',
+            'email' => 'email:rfc,dns',
         ]);
         if ($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()]);
@@ -54,5 +54,12 @@ class CustomerController extends Controller
         } else {
             return response()->json(['success'=>0]);
         }
+    }
+
+    public function edit($id){
+        $data = Customer::query()
+            ->where('id',$id)
+            ->first();
+        return response()->json($data);
     }
 }

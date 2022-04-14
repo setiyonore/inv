@@ -102,3 +102,39 @@ $('body').on('click','#submit-delete',function (e){
         }
     });
 });
+
+function filter(){
+    alert('filter');
+    var filerName = $('#filterName').val();
+    var filterPhone = $('#filterPhone').val();
+    var filterMail = $('#filterMail').val();
+
+    $('#data-table').DataTable({
+        paging      : true,
+        searching   : false,
+        info        : true,
+        ordering    : false,
+        bDestroy    : true,
+        processing: true,
+        language: {
+            loadingRecords: '&nbsp;',
+            processing: 'Loading......'
+        },
+        ajax: {
+            url: baseUrl+'/customers/search/',
+            type: 'GET',
+            data: {
+                _token: token,
+                name: filerName,
+            },
+        },
+        columns: [
+            { data: 'name'},
+            { data: 'phone'},
+            { data: 'action'}
+        ],
+        columnDefs: [
+        ],
+
+    });
+}

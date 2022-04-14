@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="box-footer">
-                                <button class="btn btn-success"><i class="fas fa-filter"></i> @lang("global.filter")</button>
+                                <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
                             </div>
                         </form>
                     </div>

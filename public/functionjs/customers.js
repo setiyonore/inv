@@ -102,39 +102,30 @@ $('body').on('click','#submit-delete',function (e){
         }
     });
 });
-
 function filter(){
-    alert('filter');
-    var filerName = $('#filterName').val();
-    var filterPhone = $('#filterPhone').val();
-    var filterMail = $('#filterMail').val();
-
+    var name = $('#filterName').val();
+    var email = $('#filterMail').val();
+    var phone = $('#filterPhone').val();
     $('#data-table').DataTable({
         paging      : true,
         searching   : false,
         info        : true,
-        ordering    : false,
+        ordering    : true,
         bDestroy    : true,
-        processing: true,
-        language: {
-            loadingRecords: '&nbsp;',
-            processing: 'Loading......'
-        },
         ajax: {
-            url: baseUrl+'/customers/search/',
-            type: 'GET',
+            url: baseurl+'/customers/search',
+            type: "GET",
             data: {
-                _token: token,
-                name: filerName,
+                name: name,
+                email: email,
+                phone: phone
             },
         },
-        columns: [
+        columns:[
             { data: 'name'},
+            { data: 'email'},
             { data: 'phone'},
             { data: 'action'}
-        ],
-        columnDefs: [
-        ],
-
+        ]
     });
 }

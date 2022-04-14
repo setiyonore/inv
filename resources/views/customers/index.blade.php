@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <!-- Toastr -->
 <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
-<script src="{{asset('dist/jquery/jquery.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 @endsection
 @section('content-header')
     <input type="hidden" id="url">
@@ -68,10 +68,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-footer">
-                                <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
-                            </div>
                         </form>
+                        <div class="box-footer">
+                            <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
+                        </div>
                     </div>
                     <hr>
                 </div>

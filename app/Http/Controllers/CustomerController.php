@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Cassandra\Custom;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
@@ -72,11 +70,10 @@ class CustomerController extends Controller
     }
 
     public function search(Request $request){
-        dd($request);
         $clause = [
-            'name' => $request['filterName'],
-            'email' => $request['filterMail'],
-            'phone' => $request['filterPhone']
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone']
         ];
         $data = $this->doSearch($clause);
         Return DataTables::of($data)
@@ -109,7 +106,7 @@ class CustomerController extends Controller
             }
             $index++;
         }
-        $data->get();
-        return $data;
+        $result = $data->get();
+        return $result;
     }
 }

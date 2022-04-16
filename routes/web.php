@@ -27,3 +27,12 @@ Route::group(['prefix'=>'customers'],function(){
    Route::get('destroy/{id}','CustomerController@destroy')->name('customers.delete');
    Route::get('search','CustomerController@search')->name('customers.search');
 });
+
+Route::group(['prefix'=>'references'],function(){
+   Route::get('/','TypeReferencesController@index')->name('references.index');
+   Route::get('edit/{id}','TypeReferencesController@edit')->name('customer.edit');
+   Route::post('store','TypeReferencesController@store')->name('references.store');
+   Route::get('destroy/{id}','TypeReferencesController@destroy')->name('references.delete');
+   Route::get('search','TypeReferencesController@search')->name('references.search');
+});
+

@@ -39,6 +39,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ url('references') }}" class="{{ request()->route()->named('references.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-list-ul nav-icon"></i>
+                        <p>Jenis Referensi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>

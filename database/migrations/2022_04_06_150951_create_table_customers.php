@@ -19,6 +19,7 @@ class CreateTableCustomers extends Migration
             $table->string('phone',50);
             $table->string('email',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateTableCustomers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_customers');
+        Schema::dropIfExists('customers');
     }
 }

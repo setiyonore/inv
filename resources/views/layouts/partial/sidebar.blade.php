@@ -39,6 +39,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ url('employees') }}" class="{{ request()->route()->named('employees.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <p>Karyawan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('references') }}" class="{{ request()->route()->named('references.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Jenis Referensi</p>

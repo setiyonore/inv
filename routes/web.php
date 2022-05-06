@@ -36,3 +36,7 @@ Route::group(['prefix'=>'references'],function(){
    Route::get('search','TypeReferencesController@search')->name('references.search');
 });
 
+Route::group(['prefix'=>'employees'],function (){
+    Route::get('/','EmployeesController@index')->name('employees.index');
+});
+

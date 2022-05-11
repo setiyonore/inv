@@ -125,6 +125,7 @@ function filter(){
             { data: 'name'},
             { data: 'email'},
             { data: 'phone'},
+            { data: 'status'},
             { data: 'action'}
         ]
     });

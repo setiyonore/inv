@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix'=>'customers'],function(){
@@ -38,5 +38,9 @@ Route::group(['prefix'=>'references'],function(){
 
 Route::group(['prefix'=>'employees'],function (){
     Route::get('/','EmployeesController@index')->name('employees.index');
+});
+
+Route::group(['prefix'=>'typereferences'],function (){
+    Route::get('/','ReferencesController@index')->name('typereferences.index');
 });
 

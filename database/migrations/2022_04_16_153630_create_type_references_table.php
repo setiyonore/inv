@@ -16,7 +16,7 @@ class CreateTypeReferencesTable extends Migration
         Schema::create('type_references', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->string('short');
+            $table->string('short')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

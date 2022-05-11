@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -21,4 +22,9 @@ class Reference extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function typereferences()
+    {
+        return $this->belongsTo(TypeReference::class, 'products_id', 'id');
+    }
 }

@@ -15,4 +15,11 @@ trait HelperMasterTraits
                 ->get();
         return $data;
     }
+
+    public function getDataReferensi($id){
+        $data = Reference::select('id','description as divisi')
+                ->where('id_type_reference',$id)
+                ->get();
+        return $data;
+    }
 }

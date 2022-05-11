@@ -56,9 +56,9 @@ class TypeReferencesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'short' => 'required',
             'description' => 'required'
         ]);
+
         if ($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
@@ -123,4 +123,46 @@ class TypeReferencesController extends Controller
         $data->delete();
         return response()->json(['success'=>1]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request){
+        $clause = [
+            'description' => $request['description'],
+            'short' => $request['short']
+        ];
+        $data = $this->doSearch($clause);
+        Return DataTables::of($data)
+        ->addColumn('description',function ($row){
+            return $row->description;
+        })
+        ->addColumn('short',function ($row){
+            return $row->short;
+        })
+        ->addColumn('action',function ($row){
+            return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+        })
+        ->rawColumns(['description','short','action'])
+        ->make(true);
+    }
+
+    private function doSearch($clauses){
+        $data = TypeReferences::all();
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $result = $data->get();
+        return $result;
+    }
+    
+
 }

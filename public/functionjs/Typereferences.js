@@ -13,7 +13,7 @@ function getData(){
         ordering    : true,
         bDestroy    : true,
         ajax: {
-            url: baseurl+'/references',
+            url: baseurl+'/typereferences',
             type: "GET",
         },
         columns:[
@@ -34,8 +34,8 @@ function create(){
 $('#simpan').click(function (e) {
     e.preventDefault();
     var id = $('#id').val();
-    var short = $('#short').val();
     var description = $('#description').val();
+    var short = $('#short').val();
 
     $.ajax({
         url: baseurl+'/references/store',
@@ -102,10 +102,10 @@ $('body').on('click','#submit-delete',function (e){
         }
     });
 });
+
 function filter(){
-    var short = $('#filtershort').val();
-    var email = $('#filterMail').val();
     var description = $('#filterdescription').val();
+    var short = $('#filtershort').val();
     $('#data-table').DataTable({
         paging      : true,
         searching   : false,
@@ -116,13 +116,14 @@ function filter(){
             url: baseurl+'/references/search',
             type: "GET",
             data: {
-                short: short,
-                email: description
+                description: description,
+                short: short
             },
         },
         columns:[
+            { data: 'description'},
             { data: 'short'},
-            { data: 'description'}
+            { data: 'action'}
         ]
     });
 }

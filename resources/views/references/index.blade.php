@@ -56,14 +56,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="filterName">Referensi</label>
-                                        <input type="text" class="form-control" id="filterName" name="filterName">
+                                        <label for="filterdescription">Referensi</label>
+                                        <input type="text" class="form-control" id="filterdescription" name="filterdescription">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="filterMail">Singkatan</label>
-                                        <input type="text" class="form-control" id="filterMail" name="filterMail">
+                                        <label for="filtershort">Singkatan</label>
+                                        <input type="text" class="form-control" id="filtershort" name="filtershort">
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 /*Models*/
 use App\Models\Employee;
 
@@ -11,7 +12,7 @@ use App\Traits\HelperMasterTraits;
 class EmployeesController extends Controller
 {
     use HelperMasterTraits;
-    public function index(){
+    public function index(Request $request){
         $data = Employee::leftJoin('references as r','r.id','id_reference')
             ->select(
                 'employees.id',
@@ -21,7 +22,31 @@ class EmployeesController extends Controller
                 'r.description as division')
             ->where('r.id_type_reference',config('config.IdTypeReference.Divisi'))
             ->get();
+        if ($request->ajax()){
+            return DataTables::of($data)
+                ->addColumn('name',function ($row){
+                    return $row->name;
+                })
+                ->addColumn('nip',function ($row){
+                    return $row->nip;
+                })
+                ->addColumn('division',function ($row){
+                    return $row->division;
+                })
+                ->addColumn('phone',function ($row){
+                    return $row->phone;
+                })
+                ->addColumn('action',function ($row){
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+                })
+                ->rawColumns(['name','nip','division','phone','action'])
+                ->make(true);
+        }
         $divisi = $this->getDivisi();
-            dd($divisi);
+        return view('employees.index',compact('divisi'));
+    }
+    public function getDivision(){
+        return $this->getDivisi();
     }
 }

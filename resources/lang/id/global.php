@@ -9,5 +9,6 @@ return [
     'close' => 'Keluar',
     'confirmation' => 'Konfirmasi',
     'cancel' => 'Batal',
-    'delete' => 'Hapus'
+    'delete' => 'Hapus',
+    'addData' => 'Tambah Data',
 ];

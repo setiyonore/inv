@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
 /*Models*/
 use App\Models\Employee;
 
@@ -45,6 +46,30 @@ class EmployeesController extends Controller
         }
         $divisi = $this->getDivisi();
         return view('employees.index',compact('divisi'));
+    }
+
+    public function store(Request $request){
+       $validator = Validator::make($request->all(),[
+           'nama' => 'required',
+           'nip' => 'required',
+           'telepon' => 'required',
+           'divisi' => 'required',
+       ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = Employee::query()
+            ->firstOrNew(array('id'=>$request->id));
+        $data->name = $request->nama;
+        $data->phone = $request->telepon;
+        $data->nip = $request->nip;
+        $data->id_reference = $request->divisi;
+        $data->save();
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
     }
     public function getDivision(){
         return $this->getDivisi();

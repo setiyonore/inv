@@ -69,7 +69,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="filterDivisi">@lang('employees.division')</label>
-                                        <select name="division" id="division" class="form-control select2" style="width: 100%;">
+                                        <select name="filterDivision" id="filterDivision" class="form-control select2" style="width: 100%;">
                                             <option value="">Pilih Divisi</option>
                                             @foreach($divisi as $val)
                                                 <option value="{{$val->id}}">{{$val->description}}</option>
@@ -111,7 +111,26 @@
                     <form id="form" name="form">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label>name</label>
+                            <label>@lang("global.name")</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang("employees.nip")</label>
+                            <input type="text" class="form-control" id="nip" name="nip">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang("global.phone")</label>
+                            <input type="text" class="form-control" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang("employees.division")</label>
+                            <select name="division" id="division" class="form-control select2" style="width: 100%;">
+
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
                         </div>
                     </form>
                 </div>
@@ -129,7 +148,7 @@
     <script>
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);
-        $('.select2').select2()
+        $('.select2').select2();
     </script>
     <script src="{{asset('functionjs/employees.js')}}"></script>
 @endsection

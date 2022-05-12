@@ -38,6 +38,7 @@ Route::group(['prefix'=>'references'],function(){
 
 Route::group(['prefix'=>'employees'],function (){
     Route::get('/','EmployeesController@index')->name('employees.index');
-    Route::get('/getDivision','EmployeeController@getDivision')->name('employees.getDivison');
+    Route::get('/getDivision','EmployeesController@getDivision')->name('employees.getDivison');
+    Route::post('/store','EmployeesController@store')->name('employees.store');
 });
 

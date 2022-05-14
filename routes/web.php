@@ -38,7 +38,10 @@ Route::group(['prefix'=>'typereferences'],function(){
 
 Route::group(['prefix'=>'employees'],function (){
     Route::get('/','EmployeesController@index')->name('employees.index');
-    Route::get('/getDivision','EmployeeController@getDivision')->name('employees.getDivison');
+    Route::get('/getDivision','EmployeesController@getDivision')->name('employees.getDivison');
+    Route::post('/store','EmployeesController@store')->name('employees.store');
+    Route::get('/edit/{id}','EmployeesController@Edit')->name('employees.edit');
+    Route::get('/destroy/{id}','EmployeesController@destroy')->name('employees.destroy');
 });
 
 Route::group(['prefix'=>'references'],function (){

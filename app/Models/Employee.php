@@ -13,7 +13,7 @@ class Employee extends Model
         'name',
         'nip',
         'phone',
-        'id_reference',
+        'id_reference_division',
     ];
     protected $hidden = [
         'created_at',

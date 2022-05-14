@@ -5,7 +5,7 @@ $(document).ready(function(){
     getdata();
 });
 function create(){
-    getDivisi();
+    //getDivisi();
     $('#form').trigger("reset");
     $('#modalCreate').modal('show');
 }
@@ -76,9 +76,35 @@ $('body').on('click','#my-btn-edit',function (){
        $('#nip').val(data.nip);
        $('#phone').val(data.phone);
        $('#division').val(data.id_reference_division);
+       $('[name=division]').val(data.id_reference_division);
        getDivisi();
        $('#modalCreate').modal('show');
    });
+});
+//delete
+$('body').on('click','#my-btn-delele',function (){
+    var recId = $(this).data('id');
+    $('#modalDelete').modal('show');
+    $('#id').val(recId);
+});
+//submit delete
+$('body').on('click','#submit-delete',function (e){
+    var recId = $('#id').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/employees/destroy/'+recId,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getdata();
+                $('#modalDelete').modal('hide');
+            }
+        }
+    });
 });
 function getDivisi(){
     $.ajax({

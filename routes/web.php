@@ -41,5 +41,6 @@ Route::group(['prefix'=>'employees'],function (){
     Route::get('/getDivision','EmployeesController@getDivision')->name('employees.getDivison');
     Route::post('/store','EmployeesController@store')->name('employees.store');
     Route::get('/edit/{id}','EmployeesController@Edit')->name('employees.edit');
+    Route::get('/destroy/{id}','EmployeesController@destroy')->name('employees.destroy');
 });
 

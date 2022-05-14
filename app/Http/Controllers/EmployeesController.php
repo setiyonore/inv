@@ -77,6 +77,11 @@ class EmployeesController extends Controller
             ->first();
         return response()->json($data);
     }
+    public function destroy($id){
+        $data = Employee::query()->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
+    }
     public function getDivision(){
         return $this->getDivisi();
     }

@@ -125,7 +125,10 @@
                         <div class="form-group">
                             <label>@lang("employees.division")</label>
                             <select name="division" id="division" class="form-control select2" style="width: 100%;">
-
+                                <option value="">Pilih Divisi</option>
+                                @foreach($divisi as $val)
+                                    <option value="{{$val->id}}">{{$val->description}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -133,6 +136,26 @@
                             <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal delete-->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('global.confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('employees.deleteConfirmation')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete" class="btn btn-danger">@lang('global.delete')</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
                 </div>
             </div>
         </div>

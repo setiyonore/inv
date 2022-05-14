@@ -16,13 +16,34 @@ class ReferencesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $type_reference = TypeReference::all();
-        $select_id = TypeReference::first()->id;
-
-        $items = Reference::with('typereferences')->where('id_type_reference', '=', $select_id )->get();
-        return view('type_references.index', compact('type_reference','items'));
+        $data = Reference::leftJoin('type_references as tr','r.id','id_reference')
+            ->select(
+                'references.id',
+                'references.description',
+                'r.description as typereferences')
+            ->where('tr.id_type_reference',config('config.IdTypeReference.typereferences'))
+            ->get();
+        dd($data);
+        $items = TypeReference::all();
+        if ($request->ajax()){
+            return DataTables::of($data)
+                ->addColumn('short',function ($row){
+                    return $row->short;
+                })
+                ->addColumn('description',function ($row){
+                    return $row->description;
+                })
+                ->addColumn('action',function ($row){
+                    return 
+                    ' <a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a> ';
+                })
+                ->rawColumns(['description','short','action'])
+                ->make(true);
+        }
+        return view('references.index');
     }
 
     /**

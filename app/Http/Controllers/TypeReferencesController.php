@@ -34,7 +34,7 @@ class TypeReferencesController extends Controller
                 ->rawColumns(['description','short','action'])
                 ->make(true);
         }
-        return view('references.index');
+        return view('type_references.index');
     }
 
     /**

@@ -28,12 +28,12 @@ Route::group(['prefix'=>'customers'],function(){
    Route::get('search','CustomerController@search')->name('customers.search');
 });
 
-Route::group(['prefix'=>'references'],function(){
-   Route::get('/','TypeReferencesController@index')->name('references.index');
-   Route::get('edit/{id}','TypeReferencesController@edit')->name('customer.edit');
-   Route::post('store','TypeReferencesController@store')->name('references.store');
-   Route::get('destroy/{id}','TypeReferencesController@destroy')->name('references.delete');
-   Route::get('search','TypeReferencesController@search')->name('references.search');
+Route::group(['prefix'=>'typereferences'],function(){
+   Route::get('/','TypeReferencesController@index')->name('typereferences.index');
+   Route::get('edit/{id}','TypeReferencesController@edit')->name('typereferences.edit');
+   Route::post('store','TypeReferencesController@store')->name('typereferences.store');
+   Route::get('destroy/{id}','TypeReferencesController@destroy')->name('typereferences.delete');
+   Route::get('search','TypeReferencesController@search')->name('typereferences.search');
 });
 
 Route::group(['prefix'=>'employees'],function (){
@@ -41,7 +41,7 @@ Route::group(['prefix'=>'employees'],function (){
     Route::get('/getDivision','EmployeeController@getDivision')->name('employees.getDivison');
 });
 
-Route::group(['prefix'=>'typereferences'],function (){
-    Route::get('/','ReferencesController@index')->name('typereferences.index');
+Route::group(['prefix'=>'references'],function (){
+    Route::get('/','ReferencesController@index')->name('references.index');
 });
 

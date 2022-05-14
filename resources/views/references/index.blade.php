@@ -6,6 +6,9 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+{{-- select 2 --}}
+<link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endsection
 @section('content-header')
     <input type="hidden" id="url">
@@ -67,6 +70,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="filterDivisi">@lang('employees.division')</label>
+                                        <select name="division" id="division" class="form-control select2" style="width: 100%;">
+                                            <option value="">Pilih Referensi</option>
+                                            @foreach($items as $val)
+                                                <option value="{{$val->id}}">{{$val->description}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div class="box-footer">
                             <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
@@ -97,7 +113,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Referensi</h5>
+                    <h5 class="modal-title">Tambah Data Tipe Referensi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -152,5 +168,5 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);
     </script>
-    <script src="{{asset('functionjs/Typereferences.js')}}"></script>
+    <script src="{{asset('functionjs/references.js')}}"></script>
 @endsection

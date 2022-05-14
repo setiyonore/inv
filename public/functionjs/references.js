@@ -38,7 +38,7 @@ $('#simpan').click(function (e) {
     var short = $('#short').val();
 
     $.ajax({
-        url: baseurl+'/references/store',
+        url: baseurl+'/typereferences/store',
         method: "POST",
         data: {
             _token: token,
@@ -68,7 +68,7 @@ $('#simpan').click(function (e) {
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");
-    $.get(baseurl+'/references/edit/'+id,function (data){
+    $.get(baseurl+'/typereferences/edit/'+id,function (data){
         $('#id').val(data.id);
         $('#short').val(data.short);
         $('#description').val(data.description);
@@ -88,7 +88,7 @@ $('body').on('click','#submit-delete',function (e){
     var recId = $('#id').val();
     e.preventDefault();
     $.ajax({
-        url: baseurl+'/references/destroy/'+recId,
+        url: baseurl+'/typereferences/destroy/'+recId,
         method: 'GET',
         data: {
             _token: token,

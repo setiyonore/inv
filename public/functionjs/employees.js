@@ -30,6 +30,7 @@ function getdata(){
 
     })
 }
+//store data employees
 $('#simpan').click(function (e){
     e.preventDefault();
     var id = $('#id').val();
@@ -65,7 +66,20 @@ $('#simpan').click(function (e){
             }
         }
     });
-})
+});
+//edit
+$('body').on('click','#my-btn-edit',function (){
+   var id = $(this).data("id");
+   $.get(baseurl+'/employees/edit/'+id,function (data) {
+       $('#id').val(data.id);
+       $('#name').val(data.name);
+       $('#nip').val(data.nip);
+       $('#phone').val(data.phone);
+       $('#division').val(data.id_reference_division);
+       getDivisi();
+       $('#modalCreate').modal('show');
+   });
+});
 function getDivisi(){
     $.ajax({
         url: baseurl+'/employees/getDivision',

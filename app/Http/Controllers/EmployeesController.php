@@ -14,7 +14,7 @@ class EmployeesController extends Controller
 {
     use HelperMasterTraits;
     public function index(Request $request){
-        $data = Employee::leftJoin('references as r','r.id','id_reference')
+        $data = Employee::leftJoin('references as r','r.id','id_reference_division')
             ->select(
                 'employees.id',
                 'employees.name',
@@ -63,13 +63,19 @@ class EmployeesController extends Controller
         $data->name = $request->nama;
         $data->phone = $request->telepon;
         $data->nip = $request->nip;
-        $data->id_reference = $request->divisi;
+        $data->id_reference_division = $request->divisi;
         $data->save();
         if ($data){
             return response()->json(['success'=>1]);
         } else {
             return response()->json(['success'=>0]);
         }
+    }
+    public function edit($id){
+        $data = Employee::query()
+            ->where('id',$id)
+            ->first();
+        return response()->json($data);
     }
     public function getDivision(){
         return $this->getDivisi();

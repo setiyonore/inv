@@ -151,7 +151,7 @@ class TypeReferencesController extends Controller
     }
 
     private function doSearch($clauses){
-        $data = TypeReferences::all();
+        $data = TypeReference::query();
         $fields = array_keys($clauses);
         $index = 0;
         foreach ($clauses as $item) {

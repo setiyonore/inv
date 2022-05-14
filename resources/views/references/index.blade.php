@@ -9,6 +9,8 @@
 {{-- select 2 --}}
 <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+{{-- sweet alert --}}
+<link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endsection
 @section('content-header')
     <input type="hidden" id="url">
@@ -59,24 +61,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="filterdescription">Referensi</label>
-                                        <input type="text" class="form-control" id="filterdescription" name="filterdescription">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="filtershort">Singkatan</label>
-                                        <input type="text" class="form-control" id="filtershort" name="filtershort">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="filterDivisi">@lang('employees.division')</label>
-                                        <select name="division" id="division" class="form-control select2" style="width: 100%;">
+                                        <select name="typeReference" id="typeReference" class="form-control select2" style="width: 100%;" onchange="filter()">
                                             <option value="">Pilih Referensi</option>
-                                            @foreach($items as $val)
+                                            @foreach($typeReference as $val)
                                                 <option value="{{$val->id}}">{{$val->description}}</option>
                                             @endforeach
                                         </select>
@@ -84,9 +72,6 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="box-footer">
-                            <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
-                        </div>
                     </div>
                     <hr>
                 </div>
@@ -97,8 +82,7 @@
                     <table id="data-table" class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Nama Referensi</th>
-                                <th>Singkatan</th>
+                                <th>Deskripsi</th>
                                 <th>@lang("global.action")</th>
                             </tr>
                         </thead>
@@ -122,12 +106,17 @@
                     <form id="form" name="form">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="description">Nama Referensi</label>
-                            <input type="text" class="form-control" id="description">
+                            <label for="description">Tipe Referensi</label>
+                            <select name="division" id="tipe" class="form-control select2" style="width: 100%;">
+                                <option value="">Pilih Tipe Referensi</option>
+                                @foreach($typeReference as $val)
+                                    <option value="{{$val->id}}">{{$val->description}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="short">Singkatan Referensi</label>
-                            <input type="text" id="short" class="form-control">
+                            <label for="short">Deskripsi</label>
+                            <input type="text" id="description" class="form-control">
                         </div>
                     </form>
                 </div>
@@ -164,6 +153,8 @@
     <script src="{{asset('plugins/datatables/datatables.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script>
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);

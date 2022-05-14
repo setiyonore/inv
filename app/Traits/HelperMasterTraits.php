@@ -2,6 +2,7 @@
 namespace App\Traits;
 /*Models*/
 use App\Models\Reference;
+use App\Models\TypeReference;
 
 use Config;
 /**
@@ -22,4 +23,10 @@ trait HelperMasterTraits
                 ->get();
         return $data;
     }
+
+    public function getTypeReferensi(){
+        $data = TypeReference::select('id','description')->get();
+        return $data;
+    }
+
 }

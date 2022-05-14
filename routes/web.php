@@ -46,5 +46,8 @@ Route::group(['prefix'=>'employees'],function (){
 
 Route::group(['prefix'=>'references'],function (){
     Route::get('/','ReferencesController@index')->name('references.index');
+    Route::post('/filter','ReferencesController@filter')->name('references.filter');
+    Route::get('/edit/{id}','ReferencesController@edit')->name('references.edit');
+    Route::get('getTypeReference', 'ReferencesController@getTypeReference')->name('references.getTypeReference');
 });
 

@@ -19,8 +19,8 @@ class TypeReference extends Model
     ];
 
     
-    public function references()
-    {
-        return $this->hasMany(References::class, 'id_type_reference');
-    }
+    // public function references()
+    // {
+    //     return $this->hasMany(References::class, 'id_type_reference');
+    // }
 }

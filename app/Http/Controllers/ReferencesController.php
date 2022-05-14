@@ -7,10 +7,12 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Reference;
 use App\Models\TypeReference;
+use App\Traits\HelperMasterTraits;
 use Auth;
 
 class ReferencesController extends Controller
 {
+    use HelperMasterTraits;
     /**
      * Display a listing of the resource.
      *
@@ -18,32 +20,10 @@ class ReferencesController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Reference::leftJoin('type_references as tr','r.id','id_reference')
-            ->select(
-                'references.id',
-                'references.description',
-                'r.description as typereferences')
-            ->where('tr.id_type_reference',config('config.IdTypeReference.typereferences'))
-            ->get();
-        dd($data);
-        $items = TypeReference::all();
-        if ($request->ajax()){
-            return DataTables::of($data)
-                ->addColumn('short',function ($row){
-                    return $row->short;
-                })
-                ->addColumn('description',function ($row){
-                    return $row->description;
-                })
-                ->addColumn('action',function ($row){
-                    return 
-                    ' <a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a> ';
-                })
-                ->rawColumns(['description','short','action'])
-                ->make(true);
-        }
-        return view('references.index');
+        $typeReference = TypeReference::query()
+                ->select('id','description','short')
+                ->get();
+        return view('references.index',compact('typeReference'));
     }
 
     /**
@@ -86,7 +66,12 @@ class ReferencesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Reference::query()
+        ->leftJoin('type_references as tr','tr.id','references.id_type_reference')
+        ->select('tr.id as id_type_reference','references.id','references.description')
+        ->where('references.id',$id)
+        ->first();
+        return response()->json($data);
     }
 
     /**
@@ -112,8 +97,27 @@ class ReferencesController extends Controller
         //
     }
 
-    public function getReferensi($id){
-        $data = $this->getDataReferensi();
-        dd($data);
+    public function filter(Request $request){
+       $data = Reference::query()
+       ->where('id_type_reference',$request->id)
+       ->get();
+       if($request->ajax()){
+           return DataTables::of($data)
+           ->addColumn('description',function($row){
+               return $row->description;
+           })
+           ->addColumn('action',function ($row){
+            return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['description','action'])
+            ->make(true);
+
+       }
+    }
+
+    public function getTypeReference(){
+        $data = $this->getTypeReferensi();
+        return $data;
     }
 }

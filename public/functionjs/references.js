@@ -2,7 +2,13 @@ var baseurl = $('#url').val();
 var token = $('#token').val();
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
-    getData();
+    // getData();
+    Swal.fire(
+        'Info',
+        'Mohon Pilih Jenis Referensi Terlebih Dahulu',
+        'info'
+      );
+    filter();
 });
 // fetch data
 function getData(){
@@ -29,7 +35,6 @@ function create(){
    $('#form').trigger("reset");
    $('#modalCreate').modal('show');
 }
-
 // store
 $('#simpan').click(function (e) {
     e.preventDefault();
@@ -68,10 +73,13 @@ $('#simpan').click(function (e) {
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");
-    $.get(baseurl+'/typereferences/edit/'+id,function (data){
+    $.get(baseurl+'/references/edit/'+id,function (data){
         $('#id').val(data.id);
-        $('#short').val(data.short);
+        $('#tipe').val(data.id_type_reference);
         $('#description').val(data.description);
+        // getTypeReference();
+        var type = $('#tipe').val();
+        console.log(type);
         $('#modalCreate').modal('show');
     })
 });
@@ -104,8 +112,7 @@ $('body').on('click','#submit-delete',function (e){
 });
 
 function filter(){
-    var description = $('#filterdescription').val();
-    var short = $('#filtershort').val();
+    var idTypeReference = $('#typeReference').val();
     $('#data-table').DataTable({
         paging      : true,
         searching   : false,
@@ -113,17 +120,42 @@ function filter(){
         ordering    : true,
         bDestroy    : true,
         ajax: {
-            url: baseurl+'/references/search',
-            type: "GET",
+            url: baseurl+'/references/filter',
+            type: "POST",
             data: {
-                description: description,
-                short: short
+                id: idTypeReference,
+                _token: token,
             },
         },
         columns:[
             { data: 'description'},
-            { data: 'short'},
             { data: 'action'}
         ]
+    });
+}
+
+function getTypeReference(){
+    $.ajax({
+        url: baseurl+'/references/getTypeReference',
+        data: {_token:token},
+        methods: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var fk_type_reference = $('#type_references').val();
+            var html = "";
+            var titleselect = "Tipe Referensi";
+            html += "<option value=''>"+titleselect+"</option>";
+            for (i=0;i<data.length;i++){
+                var id = data[i].id;
+                var description = data[i].description;
+                if (id == fk_type_reference){
+                    html += "<option class='form-control' selected='true' value='"+id+"'>"+description+"</option>"
+                } else {
+                    html += "<option class='form-control' value='"+id+"'>"+description+"</option>"
+                }
+            }
+            document.getElementById('type_references').innerHTML = "";
+            document.getElementById('type_references').innerHTML = html;
+        }
     });
 }

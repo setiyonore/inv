@@ -113,7 +113,7 @@ function filter(){
         ordering    : true,
         bDestroy    : true,
         ajax: {
-            url: baseurl+'/references/search',
+            url: baseurl+'/typereferences/search',
             type: "GET",
             data: {
                 description: description,

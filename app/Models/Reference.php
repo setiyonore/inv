@@ -23,8 +23,8 @@ class Reference extends Model
         'deleted_at',
     ];
 
-    public function typereferences()
-    {
-        return $this->belongsTo(TypeReference::class, 'products_id', 'id');
-    }
+    // public function typereferences()
+    // {
+    //     return $this->belongsTo(TypeReference::class, 'products_id', 'id');
+    // }
 }

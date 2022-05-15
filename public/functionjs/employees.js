@@ -131,3 +131,32 @@ function getDivisi(){
         }
     });
 }
+
+function filter(){
+    var name = $('#filterName').val();
+    var nip = $('#filterNip').val();
+    var division = $('#filterDivision').val();
+    $('#data-table').DataTable({
+        paging      : true,
+        searching   : false,
+        info        : true,
+        ordering    : true,
+        bDestroy    : true,
+        ajax: {
+            url: baseurl+'/employees/search',
+            type: "GET",
+            data: {
+                name: name,
+                nip: nip,
+                division: division,
+            },
+        },
+        columns:[
+            { data: 'name'},
+            { data: 'nip'},
+            { data: 'division'},
+            { data: 'phone'},
+            { data: 'action'},
+        ]
+    });
+}

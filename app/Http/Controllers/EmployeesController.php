@@ -85,4 +85,54 @@ class EmployeesController extends Controller
     public function getDivision(){
         return $this->getDivisi();
     }
+
+    public function search(Request $request){
+        $clause = [
+            'name' => $request['name'],
+            'nip' => $request['nip'],
+            'id_reference_division' => $request['division']
+        ];
+        $data = $this->doSearch($clause);
+        return DataTables::of($data)
+            ->addColumn('name',function ($row){
+                return $row->name;
+            })
+            ->addColumn('nip',function ($row){
+                return $row->nip;
+            })
+            ->addColumn('division',function ($row){
+                return $row->division;
+            })
+            ->addColumn('phone',function ($row){
+                return $row->phone;
+            })
+            ->addColumn('action',function ($row){
+                return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['name','nip','division','phone','action'])
+            ->make(true);
+
+    }
+
+    private function doSearch($clauses){
+        $data = Employee::leftJoin('references as r','r.id','id_reference_division')
+            ->select(
+                'employees.id',
+                'employees.name',
+                'employees.nip',
+                'employees.phone',
+                'r.description as division')
+            ->where('r.id_type_reference',config('config.IdTypeReference.Divisi'));
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $result = $data->get();
+        return $result;
+    }
 }

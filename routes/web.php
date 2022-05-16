@@ -46,7 +46,9 @@ Route::group(['prefix'=>'employees'],function (){
 });
 
 Route::group(['prefix'=>'references'],function (){
+    Route::post('/store','ReferencesController@store')->name('references.store');
     Route::get('/','ReferencesController@index')->name('references.index');
+    Route::get('/destroy/{id}','ReferencesController@destroy')->name('references.destroy');
     Route::post('/filter','ReferencesController@filter')->name('references.filter');
     Route::get('/edit/{id}','ReferencesController@edit')->name('references.edit');
     Route::get('getTypeReference', 'ReferencesController@getTypeReference')->name('references.getTypeReference');

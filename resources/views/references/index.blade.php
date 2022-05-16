@@ -106,8 +106,8 @@
                     <form id="form" name="form">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="description">Tipe Referensi</label>
-                            <select name="division" id="tipe" class="form-control select2" style="width: 100%;">
+                            <label for="tipe">Tipe Referensi</label>
+                            <select name="tipe" id="tipe" class="form-control select2" style="width: 100%;">
                                 <option value="">Pilih Tipe Referensi</option>
                                 @foreach($typeReference as $val)
                                     <option value="{{$val->id}}">{{$val->description}}</option>

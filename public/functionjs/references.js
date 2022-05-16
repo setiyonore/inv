@@ -19,12 +19,11 @@ function getData(){
         ordering    : true,
         bDestroy    : true,
         ajax: {
-            url: baseurl+'/typereferences',
+            url: baseurl+'/references/',
             type: "GET",
         },
         columns:[
             { data: 'description'},
-            { data: 'short'},
             { data: 'action'}
         ]
     });
@@ -39,16 +38,16 @@ function create(){
 $('#simpan').click(function (e) {
     e.preventDefault();
     var id = $('#id').val();
+    var id_type_reference = $('#tipe').val();
     var description = $('#description').val();
-    var short = $('#short').val();
 
     $.ajax({
-        url: baseurl+'/typereferences/store',
+        url: baseurl+'/references/store',
         method: "POST",
         data: {
             _token: token,
             id: id,
-            short: short,
+            id_type_reference: id_type_reference,
             description: description,
         },
         success: function (data){
@@ -58,7 +57,7 @@ $('#simpan').click(function (e) {
                 });
             } else {
                 if (data.success===1){
-                    getData();
+                    filter();
                     $('#modalCreate').modal('hide');
                     $('#form').trigger("reset");
                     toastr.success('Data Berhasil Di Simpan');
@@ -96,7 +95,7 @@ $('body').on('click','#submit-delete',function (e){
     var recId = $('#id').val();
     e.preventDefault();
     $.ajax({
-        url: baseurl+'/typereferences/destroy/'+recId,
+        url: baseurl+'/references/destroy/'+recId,
         method: 'GET',
         data: {
             _token: token,
@@ -104,7 +103,7 @@ $('body').on('click','#submit-delete',function (e){
         success: function (data){
             if (data.success===1){
                 toastr.success('Data berhasil dihapus!');
-                getData();
+                filter();
                 $('#modalDelete').modal('hide');
             }
         }

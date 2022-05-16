@@ -44,7 +44,24 @@ class ReferencesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validator = Validator::make($request->all(),[
+            'id_type_reference' => 'required',
+            'description' => 'required',
+        ]);
+         if ($validator->fails()){
+             return response()->json(['errors'=>$validator->errors()->all()]);
+         }
+         $data = Reference::query()
+             ->firstOrNew(array('id'=>$request->id));
+         $data->id_type_reference = $request->id_type_reference;
+         $data->description = $request->description;
+         $data->save();
+         if ($data){
+             return response()->json(['success'=>1]);
+         } else {
+             return response()->json(['success'=>0]);
+         }
     }
 
     /**
@@ -94,7 +111,9 @@ class ReferencesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Reference::query()->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
     }
 
     public function filter(Request $request){

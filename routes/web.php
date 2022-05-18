@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes(['register' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+//customer
 Route::group(['prefix'=>'customers'],function(){
    Route::get('/','CustomerController@index')->name('customers.index');
    Route::get('edit/{id}','CustomerController@edit')->name('customer.edit');
@@ -28,6 +29,7 @@ Route::group(['prefix'=>'customers'],function(){
    Route::get('search','CustomerController@search')->name('customers.search');
 });
 
+//tipe referensi
 Route::group(['prefix'=>'typereferences'],function(){
    Route::get('/','TypeReferencesController@index')->name('typereferences.index');
    Route::get('edit/{id}','TypeReferencesController@edit')->name('typereferences.edit');
@@ -35,7 +37,7 @@ Route::group(['prefix'=>'typereferences'],function(){
    Route::get('destroy/{id}','TypeReferencesController@destroy')->name('typereferences.delete');
    Route::get('search','TypeReferencesController@search')->name('typereferences.search');
 });
-
+//pegawai
 Route::group(['prefix'=>'employees'],function (){
     Route::get('/','EmployeesController@index')->name('employees.index');
     Route::get('/getDivision','EmployeesController@getDivision')->name('employees.getDivison');
@@ -44,7 +46,12 @@ Route::group(['prefix'=>'employees'],function (){
     Route::get('/destroy/{id}','EmployeesController@destroy')->name('employees.destroy');
     Route::get('/search','EmployeesController@search')->name('employees.search');
 });
+//paket
+Route::group(['prefix'=>'package'],function (){
+    Route::get('/','PackageController@index')->name('package.index');
+});
 
+//referensi
 Route::group(['prefix'=>'references'],function (){
     Route::post('/store','ReferencesController@store')->name('references.store');
     Route::get('/','ReferencesController@index')->name('references.index');

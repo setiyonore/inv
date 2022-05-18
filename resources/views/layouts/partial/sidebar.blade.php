@@ -11,8 +11,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-{{--                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">--}}
-                <img src="https://i.pravatar.cc/300" class="img-circle elevation-2" alt="">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+{{--                <img src="https://i.pravatar.cc/300" class="img-circle elevation-2" alt="">--}}
             </div>
             <div class="info">
                 @if (Auth::check())
@@ -46,6 +46,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{url('package')}}" class="{{ request()->route()->named('package.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-box-open nav-icon"></i>
+                        <p>Paket</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('typereferences') }}" class="{{ request()->route()->named('typereferences.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Jenis Referensi</p>
@@ -60,7 +66,7 @@
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt"></i>
+                        <i class="fas fa-sign-out-alt nav-icon"></i>
                         <p>Logout</p>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

@@ -103,6 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">@lang('package.price')</label>
+                            <input type="hidden" id="hargaOld">
                             <input type="text" class="form-control" id="price" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" datatype="currency">
                         </div>
                         <div class="modal-footer">

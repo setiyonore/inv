@@ -48,7 +48,11 @@ class PackageController extends Controller
             ->firstOrNew(array('id'=>$request->id));
         $data->name = $request->nama;
         $data->description = $request->deskripsi;
-        $data->price = $request->harga;
+        if ($request->harga == 0){
+            $data->price = $request->hargaOld;
+        }else {
+            $data->price = $request->harga;
+        }
         $data->save();
         if ($data){
             return response()->json(['success'=>1]);
@@ -68,5 +72,44 @@ class PackageController extends Controller
         $data = MasterPackage::query()->findOrFail($id);
         $data->delete();
         return response()->json(['success'=>1]);
+    }
+
+    public function search(Request $request){
+        $clause = [
+            'name' => $request->filterName
+        ];
+        $data = $this->doSearch($clause);
+        return DataTables::make($data)
+            ->addColumn('name',function ($row){
+                return $row->name;
+            })
+            ->addColumn('description',function ($row){
+                return $row->description;
+            })
+            ->addColumn('price',function ($row){
+                $rupiah = number_format($row->price,2, ',', '.');
+                return "Rp.".$rupiah;
+            })
+            ->addColumn('action',function ($row){
+                return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['name','description','price','action'])
+            ->make(true);
+
+    }
+    private function doSearch($clauses){
+        $data = MasterPackage::query()
+            ->select('id','name','description','price');
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $result = $data->get();
+        return $result;
     }
 }

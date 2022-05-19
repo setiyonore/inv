@@ -120,6 +120,7 @@ $('#simpan').click(function (e){
   var removeRp = price.substring(3);
   var removeLast3 = removeRp.slice(0,-3);
   var finalPrice = parseFloat(removeLast3.replace(/,/g,''));
+  var hargaOld = $('#hargaOld').val();
   $.ajax({
       url: baseurl+'/package/store',
       method: 'POST',
@@ -128,7 +129,8 @@ $('#simpan').click(function (e){
           id: id,
           nama: name,
           deskripsi: description,
-          harga: finalPrice
+          harga: finalPrice,
+          hargaOld: hargaOld
       },
       success: function (data) {
           if (data.errors){
@@ -137,7 +139,7 @@ $('#simpan').click(function (e){
               });
           }else{
               if (data.success === 1){
-                  getData();
+                  filter();
                   $('#modalCreate').modal('hide');
                   $('#form').trigger("reset");
                   toastr.success('Data Berhasil Di Simpan');
@@ -156,6 +158,7 @@ $('body').on('click','#my-btn-edit',function (){
         $('#name').val(data.name);
         $('#description').val(data.description);
         $('#price').val(data.price);
+        $('#hargaOld').val(data.price);
        $('#modalCreate').modal('show');
     });
 });
@@ -178,9 +181,33 @@ $('body').on('click','#submit-delete',function (e){
         success: function (data){
             if (data.success===1){
                 toastr.success('Data berhasil dihapus!');
-                getData();
+                filter();
                 $('#modalDelete').modal('hide');
             }
         }
     });
 });
+
+function filter(){
+    var name = $('#filterName').val();
+    $('#data-table').DataTable({
+        paging      : true,
+        searching   : false,
+        info        : true,
+        ordering    : true,
+        bDestroy    : true,
+        ajax: {
+            url: baseurl+'/package/search',
+            type: "GET",
+            data: {
+                filterName: name,
+            },
+        },
+        columns:[
+            { data: 'name'},
+            { data: 'description'},
+            { data: 'price'},
+            { data: 'action'},
+        ]
+    });
+}

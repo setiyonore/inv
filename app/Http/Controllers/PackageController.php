@@ -63,4 +63,10 @@ class PackageController extends Controller
             ->first();
         return response()->json($data);
     }
+
+    public function destroy($id){
+        $data = MasterPackage::query()->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
+    }
 }

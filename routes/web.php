@@ -49,6 +49,7 @@ Route::group(['prefix'=>'employees'],function (){
 //paket
 Route::group(['prefix'=>'package'],function (){
     Route::get('/','PackageController@index')->name('package.index');
+    Route::post('/store','PackageController@store')->name('package.store');
 });
 
 //referensi

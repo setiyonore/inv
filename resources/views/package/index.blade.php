@@ -80,6 +80,40 @@
             </div>
         </div>
     </div>
+    <!--Modal create -->
+    <div class="modal fade" tabindex="-1" id="modalCreate" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('package.add')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="form">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="">@lang('global.name')</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">@lang('package.description')</label>
+                            <textarea class="form-control" rows="5" id="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">@lang('package.price')</label>
+                            <input type="text" class="form-control" id="price" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" datatype="currency">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

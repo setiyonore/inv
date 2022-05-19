@@ -3,10 +3,57 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
+/*models*/
+use App\Models\MasterPackage;
 
 class PackageController extends Controller
 {
     public function index(Request $request){
+        $data = MasterPackage::query()
+            ->select('id','name','description','price')
+            ->get();
+        if ($request->ajax()){
+            return DataTables::make($data)
+                ->addColumn('name',function ($row){
+                    return $row->name;
+                })
+                ->addColumn('description',function ($row){
+                    return $row->description;
+                })
+                ->addColumn('price',function ($row){
+                    $rupiah = number_format($row->price,2, ',', '.');
+                    return "Rp.".$rupiah;
+                })
+                ->addColumn('action',function ($row){
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+                })
+                ->rawColumns(['name','description','price','action'])
+                ->make(true);
+        }
         return view('package.index');
+    }
+
+    public function store(Request $request){
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = MasterPackage::query()
+            ->firstOrNew(array('id'=>$request->id));
+        $data->name = $request->nama;
+        $data->description = $request->deskripsi;
+        $data->price = $request->harga;
+        $data->save();
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
     }
 }

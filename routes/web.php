@@ -50,6 +50,7 @@ Route::group(['prefix'=>'employees'],function (){
 Route::group(['prefix'=>'package'],function (){
     Route::get('/','PackageController@index')->name('package.index');
     Route::post('/store','PackageController@store')->name('package.store');
+    Route::get('edit/{id}','PackageController@edit')->name('package.edit');
 });
 
 //referensi

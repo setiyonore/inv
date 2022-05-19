@@ -148,3 +148,14 @@ $('#simpan').click(function (e){
       }
   });
 })
+//edit
+$('body').on('click','#my-btn-edit',function (){
+    var id = $(this).data("id");
+    $.get(baseurl+'/package/edit/'+id,function (data) {
+        $('#id').val(data.id);
+        $('#name').val(data.name);
+        $('#description').val(data.description);
+        $('#price').val(data.price);
+       $('#modalCreate').modal('show');
+    });
+});

@@ -56,4 +56,11 @@ class PackageController extends Controller
             return response()->json(['success'=>0]);
         }
     }
+
+    public function edit($id){
+        $data = MasterPackage::query()
+            ->where('id',$id)
+            ->first();
+        return response()->json($data);
+    }
 }

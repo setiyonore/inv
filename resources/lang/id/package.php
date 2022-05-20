@@ -5,5 +5,12 @@ return [
     'price' => 'Harga',
     'add' => 'Tambah Data Paket',
     'deleteConfirmation' => 'Anda akan menghapus data paket ?',
-    'detil' => 'Detil Paket'
+    'detil' => 'Detil Paket',
+    'deleteFormatNaskah' => 'Anda akan menghapus item Format Naskah?',
+    'item' => 'Item',
+    'no' => 'No',
+    'addFormatNaskah' => 'Tambah Format Naskah',
+    'addBenefit' => 'Tambah Benefit',
+    'benefit' => 'Benefit',
+    'formatNaskah' => 'Format Naskah',
 ];

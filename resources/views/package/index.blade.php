@@ -151,8 +151,8 @@
                     <div class="text-left"><h5 id="titleDetil"></h5></div>
                     <p id="decriptionDetil"></p>
                     <div class="row">
-                        <div class="col-6 text-left"><b>Benefit</b></div>
-                        <div class="col-6 text-right"><button class="btn btn-info">Tambah Benefit</button></div>
+                        <div class="col-6 text-left"><b>@lang('package.benefit')</b></div>
+                        <div class="col-6 text-right"><button class="btn btn-info">@lang('package.addBenefit')</button></div>
                     </div>
                     <br>
                     <!--table benefit-->
@@ -160,9 +160,9 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Item</th>
-                                    <th class="text-right">Action</th>
+                                    <th>@lang('package.no')</th>
+                                    <th>@lang('package.item')</th>
+                                    <th class="text-right">@lang('global.action')</th>
                                 </tr>
                             </thead>
                             <tbody id="dataBenefit">
@@ -171,17 +171,17 @@
                     </div>
                     <!--table format naskah-->
                     <div class="row">
-                        <div class="col-6 text-left"><b>Format Naskah</b></div>
-                        <div class="col-6 text-right"><button class="btn btn-info">Tambah Format Naskah</button></div>
+                        <div class="col-6 text-left"><b>@lang('package.formatNaskah')</b></div>
+                        <div class="col-6 text-right"><button class="btn btn-info">@lang('package.addFormatNaskah')</button></div>
                     </div>
                     <br>
                     <div class="table table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Item</th>
-                                    <th class="text-right">Action</th>
+                                    <th>@lang('package.no')</th>
+                                    <th>@lang('package.item')</th>
+                                    <th class="text-right">@lang('global.action')</th>
                                 </tr>
                             </thead>
                             <tbody id="dataFormatNaskah"></tbody>
@@ -191,6 +191,28 @@
             </div>
         </div>
     </div>
+    <!--modal delete format naskah-->
+    <div class="modal fade" id="modalDeleteFN" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('global.confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('package.deleteFormatNaskah')</p>
+                    <input type="hidden" id="idFN">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete-format" class="btn btn-danger">@lang('global.delete')</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal delete benefit-->
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

@@ -54,6 +54,9 @@ Route::group(['prefix'=>'package'],function (){
     Route::get('destroy/{id}','PackageController@destroy')->name('package.destroy');
     Route::get('search','PackageController@search')->name('package.search');
     Route::get('detil/{id}','PackageController@detil')->name('package.detil');
+    Route::get('getFormatNaskah/{id}','PackageController@getFormatNaskah')
+        ->name('package.getFormatNaskah');
+    Route::get('destroyFormat/{id}','PackageController@destroyFormatNaskah')->name('package.dformat');
 });
 
 //referensi

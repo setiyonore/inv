@@ -153,6 +153,7 @@ $('#simpan').click(function (e){
 //detil
 $('body').on('click','#my-btn-detil',function (){
     var id = $(this).data("id");
+    $('#id').val(id);
     $.get(baseurl+'/package/detil/'+id,function (data){
         $('#titleDetil').text(data[0]['paket'][0]['name']);
         $('#decriptionDetil').text(data[0]['paket'][0]['description']);
@@ -184,9 +185,47 @@ $('body').on('click','#my-btn-detil',function (){
 })
 //tombol delete format naskah di klik
 $('body').on('click','#delFormat',function (){
-    var id = $(this).data("id");
-    alert(id);
+    var recId = $(this).data('id');
+    $('#modalDeleteFN').modal('show');
+    $('#idFN').val(recId);
 });
+//submit delete format naskah
+$('body').on('click','#submit-delete-format',function (e){
+    var id = $('#idFN').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/package/destroyFormat/'+id,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getFormatNaskah();
+                $('#modalDeleteFN').modal('hide');
+            }
+        }
+    });
+});
+//getFormatNaskah after insert or delete format naskah
+function getFormatNaskah(){
+    var id = $('#id').val();
+    $.get(baseurl+'/package/detil/'+id,function (data){
+        //assign value format naskah
+        var htmlFormat = "";
+        for (let i = 0;i<data[0]['format'].length;i++){
+            var id = data[0]['format'][i]['id'];
+            htmlFormat += "<tr>";
+            htmlFormat += "<td>"+(i+1)+"</td>";
+            htmlFormat += "<td>"+data[0]['format'][i]['description']+"</td>";
+            htmlFormat += "<td class='text-right'><a href='javascript:void(0)' class='btn btn-danger' id='delFormat' data-id='"+id+"'><i class='fa fa-trash'></i></a></td>";
+            htmlFormat += "</tr>";
+        }
+        document.getElementById('dataFormatNaskah').innerHTML = "";
+        document.getElementById('dataFormatNaskah').innerHTML = htmlFormat;
+    });
+}
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");

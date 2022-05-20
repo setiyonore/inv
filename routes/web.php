@@ -53,6 +53,7 @@ Route::group(['prefix'=>'package'],function (){
     Route::get('edit/{id}','PackageController@edit')->name('package.edit');
     Route::get('destroy/{id}','PackageController@destroy')->name('package.destroy');
     Route::get('search','PackageController@search')->name('package.search');
+    Route::get('detil/{id}','PackageController@detil')->name('package.detil');
 });
 
 //referensi

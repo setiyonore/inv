@@ -135,6 +135,25 @@
             </div>
         </div>
     </div>
+    <!--modal detil-->
+    <div class="modal fade" tabindex="-1" id="modalDetil" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @lang('package.detil')
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-left"><h5>Detil Paket Buku</h5></div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad animi cumque, dicta dolor doloremque inventore ipsam</p>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

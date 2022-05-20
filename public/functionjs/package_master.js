@@ -150,6 +150,13 @@ $('#simpan').click(function (e){
       }
   });
 })
+//detil
+$('body').on('click','#my-btn-detil',function (){
+    var id = $(this).data("id");
+    $.get(baseurl+'/package/detil/'+id,function (data){
+        $('#modalDetil').modal('show');
+    })
+})
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");

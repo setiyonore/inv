@@ -137,7 +137,7 @@
     </div>
     <!--modal detil-->
     <div class="modal fade" tabindex="-1" id="modalDetil" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
@@ -148,8 +148,45 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-left"><h5>Detil Paket Buku</h5></div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad animi cumque, dicta dolor doloremque inventore ipsam</p>
+                    <div class="text-left"><h5 id="titleDetil"></h5></div>
+                    <p id="decriptionDetil"></p>
+                    <div class="row">
+                        <div class="col-6 text-left"><b>Benefit</b></div>
+                        <div class="col-6 text-right"><button class="btn btn-info">Tambah Benefit</button></div>
+                    </div>
+                    <br>
+                    <!--table benefit-->
+                    <div class="table table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Item</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataBenefit">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--table format naskah-->
+                    <div class="row">
+                        <div class="col-6 text-left"><b>Format Naskah</b></div>
+                        <div class="col-6 text-right"><button class="btn btn-info">Tambah Format Naskah</button></div>
+                    </div>
+                    <br>
+                    <div class="table table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Item</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataFormatNaskah"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

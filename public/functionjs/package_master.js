@@ -154,9 +154,39 @@ $('#simpan').click(function (e){
 $('body').on('click','#my-btn-detil',function (){
     var id = $(this).data("id");
     $.get(baseurl+'/package/detil/'+id,function (data){
+        $('#titleDetil').text(data[0]['paket'][0]['name']);
+        $('#decriptionDetil').text(data[0]['paket'][0]['description']);
         $('#modalDetil').modal('show');
+        //assign value benefit
+        var htmlBenefit = "";
+        for (let i = 0;i<data[0]['benefit'].length;i++){
+            htmlBenefit += "<tr>";
+            htmlBenefit += "<td>"+(i+1)+"</td>";
+            htmlBenefit += "<td>"+data[0]['benefit'][i]['description']+"</td>";
+            htmlBenefit += "<td class='text-right'><button class='btn btn-danger'><i class='fa fa-trash'></i></button></td>";
+            htmlBenefit += "</tr>";
+        }
+        document.getElementById('dataBenefit').innerHTML = "";
+        document.getElementById('dataBenefit').innerHTML = htmlBenefit;
+        //assign value format naskah
+        var htmlFormat = "";
+        for (let i = 0;i<data[0]['format'].length;i++){
+            var id = data[0]['format'][i]['id'];
+            htmlFormat += "<tr>";
+            htmlFormat += "<td>"+(i+1)+"</td>";
+            htmlFormat += "<td>"+data[0]['format'][i]['description']+"</td>";
+            htmlFormat += "<td class='text-right'><a href='javascript:void(0)' class='btn btn-danger' id='delFormat' data-id='"+id+"'><i class='fa fa-trash'></i></a></td>";
+            htmlFormat += "</tr>";
+        }
+        document.getElementById('dataFormatNaskah').innerHTML = "";
+        document.getElementById('dataFormatNaskah').innerHTML = htmlFormat;
     })
 })
+//tombol delete format naskah di klik
+$('body').on('click','#delFormat',function (){
+    var id = $(this).data("id");
+    alert(id);
+});
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");

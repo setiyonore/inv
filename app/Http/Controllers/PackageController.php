@@ -7,7 +7,8 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 /*models*/
 use App\Models\MasterPackage;
-
+use App\Models\MasterPackageBenefit;
+use App\Models\MasterPackageFormatNaskah;
 class PackageController extends Controller
 {
     public function index(Request $request){
@@ -114,6 +115,32 @@ class PackageController extends Controller
         return $result;
     }
     public function detil($id){
+        $data = MasterPackage::query()
+            ->select('name','description')
+            ->where('id',$id)
+            ->get();
+        $benefit = MasterPackageBenefit::query()
+            ->leftJoin('references as r','r.id','mst_package_benefit.id_reference_benefit')
+            ->where('r.id_type_reference',config('config.IdTypeReference.Benefit'))
+            ->select('r.description',
+                'mst_package_benefit.id')
+            ->where('mst_package_benefit.id_mst_package',$id)
+            ->get();
+        $format = MasterPackageFormatNaskah::query()
+            ->leftJoin('references as r','r.id','mst_package_format_naskah.id_reference_format_naskah')
+            ->where('r.id_type_reference',config('config.IdTypeReference.FormatNaskah'))
+            ->select('r.description','mst_package_format_naskah.id')
+            ->where('mst_package_format_naskah.id_mst_package',$id)
+            ->get();
+        $data = array([
+            'paket' => $data,
+            'benefit' => $benefit,
+            'format' => $format
+        ]);
+        return response()->json($data);
+    }
+
+    public function destroyFormatNaskah($id){
 
     }
 }

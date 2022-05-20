@@ -113,4 +113,7 @@ class PackageController extends Controller
         $result = $data->get();
         return $result;
     }
+    public function detil($id){
+
+    }
 }

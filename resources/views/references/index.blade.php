@@ -83,6 +83,7 @@
                         <thead>
                             <tr>
                                 <th>Deskripsi</th>
+                                <th>Singkatan Referensi</th>
                                 <th>@lang("global.action")</th>
                             </tr>
                         </thead>
@@ -117,6 +118,10 @@
                         <div class="form-group">
                             <label for="short">Deskripsi</label>
                             <input type="text" id="description" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="short">Singkatan</label>
+                            <input type="text" id="short" class="form-control">
                         </div>
                     </form>
                 </div>

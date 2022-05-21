@@ -56,6 +56,7 @@ class ReferencesController extends Controller
              ->firstOrNew(array('id'=>$request->id));
          $data->id_type_reference = $request->id_type_reference;
          $data->description = $request->description;
+         $data->short = $request->short;
          $data->save();
          if ($data){
              return response()->json(['success'=>1]);
@@ -85,7 +86,7 @@ class ReferencesController extends Controller
     {
         $data = Reference::query()
         ->leftJoin('type_references as tr','tr.id','references.id_type_reference')
-        ->select('tr.id as id_type_reference','references.id','references.description')
+        ->select('tr.id as id_type_reference','references.id','references.description', 'references.short')
         ->where('references.id',$id)
         ->first();
         return response()->json($data);
@@ -125,11 +126,14 @@ class ReferencesController extends Controller
            ->addColumn('description',function($row){
                return $row->description;
            })
+           ->addColumn('short',function ($row){
+               return $row->short;
+           })
            ->addColumn('action',function ($row){
             return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                         <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
             })
-            ->rawColumns(['description','action'])
+            ->rawColumns(['description','short','action'])
             ->make(true);
 
        }

@@ -17,6 +17,7 @@ class CreateReferencesTable extends Migration
             $table->id();
             $table->integer('id_type_reference');
             $table->string('description',255);
+            $table->string('short')->nullable();
             $table->timestamps();
             $table->SoftDeletes();
         });

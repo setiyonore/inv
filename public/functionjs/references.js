@@ -24,6 +24,7 @@ function getData(){
         },
         columns:[
             { data: 'description'},
+            { data: 'short'},
             { data: 'action'}
         ]
     });
@@ -40,6 +41,7 @@ $('#simpan').click(function (e) {
     var id = $('#id').val();
     var id_type_reference = $('#tipe').val();
     var description = $('#description').val();
+    var short = $('#short').val();
 
     $.ajax({
         url: baseurl+'/references/store',
@@ -49,6 +51,7 @@ $('#simpan').click(function (e) {
             id: id,
             id_type_reference: id_type_reference,
             description: description,
+            short: short,
         },
         success: function (data){
             if (data.errors) {
@@ -76,6 +79,7 @@ $('body').on('click','#my-btn-edit',function (){
         $('#id').val(data.id);
         $('#tipe').val(data.id_type_reference);
         $('#description').val(data.description);
+        $('#short').val(data.short);
         // getTypeReference();
         var type = $('#tipe').val();
         console.log(type);
@@ -128,6 +132,7 @@ function filter(){
         },
         columns:[
             { data: 'description'},
+            { data: 'short'},
             { data: 'action'}
         ]
     });

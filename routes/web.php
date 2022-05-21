@@ -51,6 +51,8 @@ Route::group(['prefix'=>'package'],function (){
     Route::get('/','PackageController@index')->name('package.index');
     Route::post('/store','PackageController@store')->name('package.store');
     Route::post('/storeBenefit','PackageController@storeBenefit')->name('package.storeBenefit');
+    Route::post('/storeFormatNaskah','PackageController@storeFormatNaskah')
+        ->name('package.storeFormatNaskah');
     Route::get('edit/{id}','PackageController@edit')->name('package.edit');
     Route::get('destroy/{id}','PackageController@destroy')->name('package.destroy');
     Route::get('search','PackageController@search')->name('package.search');

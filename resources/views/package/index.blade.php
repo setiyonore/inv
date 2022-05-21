@@ -175,7 +175,7 @@
                     <!--table format naskah-->
                     <div class="row">
                         <div class="col-6 text-left"><b>@lang('package.formatNaskah')</b></div>
-                        <div class="col-6 text-right"><button class="btn btn-info">@lang('package.addFormatNaskah')</button></div>
+                        <div class="col-6 text-right"><button class="btn btn-info" onclick="createFN()">@lang('package.addFormatNaskah')</button></div>
                     </div>
                     <br>
                     <div class="table table-responsive">
@@ -208,13 +208,43 @@
                     <form action="" role="form" id="formBenefit">
                         <label for="">@lang('package.benefit')</label>
                         <select class="form-control select2" id="benefit">
-                            <option value="">Pilih Benefit</option>
+                            <option value="">@lang('package.selectBenefit')</option>
                             @foreach($benefit as $val)
                                 <option value="{{$val->id}}">{{$val->description}}</option>
                             @endforeach
                         </select>
                         <div class="modal-footer">
                             <button type="button" id="simpanBenefit" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal create format naskah -->
+    <div class="modal fade" id="modalCreateFN" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('package.addFormatNaskah')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="formFN">
+                        <div class="form-group">
+                            <label for="">@lang('package.formatNaskah')</label>
+                            <select class="form-control select2" name="formatNaskah" id="formatNaskah">
+                                <option value="">@lang('package.selectFormatNaskah')</option>
+                                @foreach($format as $val)
+                                    <option value="{{$val->id}}">{{$val->description}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpanFN" class="btn btn-success">@lang('global.save')</button>
                             <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
                         </div>
                     </form>

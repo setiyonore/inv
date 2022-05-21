@@ -115,7 +115,10 @@ function createBenefit(){
     $('#benefit').val('').trigger('change');
     $('#modalCreateBenefit').modal('show');
 }
-
+function createFN(){
+    $('#formatNaskah').val('').trigger('change');
+    $('#modalCreateFN').modal('show');
+}
 //store
 $('#simpan').click(function (e){
   e.preventDefault();
@@ -178,7 +181,36 @@ $('#simpanBenefit').on('click',function (e){
                 if (data.success === 1){
                     getBenefit();
                     $('#modalCreateBenefit').modal('hide');
-                    $('#form').trigger("reset");
+                    toastr.success('Data Berhasil Di Simpan');
+                }else {
+                    toastr.warning("Data Gagagal Di Simpan");
+                }
+            }
+        }
+    });
+});
+//store format naskah
+$('#simpanFN').on('click',function (e){
+    e.preventDefault();
+    var id_package = $('#id').val();
+    var id_format = $('#formatNaskah').val();
+    $.ajax({
+        url: baseurl+'/package/storeFormatNaskah',
+        method: 'POST',
+        data: {
+            _token: token,
+            id_package: id_package,
+            formatNaskah: id_format
+        },
+        success: function (data) {
+            if (data.errors){
+                $.each(data.errors,function (key,value){
+                    toastr.error('<strong><li>'+value+'</li></strong>')
+                });
+            }else{
+                if (data.success === 1){
+                    getFormatNaskah();
+                    $('#modalCreateFN').modal('hide');
                     toastr.success('Data Berhasil Di Simpan');
                 }else {
                     toastr.warning("Data Gagagal Di Simpan");

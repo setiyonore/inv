@@ -14,4 +14,6 @@ return [
     'addBenefit' => 'Tambah Benefit',
     'benefit' => 'Benefit',
     'formatNaskah' => 'Format Naskah',
+    'selectFormatNaskah' => 'Pilih Format Naskah',
+    'selectBenefit' => 'Pilih Benefit'
 ];

@@ -38,7 +38,8 @@ class PackageController extends Controller
                 ->make(true);
         }
         $benefit = $this->getBenefit();
-        return view('package.index',compact('benefit'));
+        $format = $this->getFormatNaskah();
+        return view('package.index',compact('benefit','format'));
     }
 
     public function store(Request $request){
@@ -85,6 +86,25 @@ class PackageController extends Controller
         }
     }
 
+    public function storeFormatNaskah(Request $request){
+        $validator = Validator::make($request->all(),[
+            'formatNaskah' => 'required'
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = MasterPackageFormatNaskah::query()
+            ->create([
+                'id_mst_package' => $request->id_package,
+                'id_reference_format_naskah' => $request->formatNaskah,
+            ]);
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
+    }
+
     public function edit($id){
         $data = MasterPackage::query()
             ->where('id',$id)
@@ -116,6 +136,7 @@ class PackageController extends Controller
             })
             ->addColumn('action',function ($row){
                 return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
             })
             ->rawColumns(['name','description','price','action'])

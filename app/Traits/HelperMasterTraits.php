@@ -23,6 +23,13 @@ trait HelperMasterTraits
             ->get();
         return $data;
     }
+    public function getFormatNaskah(){
+        $data = Reference::query()
+            ->select('id','description')
+            ->where('id_type_reference',config('config.IdTypeReference.FormatNaskah'))
+            ->get();
+        return $data;
+    }
     public function getDataReferensi($id){
         $data = Reference::select('id','description as divisi')
                 ->where('id_type_reference',$id)

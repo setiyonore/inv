@@ -101,7 +101,7 @@
         </div>
     </div>
     <!--modal create-->
-    <div class="modal fade" tabindex="-1" id="modalCreate" role="dialog">
+    <div class="modal fade" id="modalCreate" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

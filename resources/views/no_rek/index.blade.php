@@ -70,10 +70,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-footer">
-                                <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
-                            </div>
                         </form>
+                        <div class="box-footer">
+                            <button class="btn btn-success" onclick="filter()"><i class="fas fa-filter"></i> @lang("global.filter")</button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body table-responsive">

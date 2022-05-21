@@ -57,7 +57,7 @@ $('#simpan').click(function (e){
                 });
             }else{
                 if (data.success === 1){
-                    getData();
+                    filter();
                     $('#modalCreate').modal('hide');
                     $('#form').trigger("reset");
                     toastr.success('Data Berhasil Di Simpan');
@@ -99,12 +99,39 @@ $('body').on('click','#submit-delete',function (e){
         success: function (data){
             if (data.success===1){
                 toastr.success('Data berhasil dihapus!');
-                getData();
+                filter();
                 $('#modalDelete').modal('hide');
             }
         }
     });
 });
+//filter
+function filter(){
+    var name = $('#filterName').val();
+    var bank = $('#filterBank').val();
+    $('#data-table').DataTable({
+        paging      : true,
+        searching   : false,
+        info        : true,
+        ordering    : true,
+        bDestroy    : true,
+        ajax: {
+            url: baseurl+'/norek/search',
+            type: "POST",
+            data: {
+                _token: token,
+                name: name,
+                bank: bank,
+            },
+        },
+        columns:[
+            { data: 'bank'},
+            { data: 'no_rek'},
+            { data: 'name'},
+            { data: 'action'},
+        ]
+    });
+}
 function getBank(){
     var fk_bank = $('#bank').val();
     $.ajax({

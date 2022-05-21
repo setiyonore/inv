@@ -20,22 +20,7 @@ class MstNoRekeningController extends Controller
             ->where('r.id_type_reference',config('config.IdTypeReference.Bank'))
             ->get();
         if ($request->ajax()){
-            return  DataTables::of($data)
-                ->addColumn('bank',function ($row){
-                    return $row->description;
-                })
-                ->addColumn('no_rek',function ($row){
-                    return $row->no_rek;
-                })
-                ->addColumn('name',function ($row){
-                    return $row->name;
-                })
-                ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
-                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
-                })
-                ->rawColumns(['bank','no_rek','name','action'])
-                ->make(true);
+            return $this->getMake($data);
         }
         $bank = $this->getBank();
         return view('no_rek.index',compact('bank'));
@@ -77,7 +62,58 @@ class MstNoRekeningController extends Controller
         return response()->json(['success'=>1]);
     }
 
+    public function search(Request $request){
+        $clause = [
+            'name' => $request['name'],
+            'id_reference_bank' => $request['bank'],
+        ];
+        $data = $this->doSearch($clause);
+        return $this->getMake($data);
+    }
+
+    private function doSearch($clauses){
+        $data = MasterNoRekening::query()
+            ->leftJoin('references as r','r.id','mst_no_rekening.id_reference_bank')
+            ->select('mst_no_rekening.id','r.description','mst_no_rekening.name','mst_no_rekening.no_rek')
+            ->where('r.id_type_reference',config('config.IdTypeReference.Bank'));
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $result = $data->get();
+        return $result;
+    }
+
     public function getBankReferensi(){
         return $this->getBank();
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getMake($data)
+    {
+        return DataTables::of($data)
+            ->addColumn('bank', function ($row) {
+                return $row->description;
+            })
+            ->addColumn('no_rek', function ($row) {
+                return $row->no_rek;
+            })
+            ->addColumn('name', function ($row) {
+                return $row->name;
+            })
+            ->addColumn('action', function ($row) {
+                return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="' . $row->id . '" ><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['bank', 'no_rek', 'name', 'action'])
+            ->make(true);
     }
 }

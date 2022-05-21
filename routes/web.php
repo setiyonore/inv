@@ -80,7 +80,7 @@ Route::group(['prefix'=>'norek'],function (){
     Route::get('getBankReference','MstNoRekeningController@getBankReferensi')
         ->name('norek.getBankReferensi');
     Route::get('destroy/{id}','MstNoRekeningController@destroy')->name('norek.destroy');
-
+    Route::post('search','MstNoRekeningController@search')->name('norek.search');
 
 });
 

@@ -72,3 +72,8 @@ Route::group(['prefix'=>'references'],function (){
     Route::get('getTypeReference', 'ReferencesController@getTypeReference')->name('references.getTypeReference');
 });
 
+//no rekening
+Route::group(['prefix'=>'norek'],function (){
+    Route::get('/','MstNoRekeningController@index')->name('norek.index');
+});
+

@@ -64,6 +64,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{url('norek')}}" class="{{ request()->route()->named('norek.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-money-check-alt nav-icon"></i>
+                        <p>No Rekening</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt nav-icon"></i>

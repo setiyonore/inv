@@ -70,6 +70,13 @@ class MstNoRekeningController extends Controller
         return response()->json($data);
     }
 
+    public function destroy($id){
+        $data = MasterNoRekening::query()
+            ->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
+    }
+
     public function getBankReferensi(){
         return $this->getBank();
     }

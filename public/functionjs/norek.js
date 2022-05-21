@@ -80,7 +80,31 @@ $('body').on('click','#my-btn-edit',function (){
         $('#modalCreate').modal('show');
     });
 });
-
+//delete
+$('body').on('click','#my-btn-delele',function (){
+    var recId = $(this).data('id');
+    $('#modalDelete').modal('show');
+    $('#id').val(recId);
+});
+//submit delete
+$('body').on('click','#submit-delete',function (e){
+    var recId = $('#id').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/norek/destroy/'+recId,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getData();
+                $('#modalDelete').modal('hide');
+            }
+        }
+    });
+});
 function getBank(){
     var fk_bank = $('#bank').val();
     $.ajax({

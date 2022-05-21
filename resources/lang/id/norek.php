@@ -5,4 +5,5 @@ return [
     'bank' => 'Bank',
     'selectBank' => 'Pilih Bank',
     'add' => 'Tambah No Rekening',
+    'deleteConfirmation' => 'Anda akan menghapus data No Rekening ?',
 ];

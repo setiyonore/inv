@@ -7,6 +7,7 @@ return [
     'deleteConfirmation' => 'Anda akan menghapus data paket ?',
     'detil' => 'Detil Paket',
     'deleteFormatNaskah' => 'Anda akan menghapus item Format Naskah?',
+    'deleteBenefit' => 'Anda akan menghapus item Benefit ?',
     'item' => 'Item',
     'no' => 'No',
     'addFormatNaskah' => 'Tambah Format Naskah',

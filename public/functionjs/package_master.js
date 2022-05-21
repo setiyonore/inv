@@ -161,10 +161,11 @@ $('body').on('click','#my-btn-detil',function (){
         //assign value benefit
         var htmlBenefit = "";
         for (let i = 0;i<data[0]['benefit'].length;i++){
+            var idBenefit = data[0]['benefit'][i]['id'];
             htmlBenefit += "<tr>";
             htmlBenefit += "<td>"+(i+1)+"</td>";
             htmlBenefit += "<td>"+data[0]['benefit'][i]['description']+"</td>";
-            htmlBenefit += "<td class='text-right'><button class='btn btn-danger'><i class='fa fa-trash'></i></button></td>";
+            htmlBenefit += "<td class='text-right'><a href='javascript:void(0)' class='btn btn-danger' id='delBenefit' data-id='"+idBenefit+"'><i class='fa fa-trash'></i></a></td>";
             htmlBenefit += "</tr>";
         }
         document.getElementById('dataBenefit').innerHTML = "";
@@ -183,6 +184,31 @@ $('body').on('click','#my-btn-detil',function (){
         document.getElementById('dataFormatNaskah').innerHTML = htmlFormat;
     })
 })
+//tombol delete benefit di klik
+$('body').on('click','#delBenefit',function (){
+    var recId = $(this).data('id');
+    $('#modalDeleteBenefit').modal('show');
+    $('#idBenefit').val(recId);
+});
+//tombol delete benefit diklik
+$('body').on('click','#submit-delete-benefit',function (e){
+    var id = $('#idBenefit').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/package/destroyBenefit/'+id,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getBenefit();
+                $('#modalDeleteBenefit').modal('hide');
+            }
+        }
+    });
+});
 //tombol delete format naskah di klik
 $('body').on('click','#delFormat',function (){
     var recId = $(this).data('id');
@@ -224,6 +250,24 @@ function getFormatNaskah(){
         }
         document.getElementById('dataFormatNaskah').innerHTML = "";
         document.getElementById('dataFormatNaskah').innerHTML = htmlFormat;
+    });
+}
+//getBenefit after insert or delete Benefit
+function getBenefit(){
+    var id = $('#id').val();
+    $.get(baseurl+'/package/detil/'+id,function (data){
+        //assign value format naskah
+        var htmlFormat = "";
+        for (let i = 0;i<data[0]['benefit'].length;i++){
+            var id = data[0]['benefit'][i]['id'];
+            htmlFormat += "<tr>";
+            htmlFormat += "<td>"+(i+1)+"</td>";
+            htmlFormat += "<td>"+data[0]['benefit'][i]['description']+"</td>";
+            htmlFormat += "<td class='text-right'><a href='javascript:void(0)' class='btn btn-danger' id='delBenefit' data-id='"+id+"'><i class='fa fa-trash'></i></a></td>";
+            htmlFormat += "</tr>";
+        }
+        document.getElementById('dataBenefit').innerHTML = "";
+        document.getElementById('dataBenefit').innerHTML = htmlFormat;
     });
 }
 //edit

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\HelperMasterTraits;
 /*models*/
 use App\Models\MasterPackage;
 use App\Models\MasterPackageBenefit;
 use App\Models\MasterPackageFormatNaskah;
 class PackageController extends Controller
 {
+    use HelperMasterTraits;
     public function index(Request $request){
         $data = MasterPackage::query()
             ->select('id','name','description','price')
@@ -35,7 +37,8 @@ class PackageController extends Controller
                 ->rawColumns(['name','description','price','action'])
                 ->make(true);
         }
-        return view('package.index');
+        $benefit = $this->getBenefit();
+        return view('package.index',compact('benefit'));
     }
 
     public function store(Request $request){
@@ -56,6 +59,25 @@ class PackageController extends Controller
             $data->price = $request->harga;
         }
         $data->save();
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
+    }
+
+    public function storeBenefit(Request $request){
+        $validator = Validator::make($request->all(),[
+            'benefit' => 'required'
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = MasterPackageBenefit::query()
+            ->create([
+                'id_mst_package' => $request->id_package,
+                'id_reference_benefit' => $request->benefit
+            ]);
         if ($data){
             return response()->json(['success'=>1]);
         } else {

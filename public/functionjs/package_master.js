@@ -110,6 +110,12 @@ function create(){
     $('#modalCreate').modal('show');
 }
 
+function createBenefit(){
+    $('#formBenefit').trigger("reset");
+    $('#benefit').val('').trigger('change');
+    $('#modalCreateBenefit').modal('show');
+}
+
 //store
 $('#simpan').click(function (e){
   e.preventDefault();
@@ -150,6 +156,37 @@ $('#simpan').click(function (e){
       }
   });
 })
+//store benefit
+$('#simpanBenefit').on('click',function (e){
+    e.preventDefault();
+    var id_package = $('#id').val();
+    var id_benefit = $('#benefit').val();
+    $.ajax({
+        url: baseurl+'/package/storeBenefit',
+        method: 'POST',
+        data: {
+            _token: token,
+            id_package: id_package,
+            benefit: id_benefit
+        },
+        success: function (data) {
+            if (data.errors){
+                $.each(data.errors,function (key,value){
+                    toastr.error('<strong><li>'+value+'</li></strong>')
+                });
+            }else{
+                if (data.success === 1){
+                    getBenefit();
+                    $('#modalCreateBenefit').modal('hide');
+                    $('#form').trigger("reset");
+                    toastr.success('Data Berhasil Di Simpan');
+                }else {
+                    toastr.warning("Data Gagagal Di Simpan");
+                }
+            }
+        }
+    });
+});
 //detil
 $('body').on('click','#my-btn-detil',function (){
     var id = $(this).data("id");

@@ -9,6 +9,9 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    <style>
+        .modal { overflow: auto !important; }
+    </style>
 @endsection
 @section('content-header')
     <input type="hidden" id="url">
@@ -136,7 +139,7 @@
         </div>
     </div>
     <!--modal detil-->
-    <div class="modal fade" tabindex="-1" id="modalDetil" role="dialog">
+    <div class="modal fade" id="modalDetil" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -152,7 +155,7 @@
                     <p id="decriptionDetil"></p>
                     <div class="row">
                         <div class="col-6 text-left"><b>@lang('package.benefit')</b></div>
-                        <div class="col-6 text-right"><button class="btn btn-info">@lang('package.addBenefit')</button></div>
+                        <div class="col-6 text-right"><button class="btn btn-info" onclick="createBenefit()">@lang('package.addBenefit')</button></div>
                     </div>
                     <br>
                     <!--table benefit-->
@@ -187,6 +190,34 @@
                             <tbody id="dataFormatNaskah"></tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal create benefit-->
+    <div class="modal fade" id="modalCreateBenefit" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('package.addBenefit')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="formBenefit">
+                        <label for="">@lang('package.benefit')</label>
+                        <select class="form-control select2" id="benefit">
+                            <option value="">Pilih Benefit</option>
+                            @foreach($benefit as $val)
+                                <option value="{{$val->id}}">{{$val->description}}</option>
+                            @endforeach
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" id="simpanBenefit" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

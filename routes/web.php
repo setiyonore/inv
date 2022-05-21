@@ -50,12 +50,14 @@ Route::group(['prefix'=>'employees'],function (){
 Route::group(['prefix'=>'package'],function (){
     Route::get('/','PackageController@index')->name('package.index');
     Route::post('/store','PackageController@store')->name('package.store');
+    Route::post('/storeBenefit','PackageController@storeBenefit')->name('package.storeBenefit');
     Route::get('edit/{id}','PackageController@edit')->name('package.edit');
     Route::get('destroy/{id}','PackageController@destroy')->name('package.destroy');
     Route::get('search','PackageController@search')->name('package.search');
     Route::get('detil/{id}','PackageController@detil')->name('package.detil');
     Route::get('destroyBenefit/{id}','PackageController@destroyBenefit')->name('package.dbenefit');
     Route::get('destroyFormat/{id}','PackageController@destroyFormatNaskah')->name('package.dformat');
+    Route::get('getBenefitReference','PackageController@getBenefitReference')->name('package.benefitRef');
 });
 
 //referensi

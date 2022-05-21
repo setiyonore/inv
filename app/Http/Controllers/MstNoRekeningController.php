@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\HelperMasterTraits;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 /*models*/
 use App\Models\MasterNoRekening;
@@ -38,5 +39,38 @@ class MstNoRekeningController extends Controller
         }
         $bank = $this->getBank();
         return view('no_rek.index',compact('bank'));
+    }
+
+    public function store(Request $request){
+        $validator = Validator::make($request->all(),[
+            'bank' => 'required',
+            'noRekening' => 'required',
+            'nama' => 'required',
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = MasterNoRekening::query()
+            ->firstOrNew(array('id'=>$request->id));
+        $data->id_reference_bank = $request->bank;
+        $data->no_rek = $request->noRekening;
+        $data->name = $request->nama;
+        $data->save();
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
+    }
+
+    public function edit($id){
+        $data = MasterNoRekening::query()
+            ->where('id',$id)
+            ->first();
+        return response()->json($data);
+    }
+
+    public function getBankReferensi(){
+        return $this->getBank();
     }
 }

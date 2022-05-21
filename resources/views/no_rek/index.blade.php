@@ -91,6 +91,48 @@
             </div>
         </div>
     </div>
+    <!-- modal create-->
+    <div class="modal fade" id="modalCreate" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('norek.add')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="form">
+                        <input type="hidden" id="id">
+                        <div class="form-group">
+                            <label for="">@lang('norek.bank')</label>
+                            <div id="menu">
+
+                            </div>
+                            <select name="bank" id="bank" class="form-control select2">
+                                <option value="">@lang('norek.selectBank')</option>
+                                @foreach($bank as $val)
+                                    <option value="{{$val->id}}">{{$val->description}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">@lang('norek.title')</label>
+                            <input type="text" class="form-control" id="norek">
+                        </div>
+                        <div class="form-group">
+                            <label for="">@lang('norek.name')</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

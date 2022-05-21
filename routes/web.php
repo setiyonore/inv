@@ -75,5 +75,10 @@ Route::group(['prefix'=>'references'],function (){
 //no rekening
 Route::group(['prefix'=>'norek'],function (){
     Route::get('/','MstNoRekeningController@index')->name('norek.index');
+    Route::post('store','MstNoRekeningController@store')->name('norek.store');
+    Route::get('/edit/{id}','MstNoRekeningController@edit')->name('norek.edit');
+    Route::get('getBankReference','MstNoRekeningController@getBankReferensi')
+        ->name('norek.getBankReferensi');
+
 });
 

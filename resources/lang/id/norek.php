@@ -4,4 +4,5 @@ return [
     'name' => 'Nama',
     'bank' => 'Bank',
     'selectBank' => 'Pilih Bank',
+    'add' => 'Tambah No Rekening',
 ];

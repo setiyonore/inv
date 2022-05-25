@@ -84,3 +84,8 @@ Route::group(['prefix'=>'norek'],function (){
 
 });
 
+//transaction
+Route::group(['prefix'=>'transaction'],function (){
+    Route::get('/','TransactionController@index')->name('transaction.index');
+});
+

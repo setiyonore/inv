@@ -52,6 +52,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{url('transaction')}}" class="{{ request()->route()->named('transaction.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-dolly-flatbed nav-icon"></i>
+                        <p>Transaksi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('typereferences') }}" class="{{ request()->route()->named('typereferences.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Jenis Referensi</p>

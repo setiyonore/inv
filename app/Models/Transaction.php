@@ -9,6 +9,7 @@ class Transaction extends Model
 {
     use SoftDeletes;
     protected $fillable = [
+        'date',
         'id_customer',
         'id_reference_type_transaction',
         'id_reference_type_of_payment',

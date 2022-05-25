@@ -15,6 +15,7 @@ class CreateTransactionTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
             $table->integer('id_customer');
             $table->integer('id_reference_type_transaction');
             $table->integer('id_reference_type_of_payment');

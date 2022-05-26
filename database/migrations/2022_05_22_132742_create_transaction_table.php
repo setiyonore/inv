@@ -21,7 +21,7 @@ class CreateTransactionTable extends Migration
             $table->integer('id_reference_type_of_payment');
             $table->integer('id_package');
             $table->integer('amount');
-            $table->integer('id_reference_tax');
+//            $table->integer('id_reference_tax');
             $table->string('affiliation',255);
             $table->integer('id_no_rekening');
             $table->integer('id_user');

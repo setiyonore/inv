@@ -94,7 +94,7 @@
         </div>
     </div>
     <!--modal create-->
-    <div class="modal fade" tabindex="-1" id="modalCreate" role="dialog">
+    <div class="modal fade" id="modalCreate" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,11 +158,14 @@
     <script src="{{asset('plugins/datatables/datatables.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- SweetAlert2 -->
     <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script>
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);
+        $('.select2').select2();
     </script>
     <script src="{{asset('functionjs/references.js')}}"></script>
 @endsection

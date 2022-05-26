@@ -15,7 +15,7 @@ class Transaction extends Model
         'id_reference_type_of_payment',
         'id_package',
         'amount',
-        'id_reference_tax',
+//        'id_reference_tax',
         'affiliation',
         'id_no_rekening',
         'id_user',

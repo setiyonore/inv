@@ -105,9 +105,12 @@ function getData(){
     })
 }
 
-function create(){
+function createPackage(){
     $('#form').trigger("reset");
+    $('#id').val('');
     $('#modalCreate').modal('show');
+    var id = $('#id').val();
+    alert(id);
 }
 
 function createBenefit(){

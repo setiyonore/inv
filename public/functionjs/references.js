@@ -32,7 +32,12 @@ function getData(){
 
 // add modal
 function create(){
-   $('#form').trigger("reset");
+    // $('#form').trigger("reset");
+    // $('#tipe').val('');
+    $('#id').val('');
+    $('#description').val('');
+    $('#short').val('');
+    getTypeReference();
    $('#modalCreate').modal('show');
 }
 // store
@@ -83,6 +88,7 @@ $('body').on('click','#my-btn-edit',function (){
         // getTypeReference();
         var type = $('#tipe').val();
         console.log(type);
+        getTypeReference();
         $('#modalCreate').modal('show');
     })
 });
@@ -116,6 +122,7 @@ $('body').on('click','#submit-delete',function (e){
 
 function filter(){
     var idTypeReference = $('#typeReference').val();
+    $('#tipe').val(idTypeReference);
     $('#data-table').DataTable({
         paging      : true,
         searching   : false,
@@ -139,13 +146,13 @@ function filter(){
 }
 
 function getTypeReference(){
+    var fk_type_reference = $('#tipe').val();
     $.ajax({
         url: baseurl+'/references/getTypeReference',
         data: {_token:token},
         methods: 'GET',
         dataType: 'json',
         success: function (data) {
-            var fk_type_reference = $('#type_references').val();
             var html = "";
             var titleselect = "Tipe Referensi";
             html += "<option value=''>"+titleselect+"</option>";
@@ -153,13 +160,13 @@ function getTypeReference(){
                 var id = data[i].id;
                 var description = data[i].description;
                 if (id == fk_type_reference){
-                    html += "<option class='form-control' selected='true' value='"+id+"'>"+description+"</option>"
+                    html += "<option selected='true' value='"+id+"'>"+description+"</option>"
                 } else {
-                    html += "<option class='form-control' value='"+id+"'>"+description+"</option>"
+                    html += "<option value='"+id+"'>"+description+"</option>"
                 }
             }
-            document.getElementById('type_references').innerHTML = "";
-            document.getElementById('type_references').innerHTML = html;
+            document.getElementById('tipe').innerHTML = "";
+            document.getElementById('tipe').innerHTML = html;
         }
     });
 }

@@ -6,4 +6,10 @@ return [
     'package' => 'Paket',
     'selectNorek' => 'Pilih No Rekening',
     'selectPackage' => 'Pilih Paket',
+    'customer' => 'Pelanggan',
+    'amount' => 'Nominal',
+    'add' => 'Tambah Transaksi',
+    'typeOfPayment' => 'Jenis Pembayaran',
+    'typeOfTransaction' => 'Jenis Transaksi',
+    'affiliation' => 'Afiliasi',
 ];

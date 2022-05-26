@@ -34,7 +34,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-body">
                     <div class="col-xs-12">
-                        <button class="btn btn-info" data-toggle="modal" onclick="create()"><i class="fa fa-plus"></i> @lang('global.addData')</button>
+                        <button class="btn btn-info" data-toggle="modal" onclick="createPackage()"><i class="fa fa-plus"></i> @lang('global.addData')</button>
                         <div class="btn-group float-right">
                             <a href="#"  class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Print">
                                 <i class="fa fa-print"></i>

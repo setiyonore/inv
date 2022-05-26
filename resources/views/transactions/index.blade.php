@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+    <style>
+        .modal { overflow: auto !important; }
+        /*.select2-dropdown--below {*/
+        /*    top: -2.8rem; !*your input height*!*/
+        /*}*/
+    </style>
 @endsection
 @section('content-header')
     <input type="hidden" id="url">
@@ -98,6 +104,102 @@
                         </div>
                     </div>
                 </div>
+                <div class="card-body table-responsive">
+                    <table id="data-table" class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>@lang('transaction.customer')</th>
+                            <th>@lang('transaction.date')</th>
+                            <th>@lang('transaction.package')</th>
+                            <th>@lang('transaction.amount')</th>
+                            <th>@lang('global.action')</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal create -->
+    <div class="modal fade" id="modalCreate" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('transaction.add')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="form">
+                        <input type="hidden" id="id">
+                        <input type="hidden" id="iduser">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.date')</label>
+                                    <input type="date" id="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.customer')</label>
+                                    <select class="form-control select2" id="customer">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.package')</label>
+                                    <select name="package" id="package" class="form-control select2" onchange="getPricePackage()">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.amount')</label>
+                                    <input type="text" class="form-control" id="amount" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.typeOfPayment')</label>
+                                    <select name="top" id="top" class="form-control select2"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.typeOfTransaction')</label>
+                                    <select name="tot" id="tot" class="form-control select2"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.norek')</label>
+                                    <select name="norek" id="norek" class="form-control select2"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">@lang('transaction.affiliation')</label>
+                                    <input type="text" class="form-control" id="afiliasi">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -109,9 +211,9 @@
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
-    <script src="{{asset('plugins/moment/locale/id.js')}}"></script>
     <!-- date-range-picker -->
     <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{asset('plugins/moment/locale/id.js')}}"></script>
     <script>
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);

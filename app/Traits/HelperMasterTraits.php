@@ -1,6 +1,8 @@
 <?php
 namespace App\Traits;
 /*Models*/
+
+use App\Models\MasterNoRekening;
 use App\Models\Reference;
 use App\Models\TypeReference;
 
@@ -38,7 +40,7 @@ trait HelperMasterTraits
         return $data;
     }
     public function getDataReferensi($id){
-        $data = Reference::select('id','description as divisi')
+        $data = Reference::select('id','description')
                 ->where('id_type_reference',$id)
                 ->get();
         return $data;
@@ -46,6 +48,15 @@ trait HelperMasterTraits
 
     public function getTypeReferensi(){
         $data = TypeReference::select('id','description')->get();
+        return $data;
+    }
+
+    public function getNomerRekening(){
+        $data = MasterNoRekening::query()
+            ->leftJoin('references as r','r.id','mst_no_rekening.id_reference_bank')
+            ->where('r.id_type_reference',config('config.IdTypeReference.Bank'))
+            ->select('mst_no_rekening.id','mst_no_rekening.name','mst_no_rekening.no_rek','r.description')
+            ->get();
         return $data;
     }
 

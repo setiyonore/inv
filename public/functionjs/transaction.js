@@ -35,7 +35,8 @@ $('#simpan').click(function (e){
     var amount = $('#amount').val();
     var removeRp = amount.substring(3);
     var removeLast3 = removeRp.slice(0,-3);
-    var finalPrice = parseFloat(removeLast3.replace(/,/g,''));
+    var finalPrice = removeLast3.replace('.', "");
+    var intPrice = parseInt(finalPrice.replace('.', ""));
     var jenisPembayaran = $('#top').val();
     var tipeTransaksi = $('#tot').val();
     var noRekening = $('#norek').val();
@@ -50,7 +51,7 @@ $('#simpan').click(function (e){
             tanggal: tanggal,
             pelanggan: pelanggan,
             paket: paket,
-            nominal: finalPrice,
+            nominal: intPrice,
             jenisPembayaran: jenisPembayaran,
             jenisTransaksi: tipeTransaksi,
             noRekening: noRekening,
@@ -63,8 +64,8 @@ $('#simpan').click(function (e){
                     toastr.error('<strong><li>'+value+'</li></strong>')
                 });
             } else {
-                if (data.success){
-                    toastr.success(data.success);
+                if (data.success === 1){
+                    toastr.success('Data Berhasil Di Simpan');
                     $('#modalCreate').modal('hide');
                     getData();
                 }else {

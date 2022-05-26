@@ -69,7 +69,6 @@ class TransactionController extends Controller
         } else {
             $iduser = $request->iduser;
         }
-        dd($iduser);
         $data = Transaction::query()
             ->firstOrNew(array('id'=>$request->id));
         $data->date = $request->tanggal;

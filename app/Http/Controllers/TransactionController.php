@@ -21,7 +21,11 @@ class TransactionController extends Controller
         $data = Transaction::query()
             ->leftJoin('customers as c','c.id','transactions.id_customer')
             ->leftJoin('mst_package as p','p.id','transactions.id_package')
-            ->select('c.name as customer','p.name as package','transactions.date','transactions.amount','transactions.id')
+            ->select('c.name as customer','p.name as package',
+                'transactions.date','transactions.amount','transactions.id',
+            'transactions.id_package','transactions.id_reference_type_of_payment as top',
+            'transactions.id_reference_type_transaction as tot','transactions.id_no_rekening as norek',
+            'transactions.id_customer as cust')
             ->get();
         if ($request->ajax()){
             return DataTables::make($data)
@@ -40,7 +44,7 @@ class TransactionController extends Controller
                     return $row->amount;
                 })
                 ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
@@ -87,12 +91,23 @@ class TransactionController extends Controller
             return response()->json(['success'=>0]);
         }
     }
+    public function edit($id){
+        $data = Transaction::query()
+            ->where('id',$id)
+            ->first();
+        return response()->json($data);
+    }
     public function searchCustomer($keyword){
         $data = Customer::query()
             ->where('name','like','%'.$keyword.'%')
             ->select('id','name')
             ->get();
         return $data;
+    }
+
+    public function getCustomerId($id)
+    {
+        return $this->getCustomerById($id);
     }
 
     public function getPackage(){

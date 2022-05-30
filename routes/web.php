@@ -88,6 +88,9 @@ Route::group(['prefix'=>'norek'],function (){
 Route::group(['prefix'=>'transaction'],function (){
     Route::get('/','TransactionController@index')->name('transaction.index');
     Route::post('/store','TransactionController@store')->name('transaction.store');
+    Route::get('/edit/{id}','TransactionController@edit')->name('transaction.edit');
+    Route::get('/getCustomerId/{id}','TransactionController@getCustomerId')
+        ->name('transacton.getCustId');
     Route::get('searchCustomer/{keyword}','TransactionController@searchCustomer')
         ->name('transaction.searchCust');
     Route::get('getPackage','TransactionController@getPackage')->name('transaction.getPackage');

@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\MasterNoRekening;
 use App\Models\Reference;
 use App\Models\TypeReference;
+use App\Models\Customer;
 
 use Config;
 /**
@@ -56,6 +57,14 @@ trait HelperMasterTraits
             ->leftJoin('references as r','r.id','mst_no_rekening.id_reference_bank')
             ->where('r.id_type_reference',config('config.IdTypeReference.Bank'))
             ->select('mst_no_rekening.id','mst_no_rekening.name','mst_no_rekening.no_rek','r.description')
+            ->get();
+        return $data;
+    }
+
+    public function getCustomerById($id){
+        $data = Customer::query()
+            ->select('id','name')
+            ->where('id',$id)
             ->get();
         return $data;
     }

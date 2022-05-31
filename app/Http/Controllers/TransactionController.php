@@ -97,6 +97,12 @@ class TransactionController extends Controller
             ->first();
         return response()->json($data);
     }
+    public function destroy($id){
+        $data = Transaction::query()
+            ->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
+    }
     public function searchCustomer($keyword){
         $data = Customer::query()
             ->where('name','like','%'.$keyword.'%')

@@ -203,6 +203,27 @@
             </div>
         </div>
     </div>
+<!-- delete modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('global.confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('transaction.deleteTransaction')</p>
+                    <input type="hidden" id="idFN">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete" class="btn btn-danger">@lang('global.delete')</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

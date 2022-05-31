@@ -12,4 +12,5 @@ return [
     'typeOfPayment' => 'Jenis Pembayaran',
     'typeOfTransaction' => 'Jenis Transaksi',
     'affiliation' => 'Afiliasi',
+    'deleteTransaction' => 'Anda akan menghapus data transaksi?',
 ];

@@ -103,6 +103,67 @@ class TransactionController extends Controller
         $data->delete();
         return response()->json(['success'=>1]);
     }
+    public function search(Request $request){
+        $tgl = $request['date'];
+        $tgl_awal = strtok($tgl,'-');
+        $tgl_awal = str_replace(' ','',$tgl_awal);
+        $tgl_awal = str_replace('/','-',$tgl_awal);
+        $tgl_awal = Carbon::parse($tgl_awal)->format('Y-m-d');
+        $tgl_akhir = substr($tgl,strpos($tgl,"-")+2);
+        $tgl_akhir = str_replace('/','-',$tgl_akhir);
+        $tgl_akhir = Carbon::parse($tgl_akhir)->format('Y-m-d');
+        $clause = [
+            'transactions.id_no_rekening' => $request['norek'],
+            'transactions.id_package' => $request['paket'],
+        ];
+        $data = $this->doSearch($clause,$tgl_awal,$tgl_akhir);
+        return DataTables::make($data)
+                ->addColumn('customer',function ($row){
+                    return $row->customer;
+                })
+                ->addColumn('date',function ($row){
+                    return Carbon::parse($row->date)->format('d/m/Y');
+                })
+                ->addColumn('package',function ($row){
+                    return $row->package;
+                })
+                ->addColumn('amount',function ($row){
+                    $rupiah = number_format($row->amount,2, ',', '.');
+                    return "Rp.".$rupiah;
+                    return $row->amount;
+                })
+                ->addColumn('action',function ($row){
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
+                })
+                ->rawColumns(['customer','date','package','amount','action'])
+                ->make(true);
+
+    }
+
+    private function doSearch($clauses,$tgl_awal,$tgl_akhir){
+        $data = Transaction::query()
+        ->leftJoin('customers as c','c.id','transactions.id_customer')
+        ->leftJoin('mst_package as p','p.id','transactions.id_package')
+        ->select('c.name as customer','p.name as package',
+            'transactions.date','transactions.amount','transactions.id',
+        'transactions.id_package','transactions.id_reference_type_of_payment as top',
+        'transactions.id_reference_type_transaction as tot','transactions.id_no_rekening as norek',
+        'transactions.id_customer as cust');
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $data = $data->whereBetween('transactions.date',[$tgl_awal,$tgl_akhir]);
+        $result = $data->get();
+        return $data;
+
+    }
     public function searchCustomer($keyword){
         $data = Customer::query()
             ->where('name','like','%'.$keyword.'%')

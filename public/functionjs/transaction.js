@@ -5,11 +5,12 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     $('#filter')
     //Date picker
-    $('#reservation').daterangepicker({
+    $('#filterDate').daterangepicker({
         locale: 'id',
+        dateFormat: 'yyyy-MM-dd',
     });
-    $('#reservation').on('cancel.daterangepicker', function() {
-        $('#reservation').val('')
+    $('#filterDate').on('cancel.daterangepicker', function() {
+        $('#filterDate').val('')
     });
 });
 
@@ -110,7 +111,7 @@ $('#simpan').click(function (e){
                 if (data.success === 1){
                     toastr.success('Data Berhasil Di Simpan');
                     $('#modalCreate').modal('hide');
-                    getData();
+                    filter();
                 }else {
                     toastr.warning("Data Gagagal Di Simpan");
                 }
@@ -388,7 +389,7 @@ $('body').on('click','#submit-delete',function (e){
         success: function (data){
             if (data.success===1){
                 toastr.success('Data berhasil dihapus!');
-                getData();
+                filter();
                 $('#modalDelete').modal('hide');
             }
         }
@@ -404,6 +405,37 @@ function getData(){
         ajax: {
             url: baseurl+'/transaction',
             type: "GET",
+        },
+        columns: [
+            { data: 'customer'},
+            { data: 'date'},
+            { data: 'package'},
+            { data: 'amount'},
+            { data: 'action'},
+        ],
+    });
+}
+
+//function filter
+function filter(){
+    var date = $('#filterDate').val();
+    var norek = $('#filterNorek').val();
+    var paket = $('#filterPaket').val();
+    $('#data-table').DataTable({
+        paging      : true,
+        searching   : false,
+        info        : true,
+        ordering    : true,
+        bDestroy    : true,
+        ajax: {
+            url: baseurl+'/transaction/search',
+            type: "POST",
+            data: {
+                _token: token,
+                date: date,
+                norek: norek,
+                paket: paket,
+            },
         },
         columns: [
             { data: 'customer'},

@@ -13,4 +13,6 @@ return [
     'typeOfTransaction' => 'Jenis Transaksi',
     'affiliation' => 'Afiliasi',
     'deleteTransaction' => 'Anda akan menghapus data transaksi?',
+    'detailTransaction' => 'Detil Transaksi',
+    'invoice' => 'Invoice',
 ];

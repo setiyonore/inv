@@ -171,7 +171,38 @@ class TransactionController extends Controller
             ->get();
         return $data;
     }
-
+    public function detail($id){
+        $data = Transaction::query()
+            ->leftJoin('customers as c','c.id','transactions.id_customer')
+            ->leftJoin('mst_package as p','p.id','transactions.id_package')
+            ->leftJoin('references as tot','tot.id',
+                'transactions.id_reference_type_transaction')
+            ->leftJoin('references as top','top.id',
+                'transactions.id_reference_type_of_payment')
+            ->leftJoin('mst_no_rekening as nr','nr.id','transactions.id_no_rekening')
+            ->leftJoin('references as bnk','bnk.id','nr.id_reference_bank')
+            ->select('c.name as customer','p.name as package','date','amount',
+                'tot.description as jenis_transaksi','top.description as jenis_pembayaran',
+                'affiliation','nr.name','nr.no_rek','transactions.id','bnk.description as bank')
+            ->where('transactions.id',$id)
+            ->where('tot.id_type_reference',
+                config('config.IdTypeReference.TypeOfTransaction'))
+            ->where('top.id_type_reference',
+                config('config.IdTypeReference.TypeOfPayment'))
+            ->where('bnk.id_type_reference',
+                config('config.IdTypeReference.Bank'))
+            ->first();
+        $tanggal = Carbon::parse($data->date)->format('d/m/Y');
+        $nominal = number_format($data->amount,2, ',', '.');
+        $data = array([
+            'data' => array([
+                'date' => $tanggal,
+                'transaction' => $data,
+                'nominal' => "Rp.".$nominal,
+            ]),
+        ]);
+            return response()->json($data);
+    }
     public function getCustomerId($id)
     {
         return $this->getCustomerById($id);

@@ -92,6 +92,7 @@ Route::group(['prefix'=>'transaction'],function (){
     Route::get('/getCustomerId/{id}','TransactionController@getCustomerId')
         ->name('transacton.getCustId');
     Route::get('destroy/{id}','TransactionController@destroy');
+    Route::get('detail/{id}','TransactionController@detail')->name('transaction.detail');
     Route::post('search','TransactionController@search')->name('transaction.search');
     Route::get('searchCustomer/{keyword}','TransactionController@searchCustomer')
         ->name('transaction.searchCust');

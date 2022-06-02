@@ -224,6 +224,100 @@
             </div>
         </div>
     </div>
+    <!-- modal detail transaction-->
+    <div class="modal fade" id="modalDetil" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @lang('transaction.detailTransaction')
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.date')</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="dateTransaction"></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.invoice')</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="invoiceTransaction"></h5>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-info"><i class="fas fa-file-invoice"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">
+                                @lang('transaction.customer')
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="customerTransaction">
+
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.typeOfTransaction')</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="totTransaction"></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.typeOfPayment')</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="topTransaction"></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">
+                                @lang('transaction.package')
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="pacakageTransaction"></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.amount')</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="amountTransaction"></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5 class="text-left">@lang('transaction.norek')</h5>
+                        </div>
+                        <div class="col-md-8">
+                            <h5 id="norekTransaction"></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

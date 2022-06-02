@@ -120,6 +120,25 @@ $('#simpan').click(function (e){
     });
 });
 
+//detil
+$('body').on('click','#my-btn-detil',function(){
+    var id = $(this).data("id");
+    $.get(baseurl+'/transaction/detail/'+id,function (data){
+        var norek = data[0]['data'][0].transaction.no_rek;
+        var bank = data[0]['data'][0].transaction.bank;
+        var nameNorek = data[0]['data'][0].transaction.name;
+        $('#dateTransaction').text(': '+data[0]['data'][0].date);
+        $('#invoiceTransaction').text(': invxxxxxxxxxx(status)')
+        $('#customerTransaction').text(': '+data[0]['data'][0].transaction.customer);
+        $('#totTransaction').text(': '+data[0]['data'][0].transaction.jenis_transaksi);
+        $('#topTransaction').text(': '+data[0]['data'][0].transaction.jenis_pembayaran);
+        $('#pacakageTransaction').text(': '+data[0]['data'][0].transaction.package);
+        $('#amountTransaction').text(': '+data[0]['data'][0].nominal);
+        $('#norekTransaction').text(': '+nameNorek+' ('+bank+'-'+norek+')');
+        $('#modalDetil').modal('show');
+    });
+});
+
 //key up search
 $(document).on('keyup','.select2-search__field',function (e){
     var search = e.target.value;

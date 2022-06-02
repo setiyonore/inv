@@ -15,7 +15,7 @@ class PackageController extends Controller
     use HelperMasterTraits;
     public function index(Request $request){
         $data = MasterPackage::query()
-            ->select('id','name','description','price')
+            ->select('id','name','description','price','id_reference_type_package as tp')
             ->get();
         if ($request->ajax()){
             return DataTables::make($data)
@@ -30,7 +30,7 @@ class PackageController extends Controller
                     return "Rp.".$rupiah;
                 })
                 ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-tipe-id="'.$row->tp.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
@@ -45,6 +45,7 @@ class PackageController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
+            'tipePaket' => 'required',
             'harga' => 'required|numeric',
         ]);
         if ($validator->fails()){
@@ -52,6 +53,7 @@ class PackageController extends Controller
         }
         $data = MasterPackage::query()
             ->firstOrNew(array('id'=>$request->id));
+        $data->id_reference_type_package = $request->tipePaket;
         $data->name = $request->nama;
         $data->description = $request->deskripsi;
         if ($request->harga == 0){
@@ -159,8 +161,11 @@ class PackageController extends Controller
     }
     public function detil($id){
         $data = MasterPackage::query()
-            ->select('name','description')
-            ->where('id',$id)
+            ->leftJoin('references as r','r.id','mst_package.id_reference_type_package')
+            ->select('mst_package.name','mst_package.description',
+                'r.description as tipePaket')
+            ->where('mst_package.id',$id)
+            ->where('r.id_type_reference',config('config.IdTypeReference.TypeOfPackage'))
             ->get();
         $benefit = MasterPackageBenefit::query()
             ->leftJoin('references as r','r.id','mst_package_benefit.id_reference_benefit')
@@ -195,6 +200,10 @@ class PackageController extends Controller
             ->findOrFail($id);
         $data->delete();
         return response()->json(['success'=>1]);
+    }
+
+    public function getTipePaket(){
+        return $this->getTypePackage();
     }
 
 }

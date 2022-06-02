@@ -60,6 +60,7 @@ Route::group(['prefix'=>'package'],function (){
     Route::get('destroyBenefit/{id}','PackageController@destroyBenefit')->name('package.dbenefit');
     Route::get('destroyFormat/{id}','PackageController@destroyFormatNaskah')->name('package.dformat');
     Route::get('getBenefitReference','PackageController@getBenefitReference')->name('package.benefitRef');
+    Route::get('getTypePackage','PackageController@getTipePaket')->name('package.getTipePaket');
 });
 
 //referensi

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMstPackageTable extends Migration
+class CreateInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMstPackageTable extends Migration
      */
     public function up()
     {
-        Schema::create('mst_package', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_reference_type_package');
-            $table->string('name',255);
-            $table->text('description');
-            $table->string('price',100);
+            $table->integer('id_transaction');
+            $table->string('no');
+            $table->integer('id_reference_status_invoice');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +30,6 @@ class CreateMstPackageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mst_package');
+        Schema::dropIfExists('invoice');
     }
 }

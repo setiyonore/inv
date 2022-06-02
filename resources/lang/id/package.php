@@ -15,5 +15,7 @@ return [
     'benefit' => 'Benefit',
     'formatNaskah' => 'Format Naskah',
     'selectFormatNaskah' => 'Pilih Format Naskah',
-    'selectBenefit' => 'Pilih Benefit'
+    'selectBenefit' => 'Pilih Benefit',
+    'typePackage' => 'Tipe Paket',
+    'namePackage' => 'Nama Paket',
 ];

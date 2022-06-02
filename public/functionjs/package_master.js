@@ -108,9 +108,10 @@ function getData(){
 function createPackage(){
     $('#form').trigger("reset");
     $('#id').val('');
+    $('#typePackage').val('');
+    getTypePackage();
     $('#modalCreate').modal('show');
     var id = $('#id').val();
-    alert(id);
 }
 
 function createBenefit(){
@@ -126,6 +127,7 @@ function createFN(){
 $('#simpan').click(function (e){
   e.preventDefault();
   var id = $('#id').val();
+  var typePackage = $('#typePackage').val();
   var name = $('#name').val();
   var description = $('#description').val();
   var price = $('#price').val();
@@ -139,6 +141,7 @@ $('#simpan').click(function (e){
       data: {
           _token: token,
           id: id,
+          tipePaket: typePackage,
           nama: name,
           deskripsi: description,
           harga: finalPrice,
@@ -227,7 +230,8 @@ $('body').on('click','#my-btn-detil',function (){
     var id = $(this).data("id");
     $('#id').val(id);
     $.get(baseurl+'/package/detil/'+id,function (data){
-        $('#titleDetil').text(data[0]['paket'][0]['name']);
+        $('#titleDetil').text(': '+data[0]['paket'][0]['name']);
+        $('#typeDetail').text(': '+data[0]['paket'][0]['tipePaket']);
         $('#decriptionDetil').text(data[0]['paket'][0]['description']);
         $('#modalDetil').modal('show');
         //assign value benefit
@@ -306,6 +310,59 @@ $('body').on('click','#submit-delete-format',function (e){
         }
     });
 });
+function getTypePackageId(idtipe){
+    $('#typePackage').val(idtipe);
+    $.ajax({
+        url: baseurl+'/package/getTypePackage',
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            var html = "";
+            var titleSelect = "Pilih Tipe Paket";
+            html += "<option value=''>"+titleSelect+"</option>";
+            for (i=0;i<data.length;i++){
+                var id = data[i].id;
+                var description = data[i].description;
+                if (id == idtipe){
+                    html += "<option selected='true' value='"+id+"'>"+description+"</option>"
+                } else {
+                    html += "<option value='"+id+"'>"+description+"</option>"
+                }
+            }
+            document.getElementById('typePackage').innerHTML = "";
+            document.getElementById('typePackage').innerHTML = html;
+        }
+    });
+}
+//getTypePackage
+function getTypePackage(){
+    var fk_type_package = $('#typePackage').val();
+    $.ajax({
+        url: baseurl+'/package/getTypePackage',
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            var html = "";
+            var titleSelect = "Pilih Tipe Paket";
+            html += "<option value=''>"+titleSelect+"</option>";
+            for (i=0;i<data.length;i++){
+                var id = data[i].id;
+                var description = data[i].description;
+                if (id == fk_type_package){
+                    html += "<option selected='true' value='"+id+"'>"+description+"</option>"
+                } else {
+                    html += "<option value='"+id+"'>"+description+"</option>"
+                }
+            }
+            document.getElementById('typePackage').innerHTML = "";
+            document.getElementById('typePackage').innerHTML = html;
+        }
+    });
+}
 //getFormatNaskah after insert or delete format naskah
 function getFormatNaskah(){
     var id = $('#id').val();
@@ -345,12 +402,14 @@ function getBenefit(){
 //edit
 $('body').on('click','#my-btn-edit',function (){
     var id = $(this).data("id");
+    var tipe = $(this).data("tipe-id");
     $.get(baseurl+'/package/edit/'+id,function (data) {
         $('#id').val(data.id);
         $('#name').val(data.name);
         $('#description').val(data.description);
         $('#price').val(data.price);
         $('#hargaOld').val(data.price);
+        getTypePackageId(tipe);
        $('#modalCreate').modal('show');
     });
 });

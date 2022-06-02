@@ -7,5 +7,6 @@ return [
         'Bank' => 4,
         'TypeOfPayment' =>7,
         'TypeOfTransaction' =>6,
+        'TypeOfPackage' =>8,
     ]
 ];

@@ -84,7 +84,7 @@
         </div>
     </div>
     <!--Modal create -->
-    <div class="modal fade" tabindex="-1" id="modalCreate" role="dialog">
+    <div class="modal fade" id="modalCreate" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,6 +96,10 @@
                 <div class="modal-body">
                     <form action="" role="form" id="form">
                         <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="">@lang('package.typePackage')</label>
+                            <select name="typePackage" id="typePackage" class="form-control select2"></select>
+                        </div>
                         <div class="form-group">
                             <label for="">@lang('global.name')</label>
                             <input type="text" class="form-control" id="name">
@@ -151,7 +155,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-left"><h5 id="titleDetil"></h5></div>
+                    <div class="row">
+                        <div class="col-md-2"><h5 class="text-left">@lang('package.namePackage')</h5></div>
+                        <div class="col-md-6"><h5 id="titleDetil"></h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"><h5 class="text-left">@lang('package.typePackage')</h5></div>
+                        <div class="col-md-6"><h5 id="typeDetail"></h5></div>
+                    </div>
                     <p id="decriptionDetil"></p>
                     <div class="row">
                         <div class="col-6 text-left"><b>@lang('package.benefit')</b></div>

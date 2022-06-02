@@ -69,4 +69,12 @@ trait HelperMasterTraits
         return $data;
     }
 
+    public function getTypePackage(){
+        $data = Reference::query()
+            ->select('id','description')
+            ->where('id_type_reference',config('config.IdTypeReference.TypeOfPackage'))
+            ->get();
+        return $data;
+    }
+
 }

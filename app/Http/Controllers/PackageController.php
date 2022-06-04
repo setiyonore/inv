@@ -45,6 +45,7 @@ class PackageController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
+            'singkatan' => 'required',
             'tipePaket' => 'required',
             'harga' => 'required|numeric',
         ]);
@@ -55,6 +56,7 @@ class PackageController extends Controller
             ->firstOrNew(array('id'=>$request->id));
         $data->id_reference_type_package = $request->tipePaket;
         $data->name = $request->nama;
+        $data->short = $request->singkatan;
         $data->description = $request->deskripsi;
         if ($request->harga == 0){
             $data->price = $request->hargaOld;

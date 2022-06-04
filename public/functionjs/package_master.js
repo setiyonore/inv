@@ -129,6 +129,7 @@ $('#simpan').click(function (e){
   var id = $('#id').val();
   var typePackage = $('#typePackage').val();
   var name = $('#name').val();
+  var short = $('#short').val();
   var description = $('#description').val();
   var price = $('#price').val();
   var removeRp = price.substring(3);
@@ -143,6 +144,7 @@ $('#simpan').click(function (e){
           id: id,
           tipePaket: typePackage,
           nama: name,
+          singkatan: short,
           deskripsi: description,
           harga: finalPrice,
           hargaOld: hargaOld
@@ -406,6 +408,7 @@ $('body').on('click','#my-btn-edit',function (){
     $.get(baseurl+'/package/edit/'+id,function (data) {
         $('#id').val(data.id);
         $('#name').val(data.name);
+        $('#short').val(data.short);
         $('#description').val(data.description);
         $('#price').val(data.price);
         $('#hargaOld').val(data.price);

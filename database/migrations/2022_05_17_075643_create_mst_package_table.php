@@ -17,6 +17,7 @@ class CreateMstPackageTable extends Migration
             $table->id();
             $table->integer('id_reference_type_package');
             $table->string('name',255);
+            $table->string('short',15);
             $table->text('description');
             $table->string('price',100);
             $table->timestamps();

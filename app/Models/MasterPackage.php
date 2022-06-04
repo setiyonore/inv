@@ -12,6 +12,7 @@ class MasterPackage extends Model
         'id',
         'id_reference_type_package',
         'name',
+        'short',
         'description',
         'price',
     ];

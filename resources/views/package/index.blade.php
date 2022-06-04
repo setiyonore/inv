@@ -105,6 +105,10 @@
                             <input type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
+                            <label for="">@lang('package.short')</label>
+                            <input type="text" class="form-control" id="short">
+                        </div>
+                        <div class="form-group">
                             <label for="">@lang('package.description')</label>
                             <textarea class="form-control" rows="5" id="description"></textarea>
                         </div>

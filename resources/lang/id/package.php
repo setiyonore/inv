@@ -18,4 +18,5 @@ return [
     'selectBenefit' => 'Pilih Benefit',
     'typePackage' => 'Tipe Paket',
     'namePackage' => 'Nama Paket',
+    'short' => 'Singkatan',
 ];

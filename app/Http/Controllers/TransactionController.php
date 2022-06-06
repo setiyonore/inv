@@ -13,6 +13,8 @@ use App\Models\MasterNoRekening;
 use App\Models\MasterPackage;
 use App\Models\Transaction;
 use App\Models\Customer;
+use App\Models\Reference;
+use App\Models\Invoice;
 
 class TransactionController extends Controller
 {
@@ -85,6 +87,40 @@ class TransactionController extends Controller
         $data->id_no_rekening = $request->noRekening;
         $data->id_user = $iduser;
         $data->save();
+        $invoiceExist = Invoice::query()
+            ->where('id_transaction',$data->id)
+            ->count();
+        if ($invoiceExist == 0){
+            //inv-order-paket-tanggal
+            //inv-BK-PJ-2206012139008
+            $package =  MasterPackage::query()
+                ->where('id',$request->paket)
+                ->select('id_reference_type_package as idJenisPaket')
+                ->first();
+            $order = Reference::query()
+                ->select('short')
+                ->where('id',$package->idJenisPaket)
+                ->where('id_type_reference',config('config.IdTypeReference.TypeOfPackage'))
+                ->first();
+            $shortPakcage = MasterPackage::query()
+                ->where('id',$request->paket)
+                ->select('short as shortPackage')
+                ->first();
+            $now = Carbon::now();
+            $year = $now->year;
+            $year = substr($year,-2,2);
+            $month = $now->month;
+            $day = $now->format('d');
+            $time = $now->timestamp;
+            $noInvoice = "INV"."-".$order->short."-".$shortPakcage->shortPackage."-".$year.$month.$day.$time;
+            $status = config('config.idStatusInvoiceUnpaid');
+            $invoice = Invoice::query()
+                ->firstOrNew(array('id'=>$request->id));
+            $invoice->id_transaction = $data->id;
+            $invoice->no = $noInvoice;
+            $invoice->id_reference_status_invoice = $status;
+            $invoice->save();
+        }
         if ($data){
             return response()->json(['success'=>1]);
         } else {

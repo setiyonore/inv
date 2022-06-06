@@ -8,6 +8,7 @@ return [
         'TypeOfPayment' =>7,
         'TypeOfTransaction' =>6,
         'TypeOfPackage' =>8,
+        'StatusInvoice' =>9,
     ],
     'idStatusInvoiceUnpaid' => 21,
 ];

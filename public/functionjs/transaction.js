@@ -128,7 +128,7 @@ $('body').on('click','#my-btn-detil',function(){
         var bank = data[0]['data'][0].transaction.bank;
         var nameNorek = data[0]['data'][0].transaction.name;
         $('#dateTransaction').text(': '+data[0]['data'][0].date);
-        $('#invoiceTransaction').text(': invxxxxxxxxxx(status)')
+        $('#invoiceTransaction').text(': '+data[0]['data'][0].transaction.no_invoice+'('+data[0]['data'][0].transaction.status+')');
         $('#customerTransaction').text(': '+data[0]['data'][0].transaction.customer);
         $('#totTransaction').text(': '+data[0]['data'][0].transaction.jenis_transaksi);
         $('#topTransaction').text(': '+data[0]['data'][0].transaction.jenis_pembayaran);

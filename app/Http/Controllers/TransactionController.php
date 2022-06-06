@@ -217,9 +217,12 @@ class TransactionController extends Controller
                 'transactions.id_reference_type_of_payment')
             ->leftJoin('mst_no_rekening as nr','nr.id','transactions.id_no_rekening')
             ->leftJoin('references as bnk','bnk.id','nr.id_reference_bank')
+            ->rightJoin('invoices as inv','inv.id_transaction','transactions.id')
+            ->leftJoin('references as inv_status','inv_status.id','inv.id_reference_status_invoice')
             ->select('c.name as customer','p.name as package','date','amount',
                 'tot.description as jenis_transaksi','top.description as jenis_pembayaran',
-                'affiliation','nr.name','nr.no_rek','transactions.id','bnk.description as bank')
+                'affiliation','nr.name','nr.no_rek','transactions.id','bnk.description as bank',
+                'inv_status.description as status','inv.no as no_invoice')
             ->where('transactions.id',$id)
             ->where('tot.id_type_reference',
                 config('config.IdTypeReference.TypeOfTransaction'))
@@ -227,6 +230,8 @@ class TransactionController extends Controller
                 config('config.IdTypeReference.TypeOfPayment'))
             ->where('bnk.id_type_reference',
                 config('config.IdTypeReference.Bank'))
+            ->where('inv_status.id_type_reference',
+                config('config.IdTypeReference.StatusInvoice'))
             ->first();
         $tanggal = Carbon::parse($data->date)->format('d/m/Y');
         $nominal = number_format($data->amount,2, ',', '.');

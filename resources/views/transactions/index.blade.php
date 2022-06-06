@@ -249,11 +249,11 @@
                         <div class="col-md-3">
                             <h5 class="text-left">@lang('transaction.invoice')</h5>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <h5 id="invoiceTransaction"></h5>
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-info"><i class="fas fa-file-invoice"></i></button>
+                        <div class="col-1">
+                            <button class="btn btn-info text-right"><i class="fas fa-file-invoice"></i></button>
                         </div>
                     </div>
                     <div class="row">

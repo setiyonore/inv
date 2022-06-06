@@ -12,6 +12,7 @@ class Invoice extends Model
     protected $table = 'invoices';
     protected $fillable = [
         'id_transaction',
+        'due',
         'no',
         'id_reference_status_invoice',
     ];

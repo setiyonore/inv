@@ -114,9 +114,12 @@ class TransactionController extends Controller
             $time = $now->timestamp;
             $noInvoice = "INV"."-".$order->short."-".$shortPakcage->shortPackage."-".$year.$month.$day.$time;
             $status = config('config.idStatusInvoiceUnpaid');
+            $duedate = Carbon::parse($request['tanggal']);
+            $duedate = $duedate->addDays(7)->toDateString();
             $invoice = Invoice::query()
                 ->firstOrNew(array('id'=>$request->id));
             $invoice->id_transaction = $data->id;
+            $invoice->due = $duedate;
             $invoice->no = $noInvoice;
             $invoice->id_reference_status_invoice = $status;
             $invoice->save();

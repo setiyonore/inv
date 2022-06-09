@@ -253,7 +253,7 @@
                             <h5 id="invoiceTransaction"></h5>
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-info text-right"><i class="fas fa-file-invoice"></i></button>
+                            <button class="btn btn-info text-right" onclick="detilInvoice()"><i class="fas fa-file-invoice"></i></button>
                         </div>
                     </div>
                     <div class="row">
@@ -317,7 +317,120 @@
             </div>
         </div>
     </div>
+    <!-- modal invoice detil -->
+    <div class="modal fade" id="modalDetilInvoice" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('transaction.detailInvoice')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="invoice p-3 mb-3">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+{{--                                    <i class="fas fa-globe"></i> CV. Jakad Media Publishing--}}
+                                    <img src="{{url('/img/jakadid.png')}}" alt="" style="width: 17%">
+                                    <small class="float-right"><h5 id="tglTransaction"></h5></small>
+                                </h4>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                                From
+                                <address>
+                                    <strong>CV. Jakad Media Publishing</strong><br>
+                                    Graha Indah E-11, Gayung Kebonsari<br>
+                                    Gayungan Surabaya<br>
+                                    Phone: 081230444797<br>
+                                    Email: jakadmedia@gmail.com
+                                </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                To
+                                <address>
+                                    <strong id="custName"></strong><br>
+                                    <h6 id="phoneCustomer"></h6>
+                                    <h6 id="mailCust"></h6>
+                                </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                <b id="noInvoice"></b><br>
+                                <br>
+                                <b>Payment Due:</b> <h6 id="dueInvoice"></h6><br>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
 
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Package</th>
+                                        <th>Type Of Package</th>
+                                        <th>Description</th>
+                                        <th class="text-right">@lang('transaction.subtotal')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="itemTransaction">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <!-- accepted payments column -->
+                            <div class="col-6">
+                                <p class="lead">Payment Methods:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;" id="payment">
+                                </p>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-6">
+                                <div class="table-responsive">
+                                    <table class="table text-right">
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td><h6 id="totalTransaction"></h6></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-12">
+                                <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                                <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Update Status Terbayar
+                                </button>
+                                <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                    <i class="fas fa-download"></i> Generate PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.invoice -->
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

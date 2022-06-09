@@ -123,6 +123,7 @@ $('#simpan').click(function (e){
 //detil
 $('body').on('click','#my-btn-detil',function(){
     var id = $(this).data("id");
+    $('#id').val(id);
     $.get(baseurl+'/transaction/detail/'+id,function (data){
         var norek = data[0]['data'][0].transaction.no_rek;
         var bank = data[0]['data'][0].transaction.bank;
@@ -138,7 +139,45 @@ $('body').on('click','#my-btn-detil',function(){
         $('#modalDetil').modal('show');
     });
 });
-
+//detil invoice
+function detilInvoice(){
+    var id = $('#id').val();
+    $('#modalDetilInvoice').modal('show');
+    $.ajax({
+        url: baseurl+'/transaction/getDetilInvoice/'+id,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data) {
+            // console.log(data[0].customer);
+            var top = data[0].payment.top;
+            var bank = data[0].payment.bank;
+            var nama = data[0].payment.name;
+            var norek = data[0].payment.no_rek;
+            $('#noInvoice').text(data[0].invoice.no);
+            $('#dueInvoice').text(data[0].due);
+            $('#tglTransaction').text('Date: '+data[0].dateTransaction);
+            $('#custName').text(data[0].customer.name);
+            $('#phoneCustomer').text('Phone: '+data[0].customer.phone);
+            $('#mailCust').text('Email: '+data[0].customer.email);
+            $('#totalTransaction').text('Rp.'+data[0].transactionItem[0].amount);
+            $('#payment').text(top+": "+bank+" - "+nama+" - "+norek);
+            var html = "";
+            for (let i =0;i<data[0].transactionItem.length;i++){
+                html += "<tr>";
+                html += "<td>"+(i+1)+"</td>";
+                html += "<td>"+data[0].transactionItem[i].package+"</td>";
+                html += "<td>"+data[0].transactionItem[i].type_package+"</td>";
+                html += "<td>"+data[0].transactionItem[i].description+"</td>";
+                html += "<td class='text-right'>"+"Rp."+data[0].transactionItem[i].amount+"</td>";
+                html += "</tr>";
+            }
+            document.getElementById('itemTransaction').innerHTML = "";
+            document.getElementById('itemTransaction').innerHTML = html;
+        }
+    });
+}
 //key up search
 $(document).on('keyup','.select2-search__field',function (e){
     var search = e.target.value;

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 /*models*/
 use App\Models\MasterNoRekening;
 use App\Models\MasterPackage;
@@ -246,6 +247,50 @@ class TransactionController extends Controller
             ]),
         ]);
             return response()->json($data);
+    }
+    public function exportInvoice($id){
+        $transaction = Transaction::query()
+            ->where('id',$id)
+            ->first();
+        $dateCreated = Carbon::parse($transaction->date)->format('d/F/Y');
+        $customer = Customer::query()
+            ->where('id',$transaction->id_customer)
+            ->select('name','phone','email')
+            ->first();
+        $invoice = Invoice::query()
+            ->where('id_transaction',$id)
+            ->select('due','no','id_reference_status_invoice')
+            ->first();
+        $transactionItem = Transaction::query()
+            ->leftJoin('mst_package as p','p.id','transactions.id_package')
+            ->leftJoin('references as tp','tp.id','p.id_reference_type_package')
+            ->select('p.description','p.name as package',
+                'tp.description as type_package')
+            ->selectRaw('FORMAT(transactions.amount,"C") as amount')
+            ->where('transactions.id',$id)
+            ->get();
+        $paymentMethod = Transaction::query()
+            ->leftJoin('references as r','r.id','transactions.id_reference_type_of_payment')
+            ->leftJoin('mst_no_rekening as nr','nr.id','transactions.id_no_rekening')
+            ->leftJoin('references as bk','bk.id','nr.id_reference_bank')
+            ->where('transactions.id',$id)
+            ->where('bk.id_type_reference',config('config.IdTypeReference.Bank'))
+            ->where('r.id_type_reference',config('config.IdTypeReference.TypeOfPayment'))
+            ->select('r.description as top','nr.name','nr.no_rek','bk.description as bank')
+            ->first();
+//        dd($paymentMethod);
+        $data = array([
+            'customer' => $customer,
+            'transactionItem' => $transactionItem,
+            'paymentMethod' => $paymentMethod,
+            'invoice' => $invoice,
+            'due' => Carbon::parse($invoice->due)->format('d/m/Y'),
+            'dateTransaction' => Carbon::parse($transaction->date)->format('d/m/Y'),
+            'dateCreate' => $dateCreated,
+        ]);
+        $filename = $invoice->no.".pdf";
+        $pdf = PDF::loadView('transactions.invoicePdf', compact('data'));
+        return $pdf->download($filename);
     }
     public function detilInvoice($id){
         $transaction = Transaction::query()

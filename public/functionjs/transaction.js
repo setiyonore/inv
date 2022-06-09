@@ -178,6 +178,11 @@ function detilInvoice(){
         }
     });
 }
+//export pdf
+function exportPdf(){
+    var id = $('#id').val();
+    window.location=baseurl+'/transaction/exportInvoice/'+id;
+}
 //key up search
 $(document).on('keyup','.select2-search__field',function (e){
     var search = e.target.value;

@@ -110,5 +110,7 @@ Route::group(['prefix'=>'transaction'],function (){
         ->name('transaction.getDetilInvoice');
     Route::get('exportInvoice/{id}','TransactionController@exportInvoice')
         ->name('transaction.exportInvoice');
+    Route::get('updateStatusInvoice/{id}','TransactionController@updateStatusInvoice')
+        ->name('transaction.updateStatusInvoice');
 });
 

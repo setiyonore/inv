@@ -418,7 +418,7 @@
                         <div class="row no-print">
                             <div class="col-12">
                                 <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                                <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Update Status Terbayar
+                                <button type="button" class="btn btn-success float-right" onclick="updateStatusInvoice()"><i class="far fa-credit-card"></i> Update Status Terbayar
                                 </button>
                                 <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;" onclick="exportPdf()">
                                     <i class="fas fa-download"></i> Generate PDF
@@ -429,6 +429,25 @@
                     <!-- /.invoice -->
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- modal update status invoice -->
+    <div class="modal fade" id="modalUpdateInvoice" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('transaction.updateInvoice')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('transaction.updateInvoiceMessage')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                    <button type="button" class="btn btn-success" id="my-btn-update-invoice">@lang('global.update')</button>
+                </div>
         </div>
     </div>
 @endsection

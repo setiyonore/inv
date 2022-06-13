@@ -332,6 +332,14 @@ class TransactionController extends Controller
         ]);
         return response()->json($data);
     }
+    public function updateStatusInvoice($id){
+        $invoice = Invoice::query()
+            ->where('id_transaction',$id)
+            ->first();
+        $invoice->id_reference_status_invoice = config('config.idStatusInvoicePaid');
+        $invoice->save();
+        return response()->json(['success'=>1]);
+    }
     public function getCustomerId($id)
     {
         return $this->getCustomerById($id);

@@ -18,5 +18,7 @@ return [
     'invoice' => 'Invoice',
     'detailInvoice' => 'Detil Invoice',
     'subtotal' => 'Subtotal',
-    'description' => 'Deskripsi'
+    'description' => 'Deskripsi',
+    'updateInvoiceMessage' => 'Anda akan mengubah status invoice?',
+    'updateInvoice' => 'Ubah Status Invoice',
 ];

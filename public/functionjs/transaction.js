@@ -183,6 +183,35 @@ function exportPdf(){
     var id = $('#id').val();
     window.location=baseurl+'/transaction/exportInvoice/'+id;
 }
+//update status invoice to terbayar
+function updateStatusInvoice(){
+    $('#modalUpdateInvoice').modal('show');
+}
+//submit update status invoice
+$('body').on('click','#my-btn-update-invoice',function(){
+    var id = $('#id').val();
+    $.ajax({
+        url: baseurl+'/transaction/updateStatusInvoice/'+id,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.errors){
+                $.each(data.errors,function (key,value){
+                    toastr.error('<strong><li>'+value+'</li></strong>')
+                });
+            } else {
+                if (data.success === 1){
+                    toastr.success('Data Berhasil Di Simpan');
+                    $('#modalUpdateInvoice').modal('hide');
+                }else {
+                    toastr.warning("Data Gagagal Di Simpan");
+                }
+            }
+        }
+    });
+});
 //key up search
 $(document).on('keyup','.select2-search__field',function (e){
     var search = e.target.value;

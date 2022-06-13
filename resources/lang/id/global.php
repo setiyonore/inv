@@ -11,4 +11,5 @@ return [
     'cancel' => 'Batal',
     'delete' => 'Hapus',
     'addData' => 'Tambah Data',
+    'update' => 'Ubah',
 ];

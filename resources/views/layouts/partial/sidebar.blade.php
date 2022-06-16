@@ -58,6 +58,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{url('report')}}" class="{{ request()->route()->named('report.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-chart-bar nav-icon"></i>
+                        <p>Laporan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('typereferences') }}" class="{{ request()->route()->named('typereferences.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Jenis Referensi</p>

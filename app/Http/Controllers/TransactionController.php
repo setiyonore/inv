@@ -21,6 +21,7 @@ class TransactionController extends Controller
 {
     use HelperMasterTraits;
     public function index(Request $request){
+        $now = Carbon::now()->toDateString();
         $data = Transaction::query()
             ->leftJoin('customers as c','c.id','transactions.id_customer')
             ->leftJoin('mst_package as p','p.id','transactions.id_package')
@@ -29,6 +30,7 @@ class TransactionController extends Controller
             'transactions.id_package','transactions.id_reference_type_of_payment as top',
             'transactions.id_reference_type_transaction as tot','transactions.id_no_rekening as norek',
             'transactions.id_customer as cust')
+            ->where('transactions.date','=',$now)
             ->get();
         if ($request->ajax()){
             return DataTables::make($data)

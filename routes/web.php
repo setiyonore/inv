@@ -114,3 +114,10 @@ Route::group(['prefix'=>'transaction'],function (){
         ->name('transaction.updateStatusInvoice');
 });
 
+//report / rekap
+Route::group(['prefix'=>'report'],function () {
+    Route::get('/', 'ReportController@index')->name('report.index');
+    Route::get('/getAmount','ReportController@getAmount')
+        ->name('report.getAmount');
+});
+

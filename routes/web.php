@@ -119,5 +119,9 @@ Route::group(['prefix'=>'report'],function () {
     Route::get('/', 'ReportController@index')->name('report.index');
     Route::get('/getAmount','ReportController@getAmount')
         ->name('report.getAmount');
+    Route::post('/search','ReportController@search')
+        ->name('report.search');
+    Route::post('/searchAmount','ReportController@getAmountFilter')
+        ->name('report.searchAmount');
 });
 

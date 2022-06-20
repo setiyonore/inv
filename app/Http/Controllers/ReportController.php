@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportReport;
 /*models*/
 use App\Models\Transaction;
 use App\Models\MasterPackage;
@@ -111,8 +113,25 @@ class ReportController extends Controller
         if ($request['paket'] != null){
             $amount->where('id_package',$request['paket']);
         }
-//        $amount->get();
         return response()->json($amount->get());
 
+    }
+
+    function ExportExcel(Request $request){
+        $tgl = $request['date'];
+        $tgl_awal = strtok($tgl,'-');
+        $tgl_awal = str_replace(' ','',$tgl_awal);
+        $tgl_awal = str_replace('/','-',$tgl_awal);
+        $tgl_awal = Carbon::parse($tgl_awal)->format('Y-m-d');
+        $tgl_akhir = substr($tgl,strpos($tgl,"-")+2);
+        $tgl_akhir = str_replace('/','-',$tgl_akhir);
+        $tgl_akhir = Carbon::parse($tgl_akhir)->format('Y-m-d');
+        $filname = "Report".$tgl_awal."-".$tgl_akhir.".xlsx";
+        $filter = [
+            'tgl_awal' => $tgl_awal,
+            'tgl_akhir' => $tgl_akhir,
+            'paket' => $request['paket']
+        ];
+        return Excel::download(new ExportReport($filter),$filname);
     }
 }

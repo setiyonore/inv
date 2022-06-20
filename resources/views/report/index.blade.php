@@ -38,7 +38,7 @@
                             <a href="#"  class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Print">
                                 <i class="fa fa-print"></i>
                             </a>
-                            <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Export Excell">
+                            <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Export Excell" onclick="exportExcel()">
                                 <i class="fas fa-file-excel"></i>
                             </a>
                             <a href="#" class="btn btn-default" data-toggle="tooltip" title="Export PDF">

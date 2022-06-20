@@ -123,5 +123,7 @@ Route::group(['prefix'=>'report'],function () {
         ->name('report.search');
     Route::post('/searchAmount','ReportController@getAmountFilter')
         ->name('report.searchAmount');
+    Route::get('exportReport','ReportController@ExportExcel')
+        ->name('report.excel');
 });
 

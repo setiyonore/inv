@@ -102,3 +102,21 @@ function filter(){
     });
     getAmountFilter();
 }
+
+function exportExcel(){
+    var date = $('#filterDate').val();
+    var paket = $('#filterPackage').val();
+    window.location.href = baseurl+'/report/exportReport?date='+date+'&paket='+paket;
+    // $.ajax({
+    //     url: baseurl+'/report/exportReport',
+    //     method: 'POST',
+    //     data: {
+    //         _token: token,
+    //         date:date,
+    //         paket:paket,
+    //     },
+    //     success:function (data){
+    //         console.log(data);
+    //     }
+    // });
+}

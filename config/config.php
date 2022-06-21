@@ -9,6 +9,8 @@ return [
         'TypeOfTransaction' =>6,
         'TypeOfPackage' =>8,
         'StatusInvoice' =>9,
+        'PaketBuku' => 18,
+        'PaketJurnal' => 19,
     ],
     'idStatusInvoiceUnpaid' => 21,
     'idStatusInvoicePaid' => 20,

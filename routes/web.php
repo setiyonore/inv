@@ -18,8 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix'=>'home'],function(){
+    Route::get('/','HomeController@index')->name('home');
+    Route::get('/getOrderPerMonth','HomeController@getOrderPerMonth')->name('home.orderPerMonth');
+});
 //customer
 Route::group(['prefix'=>'customers'],function(){
    Route::get('/','CustomerController@index')->name('customers.index');

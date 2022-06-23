@@ -21,4 +21,6 @@ return [
     'description' => 'Deskripsi',
     'updateInvoiceMessage' => 'Anda akan mengubah status invoice?',
     'updateInvoice' => 'Ubah Status Invoice',
+    'manpower' => 'Manpower',
+    'addManpower' => 'Tambah Manpower',
 ];

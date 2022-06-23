@@ -434,20 +434,87 @@
     <!-- modal update status invoice -->
     <div class="modal fade" id="modalUpdateInvoice" role="dialog">
         <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@lang('transaction.updateInvoice')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@lang('transaction.updateInvoiceMessage')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        <button type="button" class="btn btn-success" id="my-btn-update-invoice">@lang('global.update')</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal Manpower -->
+     <div class="modal fade" id="modalManpower" role="dialog">
+         <div class="modal-dialog modal-lg" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">@lang('transaction.manpower')</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row">
+                         <div class="col-6 text-left">
+                             <h6 id="decriptionTr"></h6>
+                         </div>
+                         <div class="col-6 text-right">
+                             <button class="btn btn-info" onclick="CreateManpower()">Tambah Manpower</button>
+                         </div>
+                     </div>
+                     <br>
+                     <div class="table table-responsive">
+                         <table class="table table-striped">
+                             <thead>
+                             <tr>
+                                 <th>@lang('global.no')</th>
+                                 <th>@lang('global.name')</th>
+                                 <th>@lang('employees.division')</th>
+                                 <th>@lang('global.status')</th>
+                                 <th>@lang('global.action')</th>
+                             </tr>
+                             </thead>
+                             <tbody id="dataManpower"></tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+    <!-- modal create manpower-->
+    <div class="modal fade" id="modalCreateManpower" role="dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('transaction.updateInvoice')</h5>
+                    <h5 class="modal-title">@lang('transaction.addManpower')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>@lang('transaction.updateInvoiceMessage')</p>
+                    <form action="formManpower" role="form">
+                        <label>@lang('transaction.manpower')</label>
+                        <select name="" id="idManpower" class="form-control select2">
+                            <option value="">Pilih Pegawai</option>
+                            @foreach($employee as $val)
+                                <option value="{{$val->id}}">{{$val->name}} - {{$val->division}}</option>
+                            @endforeach
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" id="simpanManpower" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
-                    <button type="button" class="btn btn-success" id="my-btn-update-invoice">@lang('global.update')</button>
-                </div>
+            </div>
         </div>
     </div>
 @endsection

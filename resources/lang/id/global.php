@@ -12,4 +12,6 @@ return [
     'delete' => 'Hapus',
     'addData' => 'Tambah Data',
     'update' => 'Ubah',
+    'no' => 'No',
+    'status' => 'Status',
 ];

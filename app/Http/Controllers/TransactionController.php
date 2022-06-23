@@ -16,6 +16,8 @@ use App\Models\Transaction;
 use App\Models\Customer;
 use App\Models\Reference;
 use App\Models\Invoice;
+use App\Models\Employee;
+use App\Models\Manpower;
 
 class TransactionController extends Controller
 {
@@ -50,6 +52,7 @@ class TransactionController extends Controller
                 })
                 ->addColumn('action',function ($row){
                     return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-secondary btn-sm" id="my-btn-manpower" data-id="'.$row->id.'"><i class="fa fa-user"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
@@ -58,7 +61,12 @@ class TransactionController extends Controller
         }
         $norek = $this->getNomerRekening();
         $paket = $this->getPackage();
-        return view('transactions.index',compact('norek','paket'));
+        $employee = Employee::query()
+            ->leftJoin('references as r','r.id','employees.id_reference_division')
+            ->select('employees.id','employees.name','r.description as division')
+            ->where('r.id_type_reference',config('config.IdTypeReference.Divisi'))
+            ->get();
+        return view('transactions.index',compact('norek','paket','employee'));
     }
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
@@ -176,6 +184,7 @@ class TransactionController extends Controller
                 })
                 ->addColumn('action',function ($row){
                     return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-secondary btn-sm" id="my-btn-manpower" data-id="'.$row->id.'"><i class="fa fa-user"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
@@ -361,6 +370,35 @@ class TransactionController extends Controller
         $data = "Rp.".number_format($data->price,2, ',', '.');
         return $data;
     }
+    public function getPegawai(){
+        $data = Employee::query()
+            ->select('id','name')
+            ->get();
+        return $data;
+    }
+    public function getManpowerTransaction($id){
+        $manpower = Transaction::query()
+            ->leftJoin('manpower as m','m.id_transaction','transactions.id')
+            ->leftJoin('employees as mp','m.id_employee','mp.id')
+            ->leftJoin('references as r','r.id','m.id_reference_working_status')
+            ->leftJoin('references as dv','mp.id_reference_division','dv.id')
+            ->where('transactions.id',$id)
+            ->where('dv.id_type_reference',config('config.IdTypeReference.Divisi'))
+            ->select('m.id','mp.name','r.description as status','dv.description as division')
+            ->get();
+        $transaction = Transaction::query()
+            ->leftJoin('mst_package as p','p.id','transactions.id_package')
+            ->leftJoin('customers as c','c.id','id_customer')
+            ->select('c.name','p.name as package','transactions.date')
+            ->where('transactions.id',$id)
+            ->first();
+        $data = [
+            'manpower'=>$manpower,
+            'transaction' => $transaction,
+            'dateTransaction' => Carbon::parse($transaction->date)->format('d/m/Y'),
+        ];
+        return response()->json($data);
+    }
     public function getTypeOfPayment(){
         return $this->getDataReferensi(config('config.IdTypeReference.TypeOfPayment'));
     }
@@ -370,5 +408,25 @@ class TransactionController extends Controller
 
     public function getNoRekening(){
         return $this->getNomerRekening();
+    }
+
+    public function storeManpower(Request $request){
+        $validator = Validator::make($request->all(),[
+            'manpower' => 'required'
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $data = Manpower::query()
+            ->create([
+                'id_transaction'=>$request->id_transaksi,
+                'id_employee' => $request->manpower,
+                'id_reference_working_status' => config('config.idStatusBelumDikerjakan')
+            ]);
+        if ($data){
+            return response()->json(['success'=>1]);
+        } else {
+            return response()->json(['success'=>0]);
+        }
     }
 }

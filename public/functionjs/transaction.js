@@ -538,3 +538,78 @@ function filter(){
         ],
     });
 }
+//manpower show
+$('body').on('click','#my-btn-manpower',function (){
+    var id = $(this).data("id");
+    $('#id').val(id);
+    $.get(baseurl+'/transaction/getManpowerTransaction/'+id,function (data) {
+        $('#decriptionTr').text(data['transaction']['name']+' - '+data['transaction']['package']+' - '+data['dateTransaction']);
+        let html = "";
+        for (let i=0;i<data['manpower'].length;i++){
+            var idMan = data['manpower'][i]['id'];
+            html += "<tr>";
+            html += "<td>"+(i+1)+"</td>";
+            html += "<td>"+data['manpower'][i]['name']+"</td>";
+            html += "<td>"+data['manpower'][i]['division']+"</td>";
+            html += "<td>"+data['manpower'][i]['status']+"</td>";
+            html += "<td><a href='javascript:void(0)' class='btn btn-danger' id='delManpower' data-id='"+idMan+"'><i class='fa fa-trash'></i></a></td>"
+        }
+        document.getElementById('dataManpower').innerHTML = "";
+        document.getElementById('dataManpower').innerHTML = html;
+        $('#modalManpower').modal('show');
+    })
+})
+
+function CreateManpower(){
+    $('#formManpower').trigger("reset");
+    $('#idManpower').val('').trigger('change');
+    $('#modalCreateManpower').modal('show');
+}
+//strore manpower
+$('#simpanManpower').on('click',function (e) {
+    e.preventDefault();
+    var id_transaksi = $('#id').val();
+    var manpower = $('#idManpower').val();
+    $.ajax({
+        url: baseurl+'/transaction/storeManpower',
+        method: 'POST',
+        data: {
+            _token: token,
+            id_transaksi: id_transaksi,
+            manpower: manpower,
+        },
+        success: function (data) {
+            if (data.errors){
+                $.each(data.errors,function (key,value){
+                    toastr.error('<strong><li>'+value+'</li></strong>')
+                });
+            }else{
+                if (data.success === 1){
+                    getManpower();
+                    $('#modalCreateManpower').modal('hide');
+                    toastr.success('Data Berhasil Di Simpan');
+                }else {
+                    toastr.warning("Data Gagagal Di Simpan");
+                }
+            }
+        }
+    });
+})
+function getManpower(){
+    var id = $('#id').val();
+    $.get(baseurl+'/transaction/getManpowerTransaction/'+id,function (data) {
+        $('#decriptionTr').text(data['transaction']['name']+' - '+data['transaction']['package']+' - '+data['dateTransaction']);
+        let html = "";
+        for (let i=0;i<data['manpower'].length;i++){
+            var idMan = data['manpower'][i]['id'];
+            html += "<tr>";
+            html += "<td>"+(i+1)+"</td>";
+            html += "<td>"+data['manpower'][i]['name']+"</td>";
+            html += "<td>"+data['manpower'][i]['division']+"</td>";
+            html += "<td>"+data['manpower'][i]['status']+"</td>";
+            html += "<td><a href='javascript:void(0)' class='btn btn-danger' id='delManpower' data-id='"+idMan+"'><i class='fa fa-trash'></i></a></td>"
+        }
+        document.getElementById('dataManpower').innerHTML = "";
+        document.getElementById('dataManpower').innerHTML = html;
+    })
+}

@@ -11,7 +11,9 @@ return [
         'StatusInvoice' =>9,
         'PaketBuku' => 18,
         'PaketJurnal' => 19,
+        'statusPengerjaan' =>10,
     ],
     'idStatusInvoiceUnpaid' => 21,
     'idStatusInvoicePaid' => 20,
+    'idStatusBelumDikerjakan' => 22,
 ];

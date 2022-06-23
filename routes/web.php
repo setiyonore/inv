@@ -114,6 +114,10 @@ Route::group(['prefix'=>'transaction'],function (){
         ->name('transaction.exportInvoice');
     Route::get('updateStatusInvoice/{id}','TransactionController@updateStatusInvoice')
         ->name('transaction.updateStatusInvoice');
+    Route::get('getManpowerTransaction/{id}','TransactionController@getManpowerTransaction')
+        ->name('transaction.getManpowerTr');
+    Route::post('storeManpower','TransactionController@storeManpower')
+        ->name('transaction.storeMapower');
 });
 
 //report / rekap

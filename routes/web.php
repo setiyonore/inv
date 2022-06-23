@@ -135,3 +135,9 @@ Route::group(['prefix'=>'report'],function () {
         ->name('report.excel');
 });
 
+//task list
+Route::group(['prefix'=>'task'],function (){
+    Route::get('/','TaskListController@index')
+        ->name('task.index');
+});
+

@@ -64,6 +64,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{url('task')}}" class="{{ request()->route()->named('task.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-tasks nav-icon"></i>
+                        <p>Tugas Saya</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('typereferences') }}" class="{{ request()->route()->named('typereferences.index') ? 'nav-link active' : 'nav-link' }}">
                         <i class="fas fa-list-ul nav-icon"></i>
                         <p>Jenis Referensi</p>

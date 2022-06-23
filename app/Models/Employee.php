@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Employee extends Model
 {
     use SoftDeletes;
-    protected $able = 'employees';
+    protected $table = 'employees';
     protected $fillable = [
         'name',
         'nip',

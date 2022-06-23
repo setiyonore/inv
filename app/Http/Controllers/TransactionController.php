@@ -377,14 +377,13 @@ class TransactionController extends Controller
         return $data;
     }
     public function getManpowerTransaction($id){
-        $manpower = Transaction::query()
-            ->leftJoin('manpower as m','m.id_transaction','transactions.id')
-            ->leftJoin('employees as mp','m.id_employee','mp.id')
-            ->leftJoin('references as r','r.id','m.id_reference_working_status')
+        $manpower = Manpower::query()
+            ->leftJoin('employees as mp','manpower.id_employee','mp.id')
+            ->leftJoin('references as r','r.id','manpower.id_reference_working_status')
             ->leftJoin('references as dv','mp.id_reference_division','dv.id')
-            ->where('transactions.id',$id)
+            ->where('manpower.id_transaction',$id)
             ->where('dv.id_type_reference',config('config.IdTypeReference.Divisi'))
-            ->select('m.id','mp.name','r.description as status','dv.description as division')
+            ->select('manpower.id','mp.name','r.description as status','dv.description as division')
             ->get();
         $transaction = Transaction::query()
             ->leftJoin('mst_package as p','p.id','transactions.id_package')
@@ -428,5 +427,10 @@ class TransactionController extends Controller
         } else {
             return response()->json(['success'=>0]);
         }
+    }
+    public function destroyManpower($id){
+        $data = Manpower::query()->findOrFail($id);
+        $data->delete();
+        return response()->json(['success'=>1]);
     }
 }

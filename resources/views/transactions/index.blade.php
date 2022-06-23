@@ -517,6 +517,27 @@
             </div>
         </div>
     </div>
+    <!-- modal delete manpower -->
+    <div class="modal fade" id="modalDeleteManpower" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('global.confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('transaction.deleteManpower')</p>
+                    <input type="hidden" id="idMan">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete-manpower" class="btn btn-danger">@lang('global.delete')</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

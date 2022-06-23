@@ -118,6 +118,8 @@ Route::group(['prefix'=>'transaction'],function (){
         ->name('transaction.getManpowerTr');
     Route::post('storeManpower','TransactionController@storeManpower')
         ->name('transaction.storeMapower');
+    Route::get('destroyManpower/{id}','TransactionController@destroyManpower')
+        ->name('transaction.destroyMan');
 });
 
 //report / rekap

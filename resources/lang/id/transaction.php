@@ -23,4 +23,5 @@ return [
     'updateInvoice' => 'Ubah Status Invoice',
     'manpower' => 'Manpower',
     'addManpower' => 'Tambah Manpower',
+    'deleteManpower' => 'Anda akan menghapus Manpower ?'
 ];

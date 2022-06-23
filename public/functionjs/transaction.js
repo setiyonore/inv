@@ -613,3 +613,25 @@ function getManpower(){
         document.getElementById('dataManpower').innerHTML = html;
     })
 }
+//delete manpower
+$('body').on('click','#delManpower',function (){
+    var recId = $(this).data('id');
+    $('#modalDeleteManpower').modal('show');
+    $('#idMan').val(recId);
+});
+//submit delete manpower
+$('body').on('click','#submit-delete-manpower',function (e) {
+    var id = $('#idMan').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/transaction/destroyManpower/'+id,
+        method: 'GET',
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getManpower();
+                $('#modalDeleteManpower').modal('hide');
+            }
+        }
+    });
+})

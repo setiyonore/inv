@@ -139,5 +139,11 @@ Route::group(['prefix'=>'report'],function () {
 Route::group(['prefix'=>'task'],function (){
     Route::get('/','TaskListController@index')
         ->name('task.index');
+    Route::get('getStatus','TaskListController@getStatus')
+        ->name('task.getStatus');
+    Route::post('update','TaskListController@update')
+        ->name('task.update');
+    Route::post('filter','TaskListController@search')
+        ->name('task.filter');
 });
 

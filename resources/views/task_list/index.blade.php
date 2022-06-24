@@ -91,6 +91,32 @@
             </div>
         </div>
     </div>
+    <!--update status -->
+    <div class="modal fade" id="modalUpdateStatus" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('task.updateStatus')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="form">
+                        <input type="hidden" id="id">
+                        <div class="form-group">
+                            <label for="">@lang('global.status')</label>
+                            <select name="" id="status" class="form-control select2"></select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="simpan" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

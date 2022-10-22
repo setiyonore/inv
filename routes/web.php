@@ -147,5 +147,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('filter','TaskListController@search')
             ->name('task.filter');
     });
+//roles
+    Route::group(['prefix' => 'roles'],function (){
+        Route::get('/','RolesController@index')
+            ->name('roles.index');
+        Route::post('/store','RolesController@store')
+            ->name('roles.store');
+    });
 });
 

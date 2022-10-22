@@ -87,6 +87,14 @@
                         <p>No Rekening</p>
                     </a>
                 </li>
+                @hasrole('admin')
+                <li class="nav-item">
+                    <a href="{{url('roles')}}" class="{{ request()->route()->named('roles.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-user-tag nav-icon"></i>
+                        <p>Roles</p>
+                    </a>
+                </li>
+                @endrole
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

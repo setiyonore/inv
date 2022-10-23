@@ -1,41 +1,43 @@
 var baseurl = $('#url').val();
 var token = $('#token').val();
-$(document).ready(function (){
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     getData();
 })
 
-function getData(){
+function getData() {
     $('#data-table').DataTable({
-        paging      : true,
-        searching   : false,
-        info        : true,
-        ordering    : true,
-        bDestroy    : true,
-        ajax:   {
-            url: baseurl+'/users',
+        paging: true,
+        searching: false,
+        info: true,
+        ordering: true,
+        bDestroy: true,
+        ajax: {
+            url: baseurl + '/users',
             type: 'GET',
         },
-        columns:[
-            { data: 'name'},
-            { data: 'email'},
-            { data: 'employee'},
-            { data: 'action'},
+        columns: [
+            {data: 'name'},
+            {data: 'email'},
+            {data: 'employee'},
+            {data: 'role'},
+            {data: 'action'},
         ]
     })
 }
 
-function create(){
+function create() {
     $('#modalCreate').modal('show');
     $('#form').trigger('reset');
     $('#id').val('');
     getEmployee();
     getRoles();
 }
+
 //get data pegawai
 function getEmployee() {
     $.ajax({
-        url: baseurl+'/users/getEmployee',
+        url: baseurl + '/users/getEmployee',
         method: 'GET',
         data: {
             _token: token,
@@ -44,14 +46,14 @@ function getEmployee() {
             var idtipe = 0
             var html = "";
             var titleSelect = "Pilih Pegawai";
-            html += "<option value=''>"+titleSelect+"</option>";
-            for (i=0;i<data.length;i++){
+            html += "<option value=''>" + titleSelect + "</option>";
+            for (i = 0; i < data.length; i++) {
                 var id = data[i].id;
                 var name = data[i].name;
-                if (id === idtipe){
-                    html += "<option selected='true' value='"+id+"'>"+name+"</option>"
+                if (id === idtipe) {
+                    html += "<option selected='true' value='" + id + "'>" + name + "</option>"
                 } else {
-                    html += "<option value='"+id+"'>"+name+"</option>"
+                    html += "<option value='" + id + "'>" + name + "</option>"
                 }
             }
             document.getElementById('employee').innerHTML = "";
@@ -59,10 +61,11 @@ function getEmployee() {
         }
     })
 }
+
 //get data roles
-function getRoles(){
+function getRoles() {
     $.ajax({
-        url: baseurl+'/users/getRoles',
+        url: baseurl + '/users/getRoles',
         method: 'GET',
         data: {
             _token: token,
@@ -71,14 +74,14 @@ function getRoles(){
             var idtipe = 0
             var html = "";
             var titleSelect = "Pilih Roles";
-            html += "<option value=''>"+titleSelect+"</option>";
-            for (i=0;i<data.length;i++){
+            html += "<option value=''>" + titleSelect + "</option>";
+            for (i = 0; i < data.length; i++) {
                 var id = data[i].id;
                 var name = data[i].name;
-                if (id === idtipe){
-                    html += "<option selected='true' value='"+id+"'>"+name+"</option>"
+                if (id === idtipe) {
+                    html += "<option selected='true' value='" + id + "'>" + name + "</option>"
                 } else {
-                    html += "<option value='"+id+"'>"+name+"</option>"
+                    html += "<option value='" + id + "'>" + name + "</option>"
                 }
             }
             document.getElementById('role').innerHTML = "";
@@ -86,8 +89,9 @@ function getRoles(){
         }
     })
 }
+
 //store data
-$('#simpan').on('click',function (e) {
+$('#simpan').on('click', function (e) {
     e.preventDefault();
     var id = $('#id').val();
     var name = $('#name').val();
@@ -95,27 +99,27 @@ $('#simpan').on('click',function (e) {
     var pegawai = $('#employee').val();
     var role = $('#role').val();
     $.ajax({
-        url: baseurl+'/users/store',
+        url: baseurl + '/users/store',
         method: 'POST',
-        data:{
+        data: {
             _token: token,
-            id:id,
-            name:name,
-            email:email,
-            pegawai:pegawai,
-            role:role,
+            id: id,
+            name: name,
+            email: email,
+            pegawai: pegawai,
+            role: role,
         },
         success: function (data) {
-            if (data.errors){
-                $.each(data.errors,function (key,value){
-                    toastr.error('<strong><li>'+value+'</li></strong>')
+            if (data.errors) {
+                $.each(data.errors, function (key, value) {
+                    toastr.error('<strong><li>' + value + '</li></strong>')
                 });
-            }else{
-                if (data.success === 1){
+            } else {
+                if (data.success === 1) {
                     getData();
                     $('#modalCreate').modal('hide');
                     toastr.success('Data Berhasil Di Simpan');
-                }else {
+                } else {
                     toastr.warning("Data Gagagal Di Simpan");
                 }
             }

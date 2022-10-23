@@ -81,6 +81,7 @@
                             <th>@lang('global.name')</th>
                             <th>@lang('users.email')</th>
                             <th>@lang('users.employee')</th>
+                            <th>@lang('users.role')</th>
                             <th>@lang('global.action')</th>
                         </tr>
                         </thead>

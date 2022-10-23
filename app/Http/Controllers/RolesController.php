@@ -11,6 +11,9 @@ class RolesController extends Controller
 {
     public function index(Request $request)
     {
+        $role = Role::findByName('admin');
+        $role->permissions->pluck('name');
+
         $data = Role::query()->select('id','name')->get();
         if ($request->ajax()){
             return DataTables::make($data)

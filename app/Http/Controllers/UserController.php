@@ -23,6 +23,7 @@ class UserController extends Controller
                 'e.name as pegawai'
             )
             ->get();
+//        dd($data->toJson());
         if ($request->ajax()){
             return DataTables::make($data)
                 ->addColumn('name',function ($row){
@@ -34,11 +35,16 @@ class UserController extends Controller
                 ->addColumn('employee',function ($row){
                     return $row->pegawai;
                 })
+                ->addColumn('role',function ($row){
+                    foreach ($row['roles'] as $data){
+                        return $data['name'];
+                    };
+                })
                 ->addColumn('action',function ($row){
                     return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                             <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
-                ->rawColumns(['name','email','employee','action'])
+                ->rawColumns(['name','email','employee','role','action'])
                 ->make(true);
         }
         return view('users.index');

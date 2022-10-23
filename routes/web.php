@@ -154,5 +154,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/store','RolesController@store')
             ->name('roles.store');
     });
+//users
+    Route::group(['prefix'=>'users'],function (){
+        Route::get('/','UserController@index')
+            ->name('users.index');
+        Route::get('/getRoles','UserController@getRoles')
+            ->name('users.getRoles');
+        Route::get('/getEmployee','UserController@getEmployee')
+            ->name('users.getEmployee');
+        Route::post('/store','UserController@store')
+            ->name('users.store');
+    });
 });
 

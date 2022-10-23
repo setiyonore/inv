@@ -96,6 +96,12 @@
                 </li>
                 @endrole
                 <li class="nav-item">
+                    <a href="{{url('users')}}" class="{{ request()->route()->named('users.index') ? 'nav-link active' : 'nav-link' }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt nav-icon"></i>

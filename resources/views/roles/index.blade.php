@@ -87,6 +87,40 @@
             </div>
         </div>
     </div>
+    {{--  Modal detil permission  --}}
+    <div class="modal fade" id="modalDetil" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @lang('roles.detilPermission')
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-info" onclick="createBenefit()">@lang('roles.addPermission')</button>
+                    <br>
+                    <br>
+                    {{--  Table permission    --}}
+                    <div class="table table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>@lang('roles.permission')</th>
+                                    <th class="text-right">@lang('global.action')</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataPermission">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- DataTables  & Plugins -->

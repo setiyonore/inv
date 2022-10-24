@@ -21,7 +21,7 @@ class RolesController extends Controller
                     return $row->name;
                 })
                 ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-eye"></i></a>';
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="btn-detil" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-eye"></i></a>';
                 })
                 ->rawColumns(['name','action'])
                 ->make(true);
@@ -44,5 +44,11 @@ class RolesController extends Controller
         } else {
             return response()->json(['success'=>0]);
         }
+    }
+
+    public function getPermission($id){
+        $data = Role::findById($id);
+        $data->getPermissionNames();
+       return response()->json($data);
     }
 }

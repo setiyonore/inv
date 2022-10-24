@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('roles.index');
         Route::post('/store','RolesController@store')
             ->name('roles.store');
+        Route::get('/getPermission/{id}','RolesController@getPermission')
+            ->name('roles.getPermission');
     });
 //users
     Route::group(['prefix'=>'users'],function (){

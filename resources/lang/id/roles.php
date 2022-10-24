@@ -1,5 +1,8 @@
 <?php
 return [
     'title' => 'Roles',
-    'addRole' => 'Tambah Role'
+    'addRole' => 'Tambah Role',
+    'detilPermission' => 'Detil Hak Akses',
+    'addPermission'=> 'Tambah Hak Akses',
+    'permission' => 'Hak Akses',
 ];

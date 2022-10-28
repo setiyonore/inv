@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Role;
 
@@ -14,16 +16,16 @@ class RolesController extends Controller
         $role = Role::findByName('admin');
         $role->permissions->pluck('name');
 
-        $data = Role::query()->select('id','name')->get();
-        if ($request->ajax()){
+        $data = Role::query()->select('id', 'name')->get();
+        if ($request->ajax()) {
             return DataTables::make($data)
-                ->addColumn('name',function ($row){
+                ->addColumn('name', function ($row) {
                     return $row->name;
                 })
-                ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="btn-detil" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-eye"></i></a>';
+                ->addColumn('action', function ($row) {
+                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="btn-detil" data-id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-eye"></i></a>';
                 })
-                ->rawColumns(['name','action'])
+                ->rawColumns(['name', 'action'])
                 ->make(true);
         }
 
@@ -32,23 +34,35 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'role' => 'required'
         ]);
-        if ($validator->fails()){
-            return response()->json(['errors'=>$validator->errors()->all()]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
         $role = Role::create(['name' => strtolower($request->role)]);
-        if ($role){
-            return response()->json(['success'=>1]);
+        if ($role) {
+            return response()->json(['success' => 1]);
         } else {
-            return response()->json(['success'=>0]);
+            return response()->json(['success' => 0]);
         }
     }
 
-    public function getPermission($id){
+    public function getPermission($id)
+    {
         $data = Role::findById($id);
         $data->getPermissionNames();
-       return response()->json($data);
+        return response()->json($data);
+    }
+
+    public function deletePermission(Request $request)
+    {
+        $role = Role::findById($request->idRole);
+        $permission = Permission::findById($request->idPermission);
+        $role->revokePermissionTo($permission);
+        if ($role) {
+            return response()->json(['success' => 1]);
+        }
+        return response()->json(['success' => 0]);
     }
 }

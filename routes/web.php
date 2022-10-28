@@ -155,6 +155,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('roles.store');
         Route::get('/getPermission/{id}','RolesController@getPermission')
             ->name('roles.getPermission');
+        Route::post('/deletePermission','RolesController@deletePermission')
+            ->name('roles.deletePermission');
     });
 //users
     Route::group(['prefix'=>'users'],function (){

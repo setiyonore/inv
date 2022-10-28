@@ -104,6 +104,8 @@
                     <br>
                     <br>
                     {{--  Table permission    --}}
+                    <input type="hidden" id="idRoles">
+                    <input type="hidden" id="idPermission">
                     <div class="table table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -117,6 +119,27 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--   Modal permission delete  --}}
+    <div class="modal fade" id="modalDeletePermission" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('global.confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('roles.deletePermission')</p>
+                    <input type="hidden" id="idBenefit">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete-permission" class="btn btn-danger">@lang('global.delete')</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
                 </div>
             </div>
         </div>

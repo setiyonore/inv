@@ -6,4 +6,5 @@ return [
     'email' => 'Email',
     'employee' => 'Pegawai',
     'role' => 'Role',
+    'deleteUser' => 'Anda akan menghapus data user ?'
 ];

@@ -91,6 +91,12 @@ class UserController extends Controller
             ->first();
         return response()->json($data);
     }
+    public function destroy($id){
+        $user = User::query()->findOrFail($id);
+        $user->syncRoles([]);
+        $user->delete();
+        return response()->json(['success'=>1]);
+    }
     public function getRoles(){
         $data = Role::query()
             ->select('id','name')

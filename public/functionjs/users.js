@@ -143,6 +143,32 @@ $('body').on('click','#my-btn-edit',function (){
     });
     $('#modalCreate').modal('show');
 })
+//delete user
+$('body').on('click','#my-btn-delele',function (){
+    const recId = $(this).data('id');
+    $('#idUser').val(recId);
+    $('#modalDelete').modal('show');
+})
+//tombol submit delete di klik
+$('body').on('click','#submit-delete',function (e){
+    const id = $('#idUser').val();
+    e.preventDefault();
+    $.ajax({
+        url: baseurl+'/users/destroy/'+id,
+        method: 'GET',
+        data: {
+            _token: token,
+        },
+        success: function (data){
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getData();
+                $('#modalDelete').modal('hide');
+            }
+        }
+    });
+
+})
 function getEmployeeWithId(idEmployee){
     $.ajax({
         url: baseurl + '/users/getEmployee',

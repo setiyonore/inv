@@ -172,6 +172,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('users.store');
         Route::get('/edit/{id}','UserController@editUser')
             ->name('users.edit');
+        Route::get('/destroy/{id}','UserController@destroy')
+            ->name('users.destroy');
     });
 });
 

@@ -119,7 +119,7 @@ $('#simpan').on('click', function (e) {
                 });
             } else {
                 if (data.success === 1) {
-                    getData();
+                    filter();
                     $('#modalCreate').modal('hide');
                     toastr.success('Data Berhasil Di Simpan');
                 } else {
@@ -162,13 +162,41 @@ $('body').on('click','#submit-delete',function (e){
         success: function (data){
             if (data.success===1){
                 toastr.success('Data berhasil dihapus!');
-                getData();
+                filter();
                 $('#modalDelete').modal('hide');
             }
         }
     });
 
 })
+//filter
+function filter(){
+    const filterName = $('#filterName').val();
+    const filterEmail = $('#filterEmail').val();
+    $('#data-table').DataTable({
+        paging: true,
+        searching: false,
+        info: true,
+        ordering: true,
+        bDestroy: true,
+        ajax: {
+            url: baseurl + '/users/search',
+            type: 'GET',
+            data: {
+                filterName: filterName,
+                filterEmail: filterEmail,
+            },
+        },
+        columns: [
+            {data: 'name'},
+            {data: 'email'},
+            {data: 'employee'},
+            {data: 'role'},
+            {data: 'action'},
+        ]
+    })
+}
+
 function getEmployeeWithId(idEmployee){
     $.ajax({
         url: baseurl + '/users/getEmployee',

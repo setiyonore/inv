@@ -58,13 +58,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="filterName">@lang('users.name')</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="filterName">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="filterEmail">@lang('users.email')</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="filterEmail">
                                     </div>
                                 </div>
                             </div>

@@ -174,6 +174,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('users.edit');
         Route::get('/destroy/{id}','UserController@destroy')
             ->name('users.destroy');
+        Route::get('/search','UserController@search')
+            ->name('users.search');
     });
 });
 

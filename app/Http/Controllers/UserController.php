@@ -25,27 +25,7 @@ class UserController extends Controller
             ->get();
 //        dd($data->toJson());
         if ($request->ajax()){
-            return DataTables::make($data)
-                ->addColumn('name',function ($row){
-                    return $row->name;
-                })
-                ->addColumn('email',function ($row){
-                    return $row->email;
-                })
-                ->addColumn('employee',function ($row){
-                    return $row->pegawai;
-                })
-                ->addColumn('role',function ($row){
-                    foreach ($row['roles'] as $data){
-                        return $data['name'];
-                    };
-                })
-                ->addColumn('action',function ($row){
-                    return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
-                })
-                ->rawColumns(['name','email','employee','role','action'])
-                ->make(true);
+            return $this->getMake($data);
         }
         return view('users.index');
     }
@@ -97,6 +77,35 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['success'=>1]);
     }
+    public function search(Request $request){
+        $clause = [
+            'users.name' => $request->filterName,
+            'email' => $request->filterEmail,
+        ];
+        $data = $this->doSearch($clause);
+        return $this->getMake($data);
+    }
+    private function doSearch($clauses){
+        $data = User::query()
+            ->with('roles')
+            ->leftJoin('employees as e','e.id','users.pegawai_id')
+            ->select(
+                'users.name',
+                'users.email',
+                'users.id',
+                'e.name as pegawai'
+            );
+        $fields = array_keys($clauses);
+        $index = 0;
+        foreach ($clauses as $item) {
+            if ($item != null) {
+                $data = $data->where($fields[$index], 'LIKE', '%' . $item . '%');
+            }
+            $index++;
+        }
+        $result = $data->get();
+        return $result;
+    }
     public function getRoles(){
         $data = Role::query()
             ->select('id','name')
@@ -108,5 +117,35 @@ class UserController extends Controller
         $data = Employee::query()
             ->select('id','name')->get();
         return response()->json($data);
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getMake($data)
+    {
+        return DataTables::make($data)
+            ->addColumn('name', function ($row) {
+                return $row->name;
+            })
+            ->addColumn('email', function ($row) {
+                return $row->email;
+            })
+            ->addColumn('employee', function ($row) {
+                return $row->pegawai;
+            })
+            ->addColumn('role', function ($row) {
+                foreach ($row['roles'] as $data) {
+                    return $data['name'];
+                };
+            })
+            ->addColumn('action', function ($row) {
+                return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
+                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="' . $row->id . '" ><i class="fa fa-trash"></i></a>';
+            })
+            ->rawColumns(['name', 'email', 'employee', 'role', 'action'])
+            ->make(true);
     }
 }

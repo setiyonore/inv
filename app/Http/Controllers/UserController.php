@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Matrix\Builder;
 use Spatie\Permission\Models\Role;
@@ -147,5 +149,22 @@ class UserController extends Controller
             })
             ->rawColumns(['name', 'email', 'employee', 'role', 'action'])
             ->make(true);
+    }
+    public function updatePassword(Request $request){
+        $validator = Validator::make($request->all(),[
+            'oldPassword' => 'required',
+            'newPassword' => 'required',
+        ]);
+        if ($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+        $user = User::query()->findOrFail(Auth::user()->id);
+        if (Hash::check($request->oldPassword,$user->password)){
+            $user->fill([
+                'password' => Hash::make($request->newPassword)
+            ])->save();
+            return response()->json(['success'=>1]);
+        }
+        return response()->json(['success'=>0]);
     }
 }

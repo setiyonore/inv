@@ -14,4 +14,7 @@ return [
     'update' => 'Ubah',
     'no' => 'No',
     'status' => 'Status',
+    'changePassword' => 'Ganti Kata Sandi',
+    'oldPassword' => 'Kata sandi lama',
+    'newPassword' => 'Kata sandi baru',
 ];

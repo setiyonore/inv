@@ -176,6 +176,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('users.destroy');
         Route::get('/search','UserController@search')
             ->name('users.search');
+        Route::post('/changePassword','UserController@updatePassword')
+            ->name('users.changePassword');
     });
 });
 

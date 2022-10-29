@@ -17,6 +17,7 @@
 @endsection
 @section('main-content')
     <!-- Small boxes (Stat box) -->
+    @if(auth()->user()->can('dashboard'))
     <div class="row">
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -107,6 +108,10 @@
             <!-- /.card -->
         </div>
     </div>
+    @else
+        hallo {{ Auth::user()->name }}
+    @endif
+
     <!-- /.row (main row) -->
 @endsection
 @section('script')

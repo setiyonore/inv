@@ -170,6 +170,8 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('users.getEmployee');
         Route::post('/store','UserController@store')
             ->name('users.store');
+        Route::get('/edit/{id}','UserController@editUser')
+            ->name('users.edit');
     });
 });
 

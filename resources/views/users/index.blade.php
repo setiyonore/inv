@@ -103,6 +103,8 @@
                 <div class="modal-body">
                     <form role="form" id="form">
                         <input type="hidden" id="id" name="id">
+                        <input type="hidden" id="idEmployee" name="idEmployee">
+                        <input type="hidden" id="oldRoles" name="oldRoles">
                         <div class="form-group">
                             <label for="">@lang('users.name')</label>
                             <input type="text" class="form-control" id="name">

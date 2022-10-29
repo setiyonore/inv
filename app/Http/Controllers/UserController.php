@@ -61,19 +61,35 @@ class UserController extends Controller
         if ($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()]);
         }
-        $role = Role::findById($request->role);
-        $user = User::query()->create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>bcrypt(12345678),
-            'pegawai_id'=>$request->pegawai
-        ]);
-        $user->assignRole($role);
+        $user = User::query()
+            ->firstOrNew(array('id'=>$request->id));
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->id == null){
+            $user->password = bcrypt(12345678);
+        }
+        $user->pegawai_id = $request->pegawai;
+        $user->save();
+        if ($request->oldRole ==0){
+            $role = Role::findById($request->role);
+            $user->assignRole($role);
+        } else {
+            $user->syncRoles([]);
+            $role = Role::findById($request->role);
+            $user->assignRole($role);
+
+        }
         if ($user){
             return response()->json(['success'=>1]);
         } else {
             return response()->json(['success'=>0]);
         }
+    }
+    public function editUser($id){
+        $data = User::query()->with('roles')->where('id',$id)
+            ->select('id','pegawai_id','name','email')
+            ->first();
+        return response()->json($data);
     }
     public function getRoles(){
         $data = Role::query()

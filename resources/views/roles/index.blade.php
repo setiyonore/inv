@@ -6,6 +6,9 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
     <script src="{{asset('dist/js/jquery.min.js')}}"></script>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <style>
         .modal {overflow: auto !important;}
     </style>
@@ -100,7 +103,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button class="btn btn-info" onclick="createBenefit()">@lang('roles.addPermission')</button>
+                    <button class="btn btn-info" onclick="addPermission()">@lang('roles.addPermission')</button>
                     <br>
                     <br>
                     {{--  Table permission    --}}
@@ -119,6 +122,34 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal add permission   --}}
+    <div class="modal fade" id="modalAddPermission" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('roles.addPermission')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" role="form" id="formBenefit">
+                        <label for="">@lang('roles.addPermission')</label>
+                        <select class="form-control select2" id="permission">
+                            <option value="">@lang('roles.selectPermission')</option>
+                            @foreach($dataRole as $val)
+                                <option value="{{$val->id}}">{{$val->name}}</option>
+                            @endforeach
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" id="savePermission" class="btn btn-success">@lang('global.save')</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">@lang('global.close')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -150,9 +181,12 @@
     <script src="{{asset('plugins/datatables/datatables.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
     <script>
         var APP_URL = {!! json_encode(url('/')) !!}
         $('#url').val(APP_URL);
+        $('.select2').select2();
     </script>
     <script src="{{asset('functionjs/roles.js')}}"></script>
 @endsection

@@ -122,3 +122,31 @@ $('body').on('click', '#submit-delete-permission', function (e) {
         }
     })
 })
+
+function addPermission(){
+    $('#modalAddPermission').modal('show');
+}
+
+//save permission
+$('#savePermission').on('click',function (e) {
+    e.preventDefault();
+    const idRoles = $('#idRoles').val();
+    const idPermission = $('#permission').val();
+    $.ajax({
+        url: baseurl+'/roles/assignPermission',
+        method: 'POST',
+        data: {
+            _token: token,
+            idRoles: idRoles,
+            idPermission: idPermission,
+        },
+        success: function (data) {
+            if (data.success===1){
+                toastr.success('Data berhasil dihapus!');
+                getPermission(idRoles);
+                $('#modalAddPermission').modal('hide');
+            }
+        }
+
+    });
+})

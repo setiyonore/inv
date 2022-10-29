@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Role;
+use function Sodium\add;
 
 class RolesController extends Controller
 {
@@ -15,7 +16,7 @@ class RolesController extends Controller
     {
         $role = Role::findByName('admin');
         $role->permissions->pluck('name');
-
+        $dataRole = Permission::all();
         $data = Role::query()->select('id', 'name')->get();
         if ($request->ajax()) {
             return DataTables::make($data)
@@ -28,8 +29,7 @@ class RolesController extends Controller
                 ->rawColumns(['name', 'action'])
                 ->make(true);
         }
-
-        return view('roles.index');
+        return view('roles.index', compact('dataRole'));
     }
 
     public function store(Request $request)
@@ -46,6 +46,24 @@ class RolesController extends Controller
         } else {
             return response()->json(['success' => 0]);
         }
+    }
+
+    public function assignPermissionToRole(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'idRoles' => 'required',
+            'idPermission' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+        $role = Role::findById($request->idRoles);
+        $permission = Permission::findById($request->idPermission);
+        $role->givePermissionTo($permission);
+        if ($role) {
+            return response()->json(['success' => 1]);
+        }
+        return response()->json(['success' => 0]);
     }
 
     public function getPermission($id)

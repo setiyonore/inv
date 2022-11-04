@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Invoice | @yield('title-page')</title>
+    <title>Admin | @yield('title-page')</title>
 
     <!--include css-->
     @yield('includecss')

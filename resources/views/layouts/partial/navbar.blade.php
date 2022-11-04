@@ -15,30 +15,30 @@
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user"></i>
+{{--            <a class="nav-link" data-toggle="dropdown" href="#">--}}
+{{--                <i class="far fa-user"></i>--}}
 {{--                <span class="badge badge-warning navbar-badge">15</span>--}}
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+{{--            </a>--}}
+{{--            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">--}}
 {{--                <span class="dropdown-item dropdown-header">15 Notifications</span>--}}
-                <div class="dropdown-divider"></div>
-                <a href="javascript:void(0)" class="dropdown-item" id="changePassword">
-                    <i class="fas fa-lock mr-2"></i> Ganti Kata sandi
+{{--                <div class="dropdown-divider"></div>--}}
+{{--                <a href="javascript:void(0)" class="dropdown-item" id="changePassword">--}}
+{{--                    <i class="fas fa-lock mr-2"></i> Ganti Kata sandi--}}
 {{--                    <span class="float-right text-muted text-sm">3 mins</span>--}}
-                </a>
-                <div class="dropdown-divider"></div>
+{{--                </a>--}}
+{{--                <div class="dropdown-divider"></div>--}}
 {{--                <a href="#" class="dropdown-item">--}}
 {{--                    <i class="fas fa-users mr-2"></i> 8 friend requests--}}
 {{--                    <span class="float-right text-muted text-sm">12 hours</span>--}}
 {{--                </a>--}}
-                <div class="dropdown-divider"></div>
+{{--                <div class="dropdown-divider"></div>--}}
 {{--                <a href="#" class="dropdown-item">--}}
 {{--                    <i class="fas fa-file mr-2"></i> 3 new reports--}}
 {{--                    <span class="float-right text-muted text-sm">2 days</span>--}}
 {{--                </a>--}}
-                <div class="dropdown-divider"></div>
+{{--                <div class="dropdown-divider"></div>--}}
 {{--                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>--}}
-            </div>
+{{--            </div>--}}
         </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -74,37 +74,37 @@
     </div>
 </div>
 <!-- /.navbar -->
-<script>
-    const APP_URL = {!! json_encode(url('/')) !!}
-    document.getElementById('changePassword').onclick = function(){
-        $('#modalChangePassword').modal('show');
-    }
-    const token = $('#tokenPass').val();
-    function updatePassword(){
-        const oldPassword = $('#oldPassword').val();
-        const newPassword = $('#newPassword').val();
-        $.ajax({
-            url: APP_URL+'/users/changePassword',
-            method: 'POST',
-            data: {
-                _token:  "{{ csrf_token() }}",
-                oldPassword: oldPassword,
-                newPassword: newPassword,
-            },
-            success: function (data) {
-                if (data.errors) {
-                    $.each(data.errors, function (key, value) {
-                        alert(value);
-                    });
-                } else {
-                    if (data.success === 1){
-                        alert('Password Berhasil di ubah');
-                        $('#modalChangePassword').modal('hide');
-                    } else if(data.success === 0){
-                        alert('Password lama salah')
-                    }
-                }
-            }
-        });
-    }
-</script>
+{{--<script>--}}
+{{--    const APP_URL = {!! json_encode(url('/')) !!}--}}
+{{--    document.getElementById('changePassword').onclick = function(){--}}
+{{--        $('#modalChangePassword').modal('show');--}}
+{{--    }--}}
+{{--    const token = $('#tokenPass').val();--}}
+{{--    function updatePassword(){--}}
+{{--        const oldPassword = $('#oldPassword').val();--}}
+{{--        const newPassword = $('#newPassword').val();--}}
+{{--        $.ajax({--}}
+{{--            url: APP_URL+'/users/changePassword',--}}
+{{--            method: 'POST',--}}
+{{--            data: {--}}
+{{--                _token:  "{{ csrf_token() }}",--}}
+{{--                oldPassword: oldPassword,--}}
+{{--                newPassword: newPassword,--}}
+{{--            },--}}
+{{--            success: function (data) {--}}
+{{--                if (data.errors) {--}}
+{{--                    $.each(data.errors, function (key, value) {--}}
+{{--                        alert(value);--}}
+{{--                    });--}}
+{{--                } else {--}}
+{{--                    if (data.success === 1){--}}
+{{--                        alert('Password Berhasil di ubah');--}}
+{{--                        $('#modalChangePassword').modal('hide');--}}
+{{--                    } else if(data.success === 0){--}}
+{{--                        alert('Password lama salah')--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            }--}}
+{{--        });--}}
+{{--    }--}}
+{{--</script>--}}

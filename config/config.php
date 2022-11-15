@@ -17,4 +17,5 @@ return [
     'idStatusInvoicePaid' => 20,
     'idStatusSudahDikerjakan' => 24,
     'idStatusBelumDikerjakan' => 22,
+    'idStatusSedangDikerjakan' => 23,
 ];

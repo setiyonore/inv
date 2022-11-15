@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manpower;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //models
 use App\Models\Transaction;
@@ -38,7 +40,17 @@ class HomeController extends Controller
             ->count('transactions.id');
         $pelanggan = Customer::query()
             ->count('id');
-        return view('home.dasboard',compact('order','paketBuku','paketJurnal','pelanggan'));
+        $tugasSaya = Manpower::query()
+                ->leftJoin('transactions as t','t.id','manpower.id_transaction')
+                ->leftJoin('mst_package as mp','mp.id','t.id_package')
+                ->leftJoin('customers as c','c.id','t.id_customer')
+                ->leftJoin('references as r','r.id','manpower.id_reference_working_status')
+                ->where('manpower.id_employee',Auth::user()->pegawai_id)
+                ->where('manpower.id_reference_working_status','!=',config('config.idStatusSudahDikerjakan'))
+                ->select('t.date','mp.name as paket','c.name as customer','r.description as status',
+                    'manpower.id_reference_working_status as id_status')
+            ->get();
+        return view('home.dasboard',compact('order','paketBuku','paketJurnal','pelanggan','tugasSaya'));
     }
 
     public function getOrderPerMonth(){

@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'no-rekening', 'guard_name' => 'web']);
         Permission::create(['name' => 'roles', 'guard_name' => 'web']);
         Permission::create(['name' => 'user', 'guard_name' => 'web']);
+        Permission::create(['name' => 'dashboard-tugas-saya','guard_name'=>'web']);
         //assign to role admin
         $permissions = Permission::all();
         $role = \Spatie\Permission\Models\Role::findByName('admin');

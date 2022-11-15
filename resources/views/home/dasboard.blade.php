@@ -108,6 +108,50 @@
             <!-- /.card -->
         </div>
     </div>
+    @elseif(auth()->user()->can('dashboard-tugas-saya'))
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Tugas Belum Selesai</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Nama Pelanggan</th>
+                        <th scope="col">Nama Paket</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($tugasSaya as $val)
+                    <tr>
+                        <td>{{$val->date}}</td>
+                        <td>{{$val->customer}}</td>
+                        <td>{{$val->paket}}</td>
+                        <td>
+                            @if($val->id_status == config('config.idStatusSedangDikerjakan'))
+                            <span class="badge badge-info">{{$val->status}}</span>
+                            @else
+                                <span class="badge badge-danger">{{$val->status}}</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
     @else
         hallo {{ Auth::user()->name }}
     @endif
@@ -198,6 +242,8 @@
                     })
                 }
             });
+        }
+        function getTugasSaya(){
         }
     </script>
 @endsection

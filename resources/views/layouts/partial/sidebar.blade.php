@@ -35,6 +35,14 @@
                     </a>
                 </li>
                 @endif
+                @if(auth()->user()->can('dashboard-tugas-saya'))
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}" class="{{ request()->route()->named('home') ? 'nav-link active' : 'nav-link'}}">
+                            <i class="fas fa-tachometer-alt nav-icon"></i>
+                            <p>Dashboard </p>
+                        </a>
+                    </li>
+                @endif
                 @can('pelanggan')
                 <li class="nav-item">
                     <a href="{{ url('customers') }}" class="{{ request()->route()->named('customers.index') ? 'nav-link active' : 'nav-link' }}">

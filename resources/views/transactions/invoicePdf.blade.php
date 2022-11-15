@@ -130,6 +130,7 @@
                         <td>
                             Invoice #: {{$data[0]['invoice']['no']}}<br />
                             Created: {{$data[0]['dateCreate']}}<br />
+                            Status: {{$data[0]['invoice']['status']}}<br>
                             Due: {{$data[0]['due']}}
                         </td>
                     </tr>

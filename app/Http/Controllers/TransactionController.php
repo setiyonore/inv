@@ -270,7 +270,8 @@ class TransactionController extends Controller
             ->first();
         $invoice = Invoice::query()
             ->where('id_transaction',$id)
-            ->select('due','no','id_reference_status_invoice')
+            ->select('due','no','id_reference_status_invoice','r.description as status')
+            ->leftJoin('references as r','r.id','invoices.id_reference_status_invoice')
             ->first();
         $transactionItem = Transaction::query()
             ->leftJoin('mst_package as p','p.id','transactions.id_package')

@@ -112,6 +112,7 @@
                             <th>@lang('transaction.date')</th>
                             <th>@lang('transaction.package')</th>
                             <th>@lang('transaction.amount')</th>
+                            <th>@lang('transaction.payment')</th>
                             <th>@lang('global.action')</th>
                         </tr>
                         </thead>

@@ -2,6 +2,7 @@
 return [
     'title' => 'Transaksi',
     'date' => 'Tanggal',
+    'payment' => 'Status Pembayaran',
     'norek' => 'No Rekening',
     'package' => 'Paket',
     'selectNorek' => 'Pilih No Rekening',

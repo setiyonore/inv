@@ -535,6 +535,7 @@ function filter(){
             { data: 'date'},
             { data: 'package'},
             { data: 'amount'},
+            { data: 'payment'},
             { data: 'action'},
         ],
     });

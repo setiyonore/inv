@@ -191,26 +191,42 @@ class TransactionController extends Controller
                     return "Rp.".$rupiah;
                     return $row->amount;
                 })
+                ->addColumn('payment',function ($row){
+                    if($row->id_status == config('config.idStatusInvoiceUnpaid')){
+                        return '<span class="badge badge-danger">'.$row->status.'</span>';
+                    }else {
+                        return '<span class="badge badge-success">'.$row->status.'</span>';
+                    }
+                })
                 ->addColumn('action',function ($row){
                     return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-secondary btn-sm" id="my-btn-manpower" data-id="'.$row->id.'"><i class="fa fa-user"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
-                ->rawColumns(['customer','date','package','amount','action'])
+                ->rawColumns(['customer','date','package','amount','payment','action'])
                 ->make(true);
 
     }
 
     private function doSearch($clauses,$tgl_awal,$tgl_akhir){
         $data = Transaction::query()
+        // ->leftJoin('customers as c','c.id','transactions.id_customer')
+        // ->leftJoin('mst_package as p','p.id','transactions.id_package')
+        // ->select('c.name as customer','p.name as package',
+        //     'transactions.date','transactions.amount','transactions.id',
+        // 'transactions.id_package','transactions.id_reference_type_of_payment as top',
+        // 'transactions.id_reference_type_transaction as tot','transactions.id_no_rekening as norek',
+        // 'transactions.id_customer as cust');
         ->leftJoin('customers as c','c.id','transactions.id_customer')
         ->leftJoin('mst_package as p','p.id','transactions.id_package')
+        ->leftJoin('invoices as i','i.id_transaction','transactions.id')
+        ->leftJoin('references as r','r.id','i.id_reference_status_invoice')
         ->select('c.name as customer','p.name as package',
             'transactions.date','transactions.amount','transactions.id',
         'transactions.id_package','transactions.id_reference_type_of_payment as top',
         'transactions.id_reference_type_transaction as tot','transactions.id_no_rekening as norek',
-        'transactions.id_customer as cust');
+        'transactions.id_customer as cust','r.description as status','i.id_reference_status_invoice as id_status');
         $fields = array_keys($clauses);
         $index = 0;
         foreach ($clauses as $item) {

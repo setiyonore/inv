@@ -504,6 +504,7 @@ function getData(){
             { data: 'package'},
             { data: 'amount'},
             { data: 'payment'},
+            { data: 'pengerjaan' },
             { data: 'action'},
         ],
     });
@@ -554,6 +555,7 @@ $('body').on('click','#my-btn-manpower',function (){
             html += "<td>"+data['manpower'][i]['name']+"</td>";
             html += "<td>"+data['manpower'][i]['division']+"</td>";
             html += "<td>"+data['manpower'][i]['status']+"</td>";
+
             html += "<td><a href='javascript:void(0)' class='btn btn-danger' id='delManpower' data-id='"+idMan+"'><i class='fa fa-trash'></i></a></td>"
         }
         document.getElementById('dataManpower').innerHTML = "";

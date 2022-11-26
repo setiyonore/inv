@@ -94,6 +94,8 @@ class TransactionController extends Controller
                         $workingStatus .= '<span class="badge badge-info">Sedang Dikerjakan</span>';
                     } else if ($notyet == 0 && $onprogress == 0 && $completed > 0) {
                         $workingStatus .= '<span class="badge badge-success">Selesai</span>';
+                    } else {
+                        $workingStatus .= '<span class="badge badge-secondary">Belum ada Manpower</span>';
                     }
 
                     return $workingStatus;

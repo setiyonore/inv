@@ -554,7 +554,16 @@ $('body').on('click','#my-btn-manpower',function (){
             html += "<td>"+(i+1)+"</td>";
             html += "<td>"+data['manpower'][i]['name']+"</td>";
             html += "<td>"+data['manpower'][i]['division']+"</td>";
-            html += "<td>"+data['manpower'][i]['status']+"</td>";
+            // html += "<td>"+data['manpower'][i]['status']+"</td>";
+
+            if(data['manpower'][i]['status'] === "Selesai") {
+                html += "<td><span class='badge badge-success'>"+data['manpower'][i]['status']+"</span></td>";
+            } else if(data['manpower'][i]['status'] === "Belum Dikerjakan") {
+                html += "<td><span class='badge badge-danger'>"+data['manpower'][i]['status']+"</span></td>";
+            } else if(data['manpower'][i]['status'] === "Sedang Dikerjakan") {
+                html += "<td><span class='badge badge-info'>"+data['manpower'][i]['status']+"</span></td>";
+            }
+
 
             html += "<td><a href='javascript:void(0)' class='btn btn-danger' id='delManpower' data-id='"+idMan+"'><i class='fa fa-trash'></i></a></td>"
         }

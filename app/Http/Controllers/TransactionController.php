@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\HelperMasterTraits;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -59,13 +61,52 @@ class TransactionController extends Controller
                         return '<span class="badge badge-success">'.$row->status.'</span>';
                     }
                 })
+                ->addColumn('pengerjaan', function($row) {
+                    $output = new ConsoleOutput();
+                    $manpowers = Manpower::query()
+                        ->leftJoin("transactions as t", "t.id", "manpower.id_transaction")
+                        ->where("manpower.id_transaction", "=", $row->id)
+                        ->get();
+
+                    $notyet = 0;
+                    $onprogress = 0;
+                    $completed = 0;
+                    $workingStatus = '';
+                    foreach($manpowers as $mp) {
+                        $reference = Reference::where('id', $mp["id_reference_working_status"])->first();
+                        $output->writeln("[DEBUG] $reference->description");
+                        if($reference->description == "Belum Dikerjakan") {
+                            $notyet += 1;
+                        } else if ($reference->description == "Sedang Dikerjakan") {
+                            $onprogress += 1;
+                        } else if ($reference->description == "Selesai") {
+                            $completed += 1;
+                        }
+                    }
+
+                    if($notyet > 0 && $onprogress == 0 && $completed == 0) {
+                        // Jika tim masih belum ada yang mengerjakan
+                        // set menjadi belum dikerjakan
+                        $workingStatus .= '<span class="badge badge-danger">Belum Dikerjakan</span>';
+                    } else if ($onprogress > 0 || $notyet > 0) {
+                        // Jika salah satu tim sudah ada yang mengerjakan
+                        // set menjadi sudah dikerjakan
+                        $workingStatus .= '<span class="badge badge-info">Sedang Dikerjakan</span>';
+                    } else if ($notyet == 0 && $onprogress == 0 && $completed > 0) {
+                        $workingStatus .= '<span class="badge badge-success">Selesai</span>';
+                    } else {
+                        $workingStatus .= '<span class="badge badge-secondary">Belum ada Manpower</span>';
+                    }
+
+                    return $workingStatus;
+                })
                 ->addColumn('action',function ($row){
                     return '<a href="javascript:void(0)"  class="btn btn-success btn-sm"  id="my-btn-edit" data-id="'.$row->id.'" data-package-id="'.$row->id_package.'" data-top-id="'.$row->top.'" data-tot-id="'.$row->tot.'" data-norek-id="'.$row->norek.'" data-cust-id="'.$row->cust.'" data-toggle="tooltip" data-placement="top" title="Edit this record"><i class="fa fa-edit"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-secondary btn-sm" id="my-btn-manpower" data-id="'.$row->id.'"><i class="fa fa-user"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm" id="my-btn-detil" data-id="'.$row->id.'"><i class="fa fa-file"></i></a>
                                 <a href="javascript:void(0)" class="btn btn-danger btn-sm" id="my-btn-delele" data-id="'.$row->id.'" ><i class="fa fa-trash"></i></a>';
                 })
-                ->rawColumns(['customer','date','package','amount','payment','action'])
+                ->rawColumns(['customer','date','package','amount','payment', 'pengerjaan', 'action'])
                 ->make(true);
         }
         $norek = $this->getNomerRekening();

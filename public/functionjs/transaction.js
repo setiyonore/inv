@@ -537,6 +537,7 @@ function filter(){
             { data: 'package'},
             { data: 'amount'},
             { data: 'payment'},
+            { data: 'pengerjaan'},
             { data: 'action'},
         ],
     });

@@ -18,7 +18,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Invoice</a>
+    <a href="../../index2.html"><b>Aplikasi Management Order</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
